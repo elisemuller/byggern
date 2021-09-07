@@ -6,11 +6,26 @@
 
 #define MYUBRR FOSC/16/BAUD-1
 
+/**
+* @brief initialize UART
+* @param unsigned int UBRR
+* @return void
+*/
 void uart_init(unsigned int ubrr);
 
+/**
+* @brief transmit char with UART
+* @param unsigned char message
+* @return void
+*/
 void uart_transmit(unsigned char message);
 
-unsigned char uart_receive();
+/**
+* @brief receive char with UART
+* @param void
+* @return unsigned char received
+*/
+unsigned char uart_receive(void);
 
 #endif
 
