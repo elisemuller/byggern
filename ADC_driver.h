@@ -9,6 +9,20 @@
 #ifndef ADC_DRIVER_H_
 #define ADC_DRIVER_H_
 
+typedef struct {
+  int x_pos;
+  int y_pos;
+} a_pos;
+
+enum joystick_dir {
+  LEFT,
+  RIGHT, 
+  UP, 
+  DOWN, 
+  NEUTRAL
+  };
+
+
 void adc_init(void); 
 
 volatile uint8_t adc_read(uint8_t channel);
