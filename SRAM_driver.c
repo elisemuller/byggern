@@ -10,4 +10,3 @@
 #include "SRAM_driver.h"
 #include "xmem.h"
 
-#define BASE_ADDRESS 0x1800

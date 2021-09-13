@@ -26,9 +26,9 @@ void xmem_init(void);
 */
 void mcu_porta_io_config(uint8_t mcu_in);
 
-//void xmem_write(uint8_t data, uint16_t address, uint16_t BASE_ADDRESS);
+void xmem_write(uint8_t data, uint16_t address, uint16_t base);
 
-//uint8_t xmem_read(uint16_t address, uint16_t BASE_ADDRESS);
+uint8_t xmem_read(uint16_t address, uint16_t base);
 
 
 
