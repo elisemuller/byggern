@@ -17,7 +17,7 @@
 #include "ADC_driver.h"
 #include "xmem.h"
 
-volatile char *ext_mem = (char *) BASE_ADDRESS_ADC;
+//volatile char *ext_mem = (char *) BASE_ADDRESS_ADC; Edited
 
 void adc_init(void){
 	
@@ -55,16 +55,40 @@ void adc_init(void){
 	OCR1A = 0x01FF; // duty cycle 50%
 }
 
+void adc_init(void) {
+	//Configure PD5 pin as output
+	DDRD |= (1 << PD5); 
+	
+	//Timer without prescaling
+	TCCR0 &= ~(7 << CS00); // Set CS00, CS01, CS02 to 0
+	TCCR0 |= (1 << CS00); // Set CS00 to 1
+	
+	// Waveform generation mode = CTC, Top = OCR0
+	TCCR0 &= ~(1 << WGM00); // WGM00 = 0
+	TCCR0 |= (1 << WGM01); // WGM01 = 1
+	
+	// Toggles pin PD5 when TCNT0 = OCR0
+	TCCR0 &= ~(1 << COM01); // COM01 = 0
+	TCCR0 |= (1 << COM00); // COM00 = 1
+	
+	// Defines the top value for the counter
+	OCR0 = 1;
+}	
+
 volatile uint8_t adc_read(uint8_t channel){
 	
-	ext_mem[0] = (0x80 | channel);
+	//ext_mem[0] = (0x80 | channel); edited
+	
+	xmem_write(channel, BASE_ADDRESS_ADC, 0x1000); //edited
 
-	_delay_ms((9*4*2/F_CPU)); //t_conv
+	_delay_ms((9*4*2/F_CPU)); //t_conv evt bruk delay = 20 us
 	
 	char data;
 	
+	//consecutive read pulses
 	for (int i = 0; i <= channel; i++){
-		data = ext_mem[0];
+		//data = ext_mem[0];
+		data = xmem_read(BASE_ADDRESS_ADC, 0x1000); //edited
 	}
 	
 	
