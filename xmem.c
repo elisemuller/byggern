@@ -8,17 +8,17 @@
 
 
 void xmem_init(void) {
-	MCUCR |= (1 << SRE);
+	MCUCR |= (1 << SRE); //Enables xmem
 	SFIOR &= ~(7 << XMM0); // 111 TO XMM0-2
-	SFIOR |= (1 << XMM2);
+	SFIOR |= (1 << XMM2);  // Masks PC4-PC7 Atmega pins
 }
 
 void mcu_porta_io_config(uint8_t mcu_in) {
 	if (mcu_in) {
-		DDRA = 0x00;
+		DDRA = 0x00; //input
 	}
 	else {
-		DDRA = 0xFF;
+		DDRA = 0xFF; //output
 	}
 }
 
