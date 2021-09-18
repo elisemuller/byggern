@@ -34,18 +34,15 @@ int main(void)
 	
 	
 	xmem_init();
-	
-	// SRAM_test();
-	//xmem_write(0xFF, 0x0001, 0x1000);
-	//
+
 	adc_init();
 	
 	while(1){
-		char x = adc_read(1); // A1
-		char y = adc_read(0); // A0
-		char b = adc_read(2); // A2
+		char x = adc_read(1); // A0 (0-255)
+		char y = adc_read(2); // A1
+
 		
-		printf("X value: %d, Y value: %d, Button value: %d \n", x, y, b);
+		printf("X value: %d, Y value: %d \n", x, y);
 	}
 
 }

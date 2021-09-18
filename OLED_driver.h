@@ -9,7 +9,7 @@
 #ifndef OLED_DRIVER_H_
 #define OLED_DRIVER_H_
 
-#define BASE_ADDRESS_OLED 0x1000
+#define OFFSET_OLED 0x0000
 
 
 

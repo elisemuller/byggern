@@ -9,7 +9,7 @@
 #ifndef SRAM_DRIVER_H_
 #define SRAM_DRIVER_H_
 
-#define BASE_ADDRESS_SRAM 0x1800
+#define OFFSET_SRAM 0x0800
 
 
 

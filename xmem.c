@@ -6,11 +6,16 @@
 #include "test.h"
 #include "xmem.h"
 
+#define BASE_ADDRESS 0x1000
+
 
 void xmem_init(void) {
-	MCUCR |= (1 << SRE); //Enables xmem
-	SFIOR &= ~(7 << XMM0); // 111 TO XMM0-2
-	SFIOR |= (1 << XMM2);  // Masks PC4-PC7 Atmega pins
+	// Enables external memory
+	MCUCR |= (1 << SRE); 
+	
+	// Masks PC4-PC7 pins
+	SFIOR &= ~(7 << XMM0);
+	SFIOR |= (1 << XMM2); 
 }
 
 void mcu_porta_io_config(uint8_t mcu_in) {
@@ -25,13 +30,24 @@ void mcu_porta_io_config(uint8_t mcu_in) {
 
 // xmem read og write er hentet fra labforelesning
 
-void xmem_write(uint8_t data, uint16_t address, uint16_t base) {	
-	volatile char *ext_mem = (char *) base;
-	ext_mem[address] = data;
+//void xmem_write(uint8_t data, uint16_t address, uint16_t base) {	
+	//volatile char *ext_mem = (char *) base;
+	//ext_mem[address] = data;
+//}
+
+//uint8_t xmem_read(uint16_t address, uint16_t base) {
+	//volatile char *ext_mem = (char *) base;
+	//uint8_t ret_val = ext_mem[address];
+	//return ret_val;
+//}
+
+void xmem_write(uint8_t data, uint16_t offset) {
+	volatile char *ext_mem = (char *) BASE_ADDRESS;
+	ext_mem[offset] = data;
 }
 
-uint8_t xmem_read(uint16_t address, uint16_t base) {	
-	volatile char *ext_mem = (char *) base;
-	uint8_t ret_val = ext_mem[address];	
+uint8_t xmem_read(uint16_t offset) {	
+	volatile char *ext_mem = (char *) BASE_ADDRESS;
+	uint8_t ret_val = ext_mem[offset];	
 	return ret_val;
 }

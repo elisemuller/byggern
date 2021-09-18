@@ -9,7 +9,7 @@
 #ifndef ADC_DRIVER_H_
 #define ADC_DRIVER_H_
 
-#define BASE_ADDRESS_ADC 0x1400
+
 
 typedef struct {
   int x_pos;

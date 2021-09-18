@@ -12,7 +12,7 @@
 
 
 /**
-* @brief initializes external memory
+* @brief Initializes external memory
 * @param void
 * @return void                                                                     
 */
@@ -20,17 +20,22 @@ void xmem_init(void);
 
 
 /**
-* @brief configures whether portA on mcu will receive or send
+* @brief Configures whether portA on mcu will receive or send
 * @param uint8_t mcu_in
 * @return void
 */
 void mcu_porta_io_config(uint8_t mcu_in);
 
-// void xmem_write(uint8_t data, uint16_t offset); forslag - definer base_address i ext_mem.c
 
-void xmem_write(uint8_t data, uint16_t address, uint16_t base);
+/**
+* @brief Writes @p data to offset address
+* @param uint16_t @p offset Offset from base address
+* @param uint8_t @p data Data to be written to offset address
+* @return void
+*/
+void xmem_write(uint8_t data, uint16_t offset);
 
-uint8_t xmem_read(uint16_t address, uint16_t base);
+uint8_t xmem_read(uint16_t offset);
 
 
 
