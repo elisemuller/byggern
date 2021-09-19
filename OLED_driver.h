@@ -23,7 +23,9 @@ void OLED_clear_line(uint8_t line);
 
 void OLED_pos(uint8_t row, uint8_t col);
 
-void OLED_write_data(volatile char data); //volatile
+void OLED_write_d(volatile char data); //volatile
+
+void OLED_write_c(volatile char command);
 
 void OLED_print(char* data);
 
