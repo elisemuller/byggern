@@ -12,6 +12,7 @@
 
 #define JOYSTICK_CHANNEL_X 1
 #define JOYSTICK_CHANNEL_Y 2
+#define NUM_JOYSTICK_CHANNELS 2
 
 typedef struct {
   int pos_x;
