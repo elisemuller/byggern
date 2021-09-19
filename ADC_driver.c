@@ -14,6 +14,8 @@
 #include "ADC_driver.h"
 #include "xmem.h"
 
+static pos_t joystick_pos;
+
 
 void adc_init(void){
 	// Configure PD5 pin as output
@@ -43,15 +45,35 @@ volatile uint8_t adc_read(uint8_t channel){
 	xmem_write(channel, OFFSET_ADC);
 	_delay_ms((9*4*2/F_CPU));
 	
-	char data;
+	char channel_data;
 	for (int ch = 0; ch < channel; ch++){
 		data = xmem_read(OFFSET_ADC);
 	}
 	
-	return data;
+	return channel_data;
 }
 
-//void adc_calibrate(void); //should find the returned adc values at the extrems of the x and y axis
+pos_t pos_read(void){
+	
+	
+	
+}
+
+//should find the returned adc values at the extrems of the x and y axis
+void adc_calibrate(void){
+	for (int ch = 1; ch <= JOYSTICK_CHANNELS; ch++){
+		joystick_pos[ch] = adc_read(ch);
+		joystick_pos[ch] = (joystick_pos[ch]*(40/51));
+		if (joystick_pos[ch] < 100){
+			joystick_pos[ch] = -(100 - joystick_pos[ch]);
+		}
+		else {
+			joystick_pos[ch] -= 100;
+		}
+	}
+}
+
+//should find the returned adc values at the extrems of the x and y axis
 
 
 //these returned adc values should then be used in pos_read for calculating
