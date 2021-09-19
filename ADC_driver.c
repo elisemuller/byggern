@@ -26,7 +26,7 @@ void adc_init(void){
 	// Waveform generation mode = CTC, Top = OCR0
 	TCCR1A &= ~(1 << WGM10); // WGM10 = 0
 	TCCR1A &= ~(1 << WGM11); // WGM11 = 0
-	TCCR1B |= (1 << WGM12); // WGM12 = |
+	TCCR1B |= (1 << WGM12); // WGM12 = 1
 	TCCR1B &= ~(1 << WGM13); // WGM13 = 0
 	
 	// Toggles pin PD5 when TCNT0 = OCR0
