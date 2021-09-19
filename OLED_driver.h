@@ -17,17 +17,19 @@ void OLED_reset(void);
 
 void OLED_home(void);
 
-void OLED_goto_line(int line);
+void OLED_goto_line(uint8_t line);
 
-void OLED_clear_line(int line);
+void OLED_clear_line(uint8_t line);
 
-void OLED_pos(int row, int column);
+void OLED_pos(uint8_t row, uint8_t col);
 
 void OLED_write_data(volatile char data); //volatile
 
 void OLED_print(char* data);
 
-void OLED_set_brightness(int lvl);
+void OLED_set_brightness(uint8_t lvl);
+
+void OLED_print_arrow(uint8_t row, uint8_t col); 
 
 
 
