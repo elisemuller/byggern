@@ -61,9 +61,12 @@ pos_t pos_read(void){
 
 //should find the returned adc values at the extrems of the x and y axis
 void adc_calibrate(void){
+	// joystick_pos.pos_x = adc_read(JOYSTICK_CHANNEL_X);
+	// joystick_pos.pos_y = adc_read(JOYSTICK_CHANNEL_Y);
+	
 	for (int ch = 1; ch <= JOYSTICK_CHANNELS; ch++){
-		joystick_pos[ch] = adc_read(ch);
-		joystick_pos[ch] = (joystick_pos[ch]*(40/51));
+		joystick_pos[ch-1] = adc_read(ch);
+		joystick_pos[ch-1] = (joystick_pos[ch]*(40/51));
 		if (joystick_pos[ch] < 100){
 			joystick_pos[ch] = -(100 - joystick_pos[ch]);
 		}
