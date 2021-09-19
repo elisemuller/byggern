@@ -10,11 +10,13 @@
 #define ADC_DRIVER_H_
 
 
+#define JOYSTICK_CHANNEL_X 1
+#define JOYSTICK_CHANNEL_Y 2
 
 typedef struct {
-  int x_pos;
-  int y_pos;
-} a_pos;
+  int pos_x;
+  int pos_y;
+} pos_t;
 
 enum joystick_dir {
   LEFT,
@@ -25,13 +27,15 @@ enum joystick_dir {
   };
   
 /** 
-* sets PWM
+* Initializes PWM signal to be used in ADC conversion
 **/
 void adc_init(void); 
 
 volatile uint8_t adc_read(uint8_t channel);
-//
-//void adc_calibrate(void); //should find the returned adc values at the extrems of the x and y axis
+
+pos_t pos_read(void); 
+
+void adc_calibrate(void); //should find the returned adc values at the extrems of the x and y axis
 //
 //
 ////these returned adc values should then be used in pos_read for caluculating
