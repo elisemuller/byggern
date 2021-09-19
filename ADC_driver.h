@@ -14,7 +14,7 @@
 #define JOYSTICK_CHANNEL_Y 2
 #define NUM_JOYSTICK_CHANNELS 2
 
-typedef struct {
+typedef struct pos_joystick {
   int8_t pos_x;
   int8_t pos_y;
 } pos_t;
