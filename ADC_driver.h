@@ -15,8 +15,8 @@
 #define NUM_JOYSTICK_CHANNELS 2
 
 typedef struct {
-  int pos_x;
-  int pos_y;
+  int8_t pos_x;
+  int8_t pos_y;
 } pos_t;
 
 enum joystick_dir {
