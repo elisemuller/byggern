@@ -9,12 +9,7 @@
 
 #define OFFSET_ADC 0x0400
 
-// channel1: 0x0001
-// channel2: 0x0010
-// channel3: 0x0100
-
 #include <avr/io.h>
-// #include <stdio.h>
 #include <util/delay.h>
 #include "ADC_driver.h"
 #include "xmem.h"
@@ -26,7 +21,7 @@ void adc_init(void){
 
 	// Timer without prescaling
 	TCCR1B &= ~(7 << CS10); // Set CS10, CS11, CS12 to 0
-	TCCR1B |= (1 << CS10); // Set CS00 to 1
+	TCCR1B |= (1 << CS10); // Set CS10 to 1
 
 	// Waveform generation mode = CTC, Top = OCR0
 	TCCR1A &= ~(1 << WGM10); // WGM10 = 0
@@ -43,7 +38,7 @@ void adc_init(void){
 	
 }
 
-volatile uint8_t adc_read(uint8_t channel){ // 1, 2
+volatile uint8_t adc_read(uint8_t channel){
 		
 	xmem_write(channel, OFFSET_ADC);
 	_delay_ms((9*4*2/F_CPU));
