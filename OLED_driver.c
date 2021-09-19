@@ -10,6 +10,9 @@
 #include "OLED_driver.h"
 #include "xmem.h"
 
+#define OLED_SCREEN_WIDTH 128
+#define OLED_SCREEN_HEIGHT 64
+
 
 void OLED_init(void){
  OLED_write_c(0xae); // display off
