@@ -9,7 +9,6 @@
 #ifndef OLED_DRIVER_H_
 #define OLED_DRIVER_H_
 
-#define OFFSET_OLED 0x0000
 
 void OLED_init(void);
 

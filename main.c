@@ -14,35 +14,41 @@
 #include "sram_test.h"
 //#include "test.h"
 #include "xmem.h"
-//#include "OLED_driver.h"
+#include "OLED_driver.h"
 #include "ADC_driver.h"
+#include "Movement_driver.h"
 
-//void xmem_write(uint8_t data, uint16_t address, uint16_t BASE_ADDRESS) {
-	//volatile char *ext_mem = (char *) BASE_ADDRESS;
-	//ext_mem[address] = data;
-//}
-//
-//uint8_t xmem_read(uint16_t address, uint16_t BASE_ADDRESS) {
-	//volatile char *ext_mem = (char *) BASE_ADDRESS;
-	//uint8_t ret_val = ext_mem[address];
-	//return ret_val;
-//}
 
 int main(void)
 {
 	uart_init( MYUBRR );
-	
-	
 	xmem_init();
-
 	adc_init();
+	OLED_init();
+
 	
 	while(1){
-		char x = adc_read(1); // A0 (0-255)
-		char y = adc_read(2); // A1
-
+		//pos_read();
+		//pos_t joystick_pos;
+		//joystick_pos = get_pos();
+		//
+		pos_s slider_pos; 
+		slider_pos = mov_get_slider_pos();
 		
-		printf("X value: %d, Y value: %d \n", x, y);
+		
+		//dir current_dir;
+		//current_dir = get_dir();
+		//OLED_write_d(0b00011000);
+		//OLED_write_d(0b00011000);
+		//OLED_write_d(0b01111110);
+		//OLED_write_d(0b00111100);
+		//OLED_write_d(0b00011000);
+		
+
+		//printf("X value: %d p, Y value: %d p \r\n", joystick_pos.pos_x, joystick_pos.pos_y);
+		//printf("Right slider value: %d, Left slider value: %d \r\n", right, left);
+		printf("Right slider value: %d, Left slider value: %d \r\n", slider_pos.pos_r_slider, slider_pos.pos_l_slider);
+
 	}
 
 }

@@ -30,17 +30,6 @@ void mcu_porta_io_config(uint8_t mcu_in) {
 
 // xmem read og write er hentet fra labforelesning
 
-//void xmem_write(uint8_t data, uint16_t address, uint16_t base) {	
-	//volatile char *ext_mem = (char *) base;
-	//ext_mem[address] = data;
-//}
-
-//uint8_t xmem_read(uint16_t address, uint16_t base) {
-	//volatile char *ext_mem = (char *) base;
-	//uint8_t ret_val = ext_mem[address];
-	//return ret_val;
-//}
-
 void xmem_write(uint8_t data, uint16_t offset) {
 	volatile char *ext_mem = (char *) BASE_ADDRESS;
 	ext_mem[offset] = data;
