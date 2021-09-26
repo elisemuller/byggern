@@ -44,6 +44,10 @@ void OLED_clear_page(uint8_t page);
 
 void OLED_goto_pos(uint8_t row, uint8_t col);
 
+void OLED_select_font(font format);
+
+void OLED_write_char(uint8_t ch);
+
 void OLED_print(char* data);
 
 void OLED_set_brightness(uint8_t lvl);
