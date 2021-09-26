@@ -23,7 +23,6 @@ typedef enum {
   LARGE,
   NORMAL, 
   SMALL,
-  IMAGE
 } font;
 
 typedef enum {
