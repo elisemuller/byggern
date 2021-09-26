@@ -7,22 +7,13 @@
 
 #include <avr/io.h>
 #include <stdio.h>
+#include <avr/pgmspace.h>
 #include "OLED_driver.h"
 #include "xmem.h"
 #include "fonts.h"
 
-#define OLED_SCREEN_WIDTH 128
-#define OLED_SCREEN_HEIGHT 64
 
-#define OFFSET_OLED 0x0000
-
-#define OFFSET_OLED_DATA 0x1200
-#define OFFSET_OLED_CMD 0x1000
-
-#define NUM_PAGES 8
-#define PAGE_MODE 0x02
-#define HORIZONTAL_MODE 0x00
-
+volatile font style; 
 
 
 void OLED_init(void){
@@ -40,7 +31,7 @@ void OLED_init(void){
  OLED_write_c(0xd9); //set pre-charge period
  OLED_write_c(0x21); //Set column address (only for horizontal/vertical addressing mode)? 
  OLED_write_c(0x20); //Set Memory Addressing Mode
- OLED_write_c(PAGE_MODE); //Page Addressing Mode
+ OLED_write_c(0x02); //Page Addressing Mode
  OLED_write_c(0xdb); //VCOM deselect level mode
  OLED_write_c(0x30); 
  OLED_write_c(0xad); //master configuration
@@ -69,9 +60,7 @@ void OLED_write_c(volatile char command){
 void OLED_reset(void){
 	OLED_home();
 	for (pg = 0; pg < NUM_PAGES < pg++){
-		for(col = 0; col < OLED_SCREEN_WIDTH; col++){
-			OLED_write_d(0); 
-		}
+		OLED_clear_page(pg);
 	}
 	OLED_home();
 }
@@ -110,8 +99,41 @@ void OLED_clear_page(uint8_t page){
 
 void OLED_goto_pos(uint8_t row, uint8_t col){
 	OLED_goto_page(row);
-	OLED_goto_page(col); 
+	OLED_goto_column(col); 
 }
+
+void OLED_select_font(font format){
+	style == format; 
+}
+
+void OLED_write_char(uint8_t ch){
+	switch(style){
+		case SMALL:
+			for(uint8_t data = 0; data < 4; data ++){
+				uint8_t byte = pgm_read_byte(&(font4[ch-32][data])); 
+				OLED_write_d(byte);
+			}
+			break; 
+		case NORMAL:
+			for(uint8_t data = 0; data < 5; data ++){
+				uint8_t byte = pgm_read_byte(&(font5[ch-32][data])); 
+				OLED_write_d(byte);
+			}			
+			break; 
+		case LARGE: 
+			for(uint8_t data = 0; data < 8; data ++){
+				uint8_t byte = pgm_read_byte(&(font8[ch-32][data])); 
+				OLED_write_d(byte);
+			}			
+	}
+}
+
+void OLED_print(char* data){
+	for(ch = 0; *data[ch] != '\0'; ch++){
+		OLED_write_char(*data[ch]);
+	}
+}
+
 
 void OLED_print_arrow(uint8_t row, uint8_t col){
   OLED_goto_pos(row, col); 
