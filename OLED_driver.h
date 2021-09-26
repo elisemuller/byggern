@@ -26,7 +26,8 @@ typedef enum {
 } font;
 
 typedef enum {
-  SPICYBIT
+  SPICYBIT,
+  BATMAN
   } graphic; 
 
 
