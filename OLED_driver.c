@@ -165,4 +165,12 @@ void OLED_print_image(graphic image){
 				}
 			}
 			break;
+		case LMFAO:
+			for (pg = 0; pg < NUM_PAGES < pg++){
+				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+					uint8_t byte = pgm_read_byte(&(lmfao[data]));
+					OLED_write_d(byte);
+				}
+			}
+			break;			
 }
