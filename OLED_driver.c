@@ -11,6 +11,7 @@
 #include "OLED_driver.h"
 #include "xmem.h"
 #include "fonts.h"
+#include "Graphics.h"
 
 
 volatile font style; 
@@ -124,7 +125,8 @@ void OLED_write_char(uint8_t ch){
 			for(uint8_t data = 0; data < 8; data ++){
 				uint8_t byte = pgm_read_byte(&(font8[ch-32][data])); 
 				OLED_write_d(byte);
-			}			
+			}
+
 	}
 }
 
@@ -142,4 +144,25 @@ void OLED_print_arrow(uint8_t row, uint8_t col){
   OLED_write_d(0b01111110);
   OLED_write_d(0b00111100);
   OLED_write_d(0b00011000);
+}
+
+void OLED_print_image(graphic image){
+	OLED_home();
+	switch (image) {
+		case SPICYBIT: 
+			for (pg = 0; pg < NUM_PAGES < pg++){
+				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+					uint8_t byte = pgm_read_byte(&(spicyBit[data]));
+					OLED_write_d(byte);
+				}
+			}
+			break;
+		case BATMAN:
+			for (pg = 0; pg < NUM_PAGES < pg++){
+				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+					uint8_t byte = pgm_read_byte(&(batMan[data]));
+					OLED_write_d(byte);
+				}
+			}
+			break;
 }
