@@ -52,7 +52,6 @@ void adc_init(void){
 	// Defines the top value for the counter
 	OCR1A = 1;
 	
-	adc_calibrate();
 	
 }
 
@@ -70,96 +69,5 @@ volatile uint8_t adc_rd(uint8_t channel){
 	return channel_data;
 }
 
-
-void adc_calibrate(void){
-	null_x = adc_rd(JOYSTICK_CHANNEL_X);
-	null_y = adc_rd(JOYSTICK_CHANNEL_Y);
-}
-
-
-
-
-void pos_joy_read(void){
-	char x = adc_rd(JOYSTICK_CHANNEL_X);
-	char y = adc_rd(JOYSTICK_CHANNEL_Y);
-	int32_t data_x = (int32_t)x;
-	int32_t data_y = (int32_t)y;
-
-	if (data_x >= null_x ){
-		x_pos = (data_x - null_x)*100/(255 - null_x);
-	}
-	else {
-		x_pos = (data_x - null_x)*100/(null_x);
-	}
-	if (data_y >= null_y ){
-		y_pos = (data_y - null_y)*100/(255 - null_y);
-	}
-	else {
-		y_pos = (data_y - null_y)*100/(null_y);
-	}
-	
-}
-
-pos_t get_joy_pos(void){
-	pos_joy_read();
-	pos_t joystick_pos;
-	joystick_pos.pos_x = x_pos;
-	joystick_pos.pos_y = y_pos;
-	return joystick_pos;
-}
-
-void pos_slider_read(void){
-	char right = adc_rd(SLIDER_CHANNEL_R);
-	char left = adc_rd(SLIDER_CHANNEL_L);
-	int32_t data_right = (int32_t)right;
-	int32_t data_left = (int32_t)left;
-	r_pos = (data_right*100)/255;
-	l_pos = (data_left*100)/255;
-	
-}
-
-pos_s get_slider_pos(void){
-	pos_slider_read();
-	pos_s slider_pos;
-	slider_pos.pos_l_slider = l_pos;
-	slider_pos.pos_r_slider = r_pos;
-	return slider_pos;
-	
-}
-
-dir get_dir(void){
-	pos_joy_read();
-	const int neutral_threshold = 30;
-	dir direction = UNDEFINED;
-	
-	int abs_x = abs(x_pos);
-	int abs_y = abs(y_pos);
-	
-	if (abs_x < neutral_threshold && abs_y < neutral_threshold){
-		direction = NEUTRAL;
-		printf("Direction: NEUTRAL \r\n");
-	}
-	else if((abs_x > abs_y) && (abs_x > neutral_threshold)){
-		if (x_pos > 0){
-			direction = RIGHT;
-			printf("Direction: RIGHT \r\n");
-		}
-		else {
-			printf("Direction: LEFT \r\n");
-			direction = LEFT;
-		}
-	}
-	else if ((abs_y > abs_x) && (abs_y > neutral_threshold)){
-		if(y_pos > 0){
-			direction = UP;
-			printf("Direction: UP \r\n");
-		}
-		else{
-			direction = DOWN;
-			printf("Direction: DOWN \r\n");
-		}
-	}
-	return direction;
-}
 
 

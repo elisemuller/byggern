@@ -15,6 +15,7 @@
 
 
 volatile font style; 
+//volatile graphic picture; 
 
 
 void OLED_init(void){
@@ -46,6 +47,7 @@ void OLED_init(void){
  OLED_write_c(0x10); // Starting column is SEG0 (higher column address) 
 
  OLED_reset(); 
+ OLED_select_font(LARGE);
 }
 
 
@@ -60,7 +62,7 @@ void OLED_write_c(volatile char command){
 
 void OLED_reset(void){
 	OLED_home();
-	for (pg = 0; pg < NUM_PAGES < pg++){
+	for (int pg = 0; pg < NUM_PAGES; pg++){
 		OLED_clear_page(pg);
 	}
 	OLED_home();
@@ -84,8 +86,8 @@ void OLED_goto_page(uint8_t page){ //page og line er synonymer
 }
 
 void OLED_clear_page(uint8_t page){
-	OLED_goto_page(page)
-	for(col = 0; col < OLED_SCREEN_WIDTH; col++){
+	OLED_goto_page(page);
+	for(int col = 0; col < OLED_SCREEN_WIDTH; col++){
 		OLED_write_d(0);
 	}
 }
@@ -104,7 +106,7 @@ void OLED_goto_pos(uint8_t row, uint8_t col){
 }
 
 void OLED_select_font(font format){
-	style == format; 
+	style = format; 
 }
 
 void OLED_write_char(uint8_t ch){
@@ -131,8 +133,10 @@ void OLED_write_char(uint8_t ch){
 }
 
 void OLED_print(char* data){
-	for(ch = 0; *data[ch] != '\0'; ch++){
-		OLED_write_char(*data[ch]);
+	int ch = 0;
+	while (data[ch] != '\0'){
+		OLED_write_char(data[ch]);
+		ch++;
 	}
 }
 
@@ -150,27 +154,33 @@ void OLED_print_image(graphic image){
 	OLED_home();
 	switch (image) {
 		case SPICYBIT: 
-			for (pg = 0; pg < NUM_PAGES < pg++){
-				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+			for (int pg = 0; pg < NUM_PAGES; pg++){
+				OLED_goto_page(pg);
+				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
 					uint8_t byte = pgm_read_byte(&(spicyBit[data]));
 					OLED_write_d(byte);
 				}
 			}
 			break;
 		case BATMAN:
-			for (pg = 0; pg < NUM_PAGES < pg++){
-				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+			for (int pg = 0; pg < NUM_PAGES; pg++){
+				OLED_goto_page(pg);
+				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
 					uint8_t byte = pgm_read_byte(&(batMan[data]));
 					OLED_write_d(byte);
 				}
 			}
 			break;
 		case LMFAO:
-			for (pg = 0; pg < NUM_PAGES < pg++){
-				for(uint8_t data = 0; data < OLED_SCREEN_WIDTH; data ++){
+			for (int pg = 0; pg < NUM_PAGES; pg++){
+				OLED_goto_page(pg);
+				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
 					uint8_t byte = pgm_read_byte(&(lmfao[data]));
 					OLED_write_d(byte);
 				}
 			}
-			break;			
+			break;
+		default:
+			break;	
+	}
 }
