@@ -1,11 +1,14 @@
 #include "SPI_driver.h"
 
+#define CAN_CS PB4
+#define SPI_PORT PORTB
+
 void SPI_MasterInit(void){
   // Set MOSI, SS and SCK output, all others input
-  DDRB = (1 << PB5) | (1 << PB4) | (1 << PB7);
+  DDRB |= (1 << PB5) | (1 << CAN_CS) | (1 << PB7);
   DDRB &= ~(1 << PB6); // PB6 = 0, MISO is input
   // Enable SPI, Master, set clock rate fck/16
-  SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);
+  SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0);
   SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
   
   // SPI Mode = 0 -> Leading edge: sample, Trailing edge: setup
@@ -32,9 +35,10 @@ char SPI_read(void){
 }
 
 void SPI_select(void){
-  //skru på ss signal
+  SPI_PORT &= ~(1 << CAN_CS);
 }
+ 
         
 void SPI_deselect(void){
-  //skru av ss signal
+  SPI_PORT |= (1 << CAN_CS);
 }
