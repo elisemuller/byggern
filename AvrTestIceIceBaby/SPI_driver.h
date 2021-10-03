@@ -11,11 +11,10 @@ void SPI_init(void);
 
 //Henter fra Atmega s.160
 void SPI_MasterInit(void);
-void SPI_MasterTransmit(char cData);
+void SPI_send(char cData);
 
 //To read something from the slave the master must transmit a dummy byte
-uint8_t SPI_read(void);
+char SPI_read(void);
 
-void SPI_send(uint8_t);
 
 #endif /* SPI_DRIVER_H_ */
