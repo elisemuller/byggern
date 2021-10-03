@@ -14,6 +14,9 @@ void SPI_MasterInit(void){
   // SPI Mode = 0 -> Leading edge: sample, Trailing edge: setup
   SPCR &= ~(1 << CPOL); // CPOL = 0
   SPCR &= ~(1 << CPHA); // CPHA = 0
+  
+  //enable global interrupts in SREG register? 
+  //SREG |= (1 << I); //Enables global interrupts
 }
 
 
