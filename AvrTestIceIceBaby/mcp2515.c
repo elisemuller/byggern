@@ -22,12 +22,12 @@ uint8_t mcp2515_init(void){
 uint8_t mcp2515_read(uint8_t address){
   uint8_t result; 
   
-  PORTB &= ~(1 << CAN_CS); // Select CAN-controller
+  SPI_select();// Select CAN-controller
   SPI_write(MCP_READ); //Send read instruction
   SPI_write(address); //Send address
   result = SPI_read();
   
-  PORTB |= (1 << CAN_CS); // Deselect CAN-controller
+  SPI_deselect; // Deselect CAN-controller
   
   return result; 
 }
