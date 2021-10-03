@@ -14,7 +14,7 @@ void SPI_MasterInit(void){
 }
 
 
-void SPI_MasterTransmit(char cData){
+void SPI_send(char cData){
   //Start transmission
   SPDR = cData; //SPI Data register
   //Wait for transmission complete
@@ -22,7 +22,7 @@ void SPI_MasterTransmit(char cData){
   }
 }
 
-char SPI_MasterReceive(void){
+char SPI_read(void){
   //Send dummy byte
   SPI_MasterTransmit(0x00); //SPI Data register
   //Wait for transmission complete
