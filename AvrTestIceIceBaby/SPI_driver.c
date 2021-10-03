@@ -9,10 +9,28 @@ void SPI_MasterInit(void){
   SPCR &= ~(1 << SPR1); // SPR1 = 0
 }
 
+
 void SPI_MasterTransmit(char cData){
   //Start transmission
   SPDR = cData; //SPI Data register
   //Wait for transmission complete
   while(!(SPSR & (1 << SPIF)){ //SPIF sets interrupt flag IF when transmission is completed
-  };
+  }
+}
+
+char SPI_MasterReceive(void){
+  //Send dummy byte
+  SPI_MasterTransmit(0x00); //SPI Data register
+  //Wait for transmission complete
+  while(!(SPSR & (1 << SPIF)){ //SPIF sets interrupt flag IF when transmission is completed
+  }
+  return SPDR;
+}
+
+void SPI_select(void){
+  //skru på ss signal
+}
+        
+void SPI_deselect(void){
+  //skru av ss signal
 }
