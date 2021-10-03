@@ -6,7 +6,11 @@ void SPI_MasterInit(void){
   DDRB &= ~(1 << PB6); // PB6 = 0, MISO is input
   // Enable SPI, Master, set clock rate fck/16
   SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);
-  SPCR &= ~(1 << SPR1); // SPR1 = 0
+  SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
+  
+  // SPI Mode = 0 -> Leading edge: sample, Trailing edge: setup
+  SPCR &= ~(1 << CPOL); // CPOL = 0
+  SPCR &= ~(1 << CPHA); // CPHA = 0
 }
 
 
