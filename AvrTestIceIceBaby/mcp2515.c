@@ -23,8 +23,8 @@ uint8_t mcp2515_read(uint8_t address){
   uint8_t result; 
   
   SPI_select();// Select CAN-controller
-  SPI_write(MCP_READ); //Send read instruction
-  SPI_write(address); //Send address
+  SPI_send(MCP_READ); //Send read instruction
+  SPI_send(address); //Send address
   result = SPI_read();
   
   SPI_deselect; // Deselect CAN-controller
