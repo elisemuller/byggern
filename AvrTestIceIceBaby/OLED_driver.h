@@ -21,7 +21,7 @@
 
 typedef enum {
   LARGE,
-  NORMAL, 
+  MEDIUM, 
   SMALL,
 } font;
 
@@ -59,6 +59,8 @@ void OLED_print(char* data);
 void OLED_set_brightness(uint8_t lvl);
 
 void OLED_print_arrow(uint8_t row, uint8_t col); 
+
+void OLED_print_hexa_arrow(uint8_t row, uint8_t col);
 
 void OLED_print_image(graphic image); 
 

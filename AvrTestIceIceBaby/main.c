@@ -28,22 +28,25 @@ int main(void)
 	mov_init();
 	OLED_init();
 	menu_init();
+	_delay_ms(30);
 	//printHello();
 	//printGoodBye();
 	menu_print();
+	//_delay_ms(30);
 
 	
 	//OLED_select_font(SMALL);
-	//OLED_print("Hello world");
+	//OLED_print("Easy peacy lemon squeezy");
 
-	//OLED_print_image(LMFAO);
+	//OLED_print_image(BATMAN);
+	//OLED_print_arrow(3,4);
 
 	
 	while(1){
 		menu_main();
 		//pos_joy_read();
 		//pos_j joystick_pos;
-		////dir joystick_dir = mov_get_joy_dir();
+		//dir joystick_dir = mov_get_joy_dir();
 		//int i = mov_read_r_slider_button();
 		//
 		//int j = mov_read_joy_button();
@@ -60,11 +63,6 @@ int main(void)
 		////
 		//dir current_dir;
 		//current_dir = mov_get_joy_dir();
-		//OLED_write_d(0xff);
-		//OLED_write_d(0b00011000);
-		//OLED_write_d(0b01111110);
-		//OLED_write_d(0b00111100);
-		//OLED_write_d(0b00011000);
 		
 		//printf("X value: %d, Y value: %d \r\n", joystick_pos.pos_x, joystick_pos.pos_y);
 

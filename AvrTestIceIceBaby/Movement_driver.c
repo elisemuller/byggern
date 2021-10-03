@@ -83,7 +83,7 @@ pos_s mov_get_slider_pos(void){
 
 dir mov_get_joy_dir(void){
 	mov_pos_joy_rd();
-	const int neutral_threshold = 30;
+	const int neutral_threshold = 70;
 	dir direction = UNDEFINED;
 	
 	int abs_x = abs(x_pos);
@@ -119,7 +119,7 @@ dir mov_get_joy_dir(void){
 int mov_read_joy_button(void){
 	int button_pushed = !(PINB & (1 << PB2));
 	if (button_pushed){
-		printf("Joystick button pressed\r\n");
+		//printf("Joystick button pressed\r\n");
 		return 1;
 	}
 	

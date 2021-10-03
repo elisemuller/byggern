@@ -16,6 +16,7 @@
 
 volatile font style; 
 //volatile graphic picture; 
+volatile int current_page = 0;
 
 
 void OLED_init(void){
@@ -71,6 +72,7 @@ void OLED_reset(void){
 void OLED_home(void){
 	OLED_goto_page(0); 
 	OLED_goto_column(0);
+	current_page = 0; 
 }
 
 void OLED_goto_column(uint8_t col){
@@ -83,6 +85,7 @@ void OLED_goto_column(uint8_t col){
 
 void OLED_goto_page(uint8_t page){ //page og line er synonymer
 	OLED_write_c(0xB0 + page);
+	current_page = page; 
 }
 
 void OLED_clear_page(uint8_t page){
@@ -117,7 +120,7 @@ void OLED_write_char(uint8_t ch){
 				OLED_write_d(byte);
 			}
 			break; 
-		case NORMAL:
+		case MEDIUM:
 			for(uint8_t data = 0; data < 5; data ++){
 				uint8_t byte = pgm_read_byte(&(font5[ch-32][data])); 
 				OLED_write_d(byte);
@@ -132,12 +135,24 @@ void OLED_write_char(uint8_t ch){
 	}
 }
 
+
+
 void OLED_print(char* data){
+	int size_ch = 0;
 	int ch = 0;
 	while (data[ch] != '\0'){
-		OLED_write_char(data[ch]);
-		ch++;
+		if(size_ch*8 < OLED_SCREEN_WIDTH){
+			OLED_write_char(data[ch]);
+			size_ch++;
+			ch++;		
+		}
+		else{
+			OLED_goto_page(current_page + 1);
+			size_ch = 0; 
+		}
+
 	}
+	//printf("Size of data is: %d byte \r\n", size_ch);
 }
 
 
@@ -148,6 +163,15 @@ void OLED_print_arrow(uint8_t row, uint8_t col){
   OLED_write_d(0b01111110);
   OLED_write_d(0b00111100);
   OLED_write_d(0b00011000);
+}
+
+void OLED_print_hexa_arrow(uint8_t row, uint8_t col){
+	OLED_goto_pos(row, col);
+	OLED_write_d(0x18);
+	OLED_write_d(0x18);
+	OLED_write_d(0x7e);
+	OLED_write_d(0x3c);
+	OLED_write_d(0x18);
 }
 
 void OLED_print_image(graphic image){
@@ -163,23 +187,45 @@ void OLED_print_image(graphic image){
 			}
 			break;
 		case BATMAN:
-			for (int pg = 0; pg < NUM_PAGES; pg++){
-				OLED_goto_page(pg);
-				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
-					uint8_t byte = pgm_read_byte(&(batMan[data]));
-					OLED_write_d(byte);
+			{
+				int data = 0;
+				for (int pg = 0; pg < NUM_PAGES; pg++){
+					OLED_goto_pos(pg,0);
+					int size_ch = 0;
+					
+					//OLED_print("hello");
+					while(size_ch < OLED_SCREEN_WIDTH){
+						uint8_t byte = pgm_read_byte(&(lmfao[data]));
+						OLED_write_d(byte);
+						size_ch++;
+						data++;
+					}
+					break;
 				}
 			}
-			break;
 		case LMFAO:
-			for (int pg = 0; pg < NUM_PAGES; pg++){
-				OLED_goto_page(pg);
-				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
-					uint8_t byte = pgm_read_byte(&(lmfao[data]));
-					OLED_write_d(byte);
+			{
+				int data = 0; 
+				for (int pg = 0; pg < NUM_PAGES; pg++){
+					OLED_goto_pos(pg,0);
+					int size_ch = 0;
+
+					//OLED_print("hello");
+					while(size_ch < OLED_SCREEN_WIDTH){
+						uint8_t byte = pgm_read_byte(&(lmfao[data]));
+						OLED_write_d(byte);
+						size_ch++;
+						data++;
+					}
+					printf("size = %d, page = %d and data = %d \r\n", size_ch, pg, data);
+					//for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
+						//uint8_t byte = pgm_read_byte(&(lmfao[data]));
+						//printf("Byte: %d and page: %d \r\n", byte, pg);
+						//OLED_write_d(byte);
+					//}
 				}
+				break;
 			}
-			break;
 		default:
 			break;	
 	}
