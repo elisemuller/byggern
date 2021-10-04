@@ -18,6 +18,9 @@
 #include "ADC_driver.h"
 #include "Movement_driver.h"
 #include "menu.h"
+#include "mcp2515.h"
+#include "SPI_driver.h"
+#include "CAN_driver.h"
 
 
 int main(void)
@@ -25,51 +28,33 @@ int main(void)
 	uart_init( MYUBRR );
 	xmem_init();
 	adc_init();
-	mov_init();
-	OLED_init();
-	menu_init();
-	_delay_ms(30);
-	//printHello();
-	//printGoodBye();
-	menu_print();
-	//_delay_ms(30);
+	//mov_init();
+	//OLED_init();
+	//menu_init();
 
+	//SPI_init();
+	//SPI_send("H");
+	//CAN_init();
+	//menu_print();
+	mcp2515_init();
+	//can_message* test_message;
+	//test_message->id = 0x01AF;
+	//test_message->length = 1;
+	//test_message->data[0] = 0xAB;
+	//
+	//can_message test_received;
 	
-	//OLED_select_font(SMALL);
-	//OLED_print("Easy peacy lemon squeezy");
-
-	//OLED_print_image(BATMAN);
-	//OLED_print_arrow(3,4);
-
 	
 	while(1){
-		menu_main();
-		//pos_joy_read();
-		//pos_j joystick_pos;
-		//dir joystick_dir = mov_get_joy_dir();
-		//int i = mov_read_r_slider_button();
-		//
-		//int j = mov_read_joy_button();
-		//int k = mov_read_l_slider_button();
-		////char x = adc_rd(JOYSTICK_CHANNEL_X);
-		//char y = adc_rd(JOYSTICK_CHANNEL_Y);
-		
-		//
-		//pos_s slider_pos; 
-		//slider_pos = mov_get_slider_pos();
-		//char data = 'H'; 
-		//char *pointer = &data;
-		//OLED_print('H');
-		////
-		//dir current_dir;
-		//current_dir = mov_get_joy_dir();
-		
-		//printf("X value: %d, Y value: %d \r\n", joystick_pos.pos_x, joystick_pos.pos_y);
+		mcp2515_init();
 
-		//printf("X value: %d p, Y value: %d p \r\n", x, y);
-		//printf("Right slider value: %d, Left slider value: %d \r\n", right, left);
-		//printf("Right slider value: %d, Left slider value: %d \r\n", slider_pos.pos_r_slider, slider_pos.pos_l_slider);
-
+		_delay_ms(3000);
+		//SPI_deselect();
+		//_delay_ms(1000);
+		//mcp2515_write(0x2,0x2);
+		//menu_main();
+		//CAN_send_message(*test_message);
+		//CAN_receive_message(&test_received);
 	}
 
 }

@@ -288,4 +288,61 @@ const unsigned char PROGMEM lmfao[1024]= {
 	//}
 //};
 
+//uint8_t[] line1_16_pages = {
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111
+//}
+//
+//uint8_t[] line2_16_pages = {
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b11111111,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000,
+//0b00000000
+//}
+//
+//void print_sjakkbrett(){
+	//for(int row = 0; row < 8; 8+=2){
+		//go_to_row(row);
+		//for(int times = 0; times < 4; times ++){
+			//for(int len; len < line1_16_pages.size(); len ++){
+				//OLED_write(line1_16_pages[len]);
+			//}
+			//
+		//}
+		//go_to_row(row+1);
+		//for(int times = 0; times < 4; times ++){
+			//for(int len; len < line2_16_pages.size(); len ++){
+				//OLED_write(line2_16_pages[len]);
+			//}
+			//
+		//}
+	//}
+//}
+
 #endif /* FONTS_H_ */
