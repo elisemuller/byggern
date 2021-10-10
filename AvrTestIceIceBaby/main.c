@@ -36,7 +36,7 @@ int main(void)
 	//SPI_send("H");
 	//CAN_init();
 	//menu_print();
-	mcp2515_init();
+	mcp2515_init(); // må vi ta imot denne?
 	//can_message* test_message;
 	//test_message->id = 0x01AF;
 	//test_message->length = 1;
