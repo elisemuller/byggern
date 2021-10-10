@@ -103,6 +103,7 @@ void CAN_interrupt_init(void){
 	mcp2515_bit_modify(0b00011111, 0xFF, MCP_CANINTE);
 
 	// Define INT0 as interrupt input
+	DDRD &= ~(1 << PD2);
 	GICR |= (1 << INT0);
 		
 	// Interrupt at falling edge of INT0
