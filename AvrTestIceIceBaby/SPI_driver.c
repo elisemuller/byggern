@@ -32,18 +32,16 @@ void SPI_send(char cData){
   //Start transmission
   SPDR = cData; //SPI Data register
   //Wait for transmission complete
-  while(!(SPSR & (1 << SPIF))){
-	  ;} //SPIF sets interrupt flag IF when transmission is completed
+  while(!(SPSR & (1 << SPIF))){}; //SPIF sets interrupt flag IF when transmission is completed
 }
 
 char SPI_read(void){
   //Send dummy byte
-	SPDR = 0xFF; //SPI Data register
+  SPDR = 0xFF; //SPI Data register
   
   //Wait for transmission complete
-	while(!(SPSR & (1 << SPIF))){
-		;}//SPIF sets interrupt flag IF when transmission is completed
-	return SPDR;
+  while(!(SPSR & (1 << SPIF))){};//SPIF sets interrupt flag IF when transmission is completed
+  return SPDR;
 }
 
 void SPI_select(void){
