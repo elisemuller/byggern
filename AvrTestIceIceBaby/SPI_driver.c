@@ -37,10 +37,10 @@ void SPI_send(char cData){
 
 char SPI_read(void){
   //Send dummy byte
-  SPDR = 0xFF; //SPI Data register
-  
+  SPDR = 0; //SPI Data register
   //Wait for transmission complete
   while(!(SPSR & (1 << SPIF))){};//SPIF sets interrupt flag IF when transmission is completed
+  
   return SPDR;
 }
 
