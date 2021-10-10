@@ -9,6 +9,11 @@ void SPI_init(void){
   // Set MOSI, SS and SCK output, all others input
   DDRB |= (1 << PB5) | (1 << CAN_CS) | (1 << PB7);
   DDRB &= ~(1 << PB6); // PB6 = 0, MISO is input
+  
+  // Set slave select pins high	
+  SPI_PORT |= (1 << CAN_CS);
+  
+
   // Enable SPI, Master, set clock rate fck/16
   SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0);
   //SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
