@@ -13,21 +13,19 @@ uint8_t mcp2515_init(void){
   uint8_t value; 
   
   SPI_init();
-
   mcp2515_reset();
- 
 
-  
-  //Self-test (Should be implemented in all drivers)
- value = mcp2515_read(MCP_CANSTAT);
+  value = mcp2515_read(MCP_CANSTAT);
   if ((value & MODE_MASK) != MODE_CONFIG){
     printf("MCP2515 is NOT in configuration mode after reset: %x\r\n", value);
     return 1;        
   }
   printf("MCP2515 is in configuration mode after reset!\r\n");
-  //More initialization
+
+  // Set CAN bitrate
+  // CNF1/2/3
   
-  return 0; 
+  return 0;
 }
 
 uint8_t mcp2515_read(uint8_t address){
