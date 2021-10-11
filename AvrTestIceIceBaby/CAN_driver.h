@@ -21,13 +21,34 @@ typedef struct {
   };
 } can_message;
 
+// TODO: Gi mode som input i init
 
-void CAN_init(void);
+/**
+* @brief Initializes the CAN controller. Sets mode to LOOPBACK_MODE.
+* @param uint8_t mode The wanted CAN mode
+* @return void
+*/
+void CAN_init(uint8_t mode);
 
-void CAN_send_message(can_message msg);
+/**
+* @brief Sends CAN message of type can_message
+* @param can_message* p_msg This is a poniter to the message to be sent.
+* @return void
+*/
+void CAN_send_message(can_message* p_msg);
 
+/**
+* @brief Receives CAN message.
+* @param can_message* p_msg This pointer points to the storage location of the received message.
+* @return void
+*/
 void CAN_receive_message(can_message* p_msg);
 
+/**
+* @brief Initializes CAN interrupts
+* @param void
+* @return void
+*/
 void CAN_interrupt_init(void);
 
 

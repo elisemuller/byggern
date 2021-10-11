@@ -9,18 +9,13 @@ void SPI_init(void){
   // Set MOSI, SS and SCK output, all others input
   DDRB |= (1 << PB5) | (1 << CAN_CS) | (1 << PB7);
   DDRB &= ~(1 << PB6); // PB6 = 0, MISO is input
-  
-  // Set slave select pins high	
-  SPI_PORT |= (1 << CAN_CS);
-  
-
   // Enable SPI, Master, set clock rate fck/16
   SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0);
-  //SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
+  SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
   
   // SPI Mode = 0 -> Leading edge: sample, Trailing edge: setup
-  //SPCR &= ~(1 << CPOL); // CPOL = 0
-  //SPCR &= ~(1 << CPHA); // CPHA = 0
+  SPCR &= ~(1 << CPOL); // CPOL = 0
+  SPCR &= ~(1 << CPHA); // CPHA = 0
   
   
   //enable global interrupts in SREG register? 
@@ -32,16 +27,17 @@ void SPI_send(char cData){
   //Start transmission
   SPDR = cData; //SPI Data register
   //Wait for transmission complete
-  while(!(SPSR & (1 << SPIF))){}; //SPIF sets interrupt flag IF when transmission is completed
+  while(!(SPSR & (1 << SPIF))){} //SPIF sets interrupt flag IF when transmission is completed
 }
 
 char SPI_read(void){
-  //Send dummy byte
-  SPDR = 0; //SPI Data register
-  //Wait for transmission complete
-  while(!(SPSR & (1 << SPIF))){};//SPIF sets interrupt flag IF when transmission is completed
+	//Send dummy byte
+	SPDR = 0xFF; //SPI Data register
   
-  return SPDR;
+	//Wait for transmission complete
+	while(!(SPSR & (1 << SPIF))){} //SPIF sets interrupt flag IF when transmission is completed
+		
+	return SPDR;
 }
 
 void SPI_select(void){

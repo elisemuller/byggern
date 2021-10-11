@@ -6,6 +6,7 @@
  */ 
 
 #define F_CPU 4915200
+#include <avr/interrupt.h>
 
 #include <avr/io.h>
 #include <stdio.h>
@@ -28,33 +29,30 @@ int main(void)
 	uart_init( MYUBRR );
 	xmem_init();
 	adc_init();
-	//mov_init();
-	//OLED_init();
-	//menu_init();
-
-	//SPI_init();
-	//SPI_send("H");
-	//CAN_init();
-	//menu_print();
-	mcp2515_init(); // må vi ta imot denne?
-	//can_message* test_message;
-	//test_message->id = 0x01AF;
-	//test_message->length = 1;
-	//test_message->data[0] = 0xAB;
-	//
-	//can_message test_received;
+	CAN_init(MODE_LOOPBACK);
+	
+	printf("######## Starting new session ########\r\n");
+	
+	can_message test_message;
+	test_message.id = 0x76;
+	test_message.length = 1;
+	test_message.data[0] = 'U';
+	
+	can_message test_message_2;
+	test_message_2.id = 0x7B;
+	test_message_2.length = 1;
+	test_message_2.data[0] = 'M';
+	
+	can_message test_1_received;
+	can_message test_2_received;
 	
 	
-	while(1){
-		mcp2515_init();
-
-		_delay_ms(3000);
-		//SPI_deselect();
-		//_delay_ms(1000);
-		//mcp2515_write(0x2,0x2);
-		//menu_main();
-		//CAN_send_message(*test_message);
-		//CAN_receive_message(&test_received);
+	while (1)
+	{
+		CAN_send_message(&test_message);
+		CAN_receive_message(&test_1_received);
+		CAN_send_message(&test_message_2);
+		CAN_receive_message(&test_2_received);
 	}
 
 }
