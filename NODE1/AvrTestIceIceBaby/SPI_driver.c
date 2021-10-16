@@ -9,6 +9,7 @@ void SPI_init(void){
   // Set MOSI, SS and SCK output, all others input
   DDRB |= (1 << PB5) | (1 << CAN_CS) | (1 << PB7);
   DDRB &= ~(1 << PB6); // PB6 = 0, MISO is input
+	
   // Enable SPI, Master, set clock rate fck/16
   SPCR |= (1 << SPE) | (1 << MSTR) | (1 << SPR0);
   SPCR &= ~(1 << SPR1); // SPR1 = 0 (clk rate)
@@ -16,10 +17,6 @@ void SPI_init(void){
   // SPI Mode = 0 -> Leading edge: sample, Trailing edge: setup
   SPCR &= ~(1 << CPOL); // CPOL = 0
   SPCR &= ~(1 << CPHA); // CPHA = 0
-  
-  
-  //enable global interrupts in SREG register? 
-  //SREG |= (1 << I); //Enables global interrupts
 }
 
 
