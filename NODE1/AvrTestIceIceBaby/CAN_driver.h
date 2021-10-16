@@ -5,6 +5,11 @@
  *  Author: elisegm
  */ 
 
+/**
+ * @file
+ * @brief Driver for CAN communication 
+ */
+
 
 #ifndef CAN_DRIVER_H_
 #define CAN_DRIVER_H_
