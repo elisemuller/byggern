@@ -14,6 +14,9 @@
 #ifndef CAN_DRIVER_H_
 #define CAN_DRIVER_H_
 
+#define JOYSTICK_ID 1
+#define SLIDER_ID 2
+
 #include <stdio.h>
 
 typedef struct {
