@@ -41,7 +41,12 @@ typedef struct input_slider {
 
 void CAN0_Handler       ( void );
 
-
+/**
+* @brief Collects and redistributes data from message according to the message ID.  
+* @param CAN_MESSAGE msg
+* @return void
+*/
+void message_data_collector(CAN_MESSAGE msg);
 
 
 
