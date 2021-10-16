@@ -146,3 +146,14 @@ int mov_read_l_slider_button(void){
 	return 0;
 }
 
+
+input_j mov_get_joy_input(void){
+	input j joy_input; 
+	joy_input.x_pos = x_pos;
+	joy_input.y_pos = y_pos;
+	joy_input.button_pressed = mov_read_joy_button();
+	joy_input.direction = mov_get_joy_dir();
+	return joy_input;
+}
+
+input_s mov_get_slider_input(void);
