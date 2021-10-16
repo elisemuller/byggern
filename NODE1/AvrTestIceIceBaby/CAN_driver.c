@@ -12,7 +12,10 @@
 #include <stdio.h>
 #include <avr/interrupt.h>
 
+// Higher priority message 
 volatile uint8_t READ_B0_MESSAGE = 0;
+
+// Lower priority message
 volatile uint8_t READ_B1_MESSAGE = 0;
 
 
@@ -23,84 +26,90 @@ void CAN_init(uint8_t mode){
 	mcp2515_bit_modify(MODE_MASK, mode, MCP_CANCTRL);
 }
 
+// Gjør det noe at vi alltid sender via transmit buffer 0? Kan hende vi vil bruke en annen buffer for andre meldinger i fremtidig kode
+
 void CAN_send_message(can_message* p_msg) {
-	// wait for transmit buffers to be empty
+	// Wait for transmit buffer 0 to be empty
 	while(MCP_TXB0CTRL & (1 << TXREQ));
 	
-	// write id
+	// Write message ID
 	uint8_t id_high = (uint8_t) ((p_msg->id & 0b11111111000) >> 3);
 	uint8_t id_low = (uint8_t) ((p_msg->id & 0b111) << 5);
 	
 	mcp2515_bit_modify(0xE0, id_low, MCP_TXB0SIDL);
 	mcp2515_write(id_high, MCP_TXB0SIDH);
 	
-	// write length
+	// Write data length
 	mcp2515_bit_modify(0x0F, p_msg->length, MCP_TXB0DLC);
 	
-	// write data
+	// Write data with specified length
 	for(int byte = 0; byte < p_msg->length; byte++){
 		mcp2515_write(p_msg->data[byte], MCP_TXB0D0+byte);
 	}
 	
+	// Request to send message for transmit buffer 0
 	mcp2515_request_to_send(1,0,0);
 	
 	printf("Transmitted data: %x \r\n", p_msg->data[0]);
 	
 }
 
+
+// Vi har ikke lest filter and masks som spesifisert i lab lecture. 
+
 void CAN_receive_message(can_message* p_msg) {
 	if(READ_B0_MESSAGE){
-		// read length
+		
+		// Read data length
 		uint8_t length = mcp2515_read(MCP_RXB0DLC);
 		p_msg->length = (0b1111 & length);
 	
-		// read data
+		// Read data with specified length
 		for (int byte = 0; byte < p_msg->length; byte ++){
 			p_msg->data[byte] = mcp2515_read(MCP_RXB0D0+byte);
 		}
-		// read id
+		// Read message ID
 		short id_high = (short) mcp2515_read(MCP_RXB0SIDH);
 		short id_low = (short) (mcp2515_read(MCP_RXB0SIDL) & (0b11100000));
 		
 		p_msg->id = ((id_high << 3) | (id_low >> 5));
 	
-		//check receive interrupt -> clear when set
+		// Clear receive flag for receive buffer 0. 
 		READ_B0_MESSAGE = 0;
 		
 		printf("Received message: %x \r\n", p_msg->data[0]);
 	}
 	
 	else if(READ_B1_MESSAGE){
-		// les ut RXBnDLC bit 0-3. sett disse lik msg.length
+		
+		// Read data length
 		uint8_t length = mcp2515_read(MCP_RXB1DLC);
 		p_msg->length = (0b1111 & length);
 		
-		// les ut RXBnDm, alle bits. = msg.data
+		// Read data with specified length
 		for (int byte = 0; byte < p_msg->length; byte ++){
 			p_msg->data[byte] = mcp2515_read(MCP_RXB1D0+byte);
 		}
-		// les ut id
+		// Read message ID
 		short id_high = (short) mcp2515_read(MCP_RXB1SIDH);
 		short id_low = (short) (mcp2515_read(MCP_RXB1SIDL) & (0b11100000));
 		
 		p_msg->id = ((id_high << 3) | (id_low >> 5));
 		
-		//check receive interrupt -> clear when set
+		// Clear receive flag for receive buffer 1. 
 		READ_B1_MESSAGE = 0;
 		
 		printf("Received message: %x \r\n", p_msg->data[0]);
 	}
 }
 
-//void CAN_communication(void){
-	////sjekker for interrupts
-//}
+
 
 void CAN_interrupt_init(void){
 	// Disable global interrupts
 	cli();
 	
-	// Enable desired interrupts on MCP
+	// Enable interrupts on MCP for when messages are received in the receive buffers
 	mcp2515_bit_modify(0b00000011, 0xFF, MCP_CANINTE);
 	
 	DDRD &= ~(1 << PD2);
@@ -119,13 +128,18 @@ void CAN_interrupt_init(void){
 
 ISR(INT0_vect){
 	uint8_t interrupt_flag = mcp2515_read(MCP_CANINTF);
-	//printf("Interrupt flag: %d \r\n", interrupt_flag);
 	if (interrupt_flag & 0x01){
+		// Set receive flag for receive buffer 0
 		READ_B0_MESSAGE = 1;
+		
+		// Clear interrupt flag to allow new message reception
 		mcp2515_bit_modify(0x01, 0x00, MCP_CANINTF);
 	}
 	if (interrupt_flag & 0x02){
+		// Set receive flag for receive buffer 1
 		READ_B1_MESSAGE = 1;
+		
+		// Clear interrupt flag to allow new message reception
 		mcp2515_bit_modify(0x02, 0x00, MCP_CANINTF);
 	}
 	
