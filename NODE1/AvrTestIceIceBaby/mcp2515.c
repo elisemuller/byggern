@@ -8,9 +8,15 @@
 #define BRP (F_OSC/(2*BAUD*TQ_NUM))-1;
 
 // Define timing config values
-#define CNF3_REG_VALUE ( SOF_ENABLE | WAKFIL_ENABLE | PS2 )					// Enable CLKOUT pin for SOF signal, enable wakeup filter, PS2
-#define CNF2_REG_VALUE ( BTLMODE | SAMPLE_3X | (PS1 << 3) | (PS1 << 0) )	// Set bit 7 to 1 = BTLMODE. Sample 3x = SAMPLE_3X, PS1 on pos 3 and 0
-#define CNF1_REG_VALUE ( SJW4 | BRP )										// Two top bits are 11 (4 x TQ). Bottom bits are BRP.
+
+// Enable CLKOUT pin for SOF signal, enable wakeup filter, PS2
+#define CNF3_REG_VALUE ( SOF_ENABLE | WAKFIL_ENABLE | PS2 )
+
+// Set bit 7 to 1 = BTLMODE. Sample 3x = SAMPLE_3X, PS1 on pos 3 and 0
+#define CNF2_REG_VALUE ( BTLMODE | SAMPLE_3X | (PS1 << 3) | (PS1 << 0) )	
+
+// Two top bits are 11 (4 x TQ). Bottom bits are BRP.
+#define CNF1_REG_VALUE ( SJW4 | BRP )										
 
 #include "mcp2515.h"
 #include <stdio.h>
@@ -35,7 +41,7 @@ uint8_t mcp2515_init(void){
 	}
 	
 	// Bit timing configuration
-	mcp2515_bit_modify(0xC7, CNF3_REG_VALUE, MCP_CNF3); // Modify CNF3, bits 7, 6, 5-0. 
+	mcp2515_bit_modify(0xC7, CNF3_REG_VALUE, MCP_CNF3); // Modify CNF3, bits 7, 6, 2-0. 
 	mcp2515_bit_modify(0xFF, CNF2_REG_VALUE, MCP_CNF2); // Modify CNF2.
 	mcp2515_bit_modify(0xFF, CNF1_REG_VALUE, MCP_CNF1); // Modify CNF1.
 	
