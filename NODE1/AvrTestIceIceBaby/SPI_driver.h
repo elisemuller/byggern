@@ -7,12 +7,25 @@
 #ifndef SPI_DRIVER_H_
 #define SPI_DRIVER_H_
 
-//Henter fra Atmega s.160
+/**
+* @brief Initializes the SPI. Followed the init procedure from the Atmega162 datasheet, page 160. 
+* @param void
+* @return void                                                                     
+*/
 void SPI_init(void);
 
+/**
+* @brief Transmits @p cData to the SPI data register.
+* @param cData The data to be transmitted
+* @return void                                                                     
+*/
 void SPI_send(char cData);
 
-//To read something from the slave the master must transmit a dummy byte
+/**
+* @brief Reads data from the SPI data register. 
+* @param void
+* @return char The contents of the SPI data register                                                                     
+*/
 char SPI_read(void);
 
 /**
