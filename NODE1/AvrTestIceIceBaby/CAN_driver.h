@@ -14,8 +14,8 @@
 #ifndef CAN_DRIVER_H_
 #define CAN_DRIVER_H_
 
-#define JOYSTICK_ID 1
-#define SLIDER_ID 2
+#define CAN_JOYSTICK_ID 1
+#define CAN_SLIDER_ID 2
 
 #include <stdio.h>
 
