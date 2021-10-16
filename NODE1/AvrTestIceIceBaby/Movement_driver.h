@@ -71,4 +71,8 @@ int mov_read_r_slider_button(void);
 
 int mov_read_l_slider_button(void);
 
+input_j mov_get_joy_input(void);
+
+input_s mov_get_slider_input(void);
+
 #endif /* MOVEMENT_DRIVER_H_ */
