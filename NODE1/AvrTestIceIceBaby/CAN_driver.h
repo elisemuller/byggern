@@ -17,8 +17,7 @@
 #include <stdio.h>
 
 typedef struct {
-  unsigned short id; 
-  // unsigned char
+  unsigned short id; //16 bit
   uint8_t length; 
   union {
     char data[8];
@@ -26,7 +25,6 @@ typedef struct {
   };
 } can_message;
 
-// TODO: Gi mode som input i init
 
 /**
 * @brief Initializes the CAN controller. Sets mode to LOOPBACK_MODE.
