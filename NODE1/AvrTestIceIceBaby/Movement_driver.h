@@ -14,6 +14,20 @@ typedef struct pos_joystick {
 	int pos_y;
 } pos_j;
 
+typedef struct input_joystick {
+	int pos_x;
+	int pos_y;
+	int button_pressed;
+	dir direction;
+} input_j;
+
+typedef struct input_slider {
+	int pos_r_slider;
+	int pos_l_slider;
+  	int r_button_pressed;
+  	int l_button_pressed;
+} input_s;
+
 typedef enum {
 	LEFT,
 	RIGHT,
