@@ -20,6 +20,9 @@
 
 #define DEBUG_INTERRUPT 0
 
+volatile input_j joystick;
+volatile input_s slider;
+
 /**
  * \brief CAN0 Interrupt handler for RX, TX and bus error interrupts
  *
@@ -58,6 +61,8 @@ void CAN0_Handler( void )
 			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
 		}
 		if(DEBUG_INTERRUPT)printf("\n\r");
+		
+		message_data_collector(message);
 	}
 	
 	if(can_sr & CAN_SR_MB0)
@@ -82,4 +87,23 @@ void CAN0_Handler( void )
 	
 	NVIC_ClearPendingIRQ(ID_CAN0);
 	//sei();*/
+}
+
+
+void message_data_collector(CAN_MESSAGE msg){
+	switch(msg.id){
+		case CAN_JOYSTICK_ID:{
+			joystick.pos_x = msg.data[0];
+			joystick.pos_y = msg.data[1];
+			joystick.button_pressed = msg.data[2];
+			joystick.direction = msg.data[3];
+			break;
+		}
+		case CAN_SLIDER_ID:{
+			slider.pos_r_slider = msg.data[0];
+			slider.pos_l_slider = msg.data[1];
+			slider.r_button_pressed = msg.data[2];
+			slider.l_button_pressed = msg.data[3];
+		}
+	}
 }
