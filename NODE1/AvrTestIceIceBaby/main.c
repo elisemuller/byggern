@@ -29,30 +29,28 @@ int main(void)
 	uart_init( MYUBRR );
 	xmem_init();
 	adc_init();
-	CAN_init(MODE_LOOPBACK);
+	CAN_init(MODE_NORMAL);
 	
 	printf("######## Starting new session ########\r\n");
 	
-	can_message test_message;
-	test_message.id = 0x76;
-	test_message.length = 1;
-	test_message.data[0] = 'U';
-	
-	can_message test_message_2;
-	test_message_2.id = 0x7B;
-	test_message_2.length = 1;
-	test_message_2.data[0] = 'M';
-	
-	can_message test_1_received;
-	can_message test_2_received;
-	
+	can_message test_joystick_message;
+	test_joystick_message.id = CAN_JOYSTICK_ID;
+	test_joystick_message.length = 4;
+	input_j joystick_input;
 	
 	while (1)
 	{
-		CAN_send_message(&test_message);
-		CAN_receive_message(&test_1_received);
-		CAN_send_message(&test_message_2);
-		CAN_receive_message(&test_2_received);
+		menu_main();
+		joystick_input = mov_get_joy_input();
+		
+
+		test_joystick_message.data[0] = joystick_input.x_pos;
+		test_joystick_message.data[1] = joystick_input.y_pos;
+		test_joystick_message.data[2] = joystick_input.button_pressed;
+		test_joystick_message.data[3] = joystick_input.direction;
+		
+		CAN_send_message(&test_joystick_message);
+		//CAN_receive_message(&test_1_received);
 	}
 
 }
