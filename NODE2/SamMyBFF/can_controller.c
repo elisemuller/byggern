@@ -8,6 +8,13 @@
  *
  */ 
 
+#define MCK 84000000
+#define CAN_PHS2 (0b101)
+#define CAN_PHS1 (0b101 << 4)
+#define CAN_PROPAG (0b101 << 8)
+#define CAN_SJW (0b11 << 12)
+#define CAN_SMP (0b1 << 24)
+
 #include "can_controller.h"
 
 #include "sam.h"
@@ -24,9 +31,9 @@
  *
  * \retval Success(0) or failure(1)
  */
-uint8_t can_init_def_tx_rx_mb(uint32_t can_br)
+uint8_t can_init_def_tx_rx_mb(void)
 {
-	return can_init(can_br, 1, 2);
+	return can_init(1, 2);
 }
 
 /**
@@ -41,7 +48,7 @@ uint8_t can_init_def_tx_rx_mb(uint32_t can_br)
  * \retval Success(0) or failure(1)
  */
 
-uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
+uint8_t can_init( uint8_t num_tx_mb, uint8_t num_rx_mb)
 {
 	
 	//Make sure num_rx_mb and num_tx_mb is valid
@@ -78,7 +85,7 @@ uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
 	PMC->PMC_PCER1 |= 1 << (ID_CAN0 - 32);
 	
 	//Set baudrate, Phase1, phase2 and propagation delay for can bus. Must match on all nodes!
-	CAN0->CAN_BR = can_br; 
+	CAN0->CAN_BR = CAN_PHS1 | CAN_PHS2 | CAN_PROPAG | CAN_SJW | CAN_SMP; 
 	
 
 	/****** Start of mailbox configuration ******/

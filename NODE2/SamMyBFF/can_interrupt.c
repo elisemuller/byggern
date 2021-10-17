@@ -18,7 +18,7 @@
 
 #include "can_controller.h"
 
-#define DEBUG_INTERRUPT 0
+#define DEBUG_INTERRUPT 1
 
 volatile input_j joystick;
 volatile input_s slider;

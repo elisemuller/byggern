@@ -15,6 +15,8 @@
 #define CAN_JOYSTICK_ID 1
 #define CAN_SLIDER_ID 2
 
+#include "can_controller.h"
+
 typedef enum {
 	LEFT,
 	RIGHT,
@@ -27,15 +29,15 @@ typedef enum {
 typedef struct input_joystick {
 	int pos_x;
 	int pos_y;
-  int button_pressed;
-  dir direction; 
+	int button_pressed;
+	dir direction; 
 } input_j;
 
 typedef struct input_slider {
 	int pos_r_slider;
 	int pos_l_slider;
-  int r_button_pressed;
-  int l_button_pressed;
+	int r_button_pressed;
+	int l_button_pressed;
 } input_s;
 
 

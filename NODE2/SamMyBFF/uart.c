@@ -59,7 +59,7 @@ Initialize UART communication
 	UART->UART_CR = UART_CR_RSTRX | UART_CR_RSTTX | UART_CR_RXDIS | UART_CR_TXDIS;
 
 	// Set the baudrate
-	UART->UART_BRGR = 547; // MCK / 16 * x = BaudRate (write x into UART_BRGR)  
+	UART->UART_BRGR = 547; // MCK / 16 * x = BaudRate (write x into UART_BRGR)  //MCK = 84M
 
 	// No parity bits
 	UART->UART_MR = UART_MR_PAR_NO | UART_MR_CHMODE_NORMAL;	
