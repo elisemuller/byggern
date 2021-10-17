@@ -136,127 +136,90 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\..\..\Program Files %28x86%29\Atmel\Studio\7.0\packs\atmel\SAMV71_DFP\2.3.136\samv71b\include\sam.h">
-      <SubType>compile</SubType>
-      <Link>NODE2\sam.h</Link>
-    </Compile>
-    <Compile Include="NODE1\ADC_driver.c">
+    <Compile Include="ADC_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\ADC_driver.h">
+    <Compile Include="ADC_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\CAN_driver.c">
+    <Compile Include="CAN_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\CAN_driver.h">
+    <Compile Include="CAN_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\fonts.h">
+    <Compile Include="fonts.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\Graphics.h">
+    <Compile Include="Graphics.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\main.c">
+    <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\mcp2515.c">
+    <Compile Include="mcp2515.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\mcp2515.h">
+    <Compile Include="mcp2515.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\menu.c">
+    <Compile Include="menu.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\menu.h">
+    <Compile Include="menu.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\Movement_driver.c">
+    <Compile Include="Movement_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\Movement_driver.h">
+    <Compile Include="Movement_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\OLED_driver.c">
+    <Compile Include="OLED_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\OLED_driver.h">
+    <Compile Include="OLED_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\SPI_driver.c">
+    <Compile Include="SPI_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\SPI_driver.h">
+    <Compile Include="SPI_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\SRAM_driver.c">
+    <Compile Include="SRAM_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\SRAM_driver.h">
+    <Compile Include="SRAM_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\sram_test.c">
+    <Compile Include="sram_test.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\sram_test.h">
+    <Compile Include="sram_test.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\test.c">
+    <Compile Include="test.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\test.h">
+    <Compile Include="test.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\UART_driver.c">
+    <Compile Include="UART_driver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\UART_driver.h">
+    <Compile Include="UART_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\xmem.c">
+    <Compile Include="xmem.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="NODE1\xmem.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\can_controller.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\can_controller.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\can_interrupt.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\can_interrupt.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\printf-stdarg.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\printf-stdarg.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\uart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="NODE2\uart.h">
+    <Compile Include="xmem.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="NODE2" />
     <Folder Include="NODE1" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NODE2\COPYING">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="NODE2\COPYING.LESSER">
-      <SubType>compile</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

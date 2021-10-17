@@ -5,7 +5,7 @@
 
 #define PS1 5 // 4 (TQ) + 1
 #define PS2 5 // 4 (TQ) + 1
-#define BRP (F_OSC/(2*BAUD*TQ_NUM))-1;
+#define BRP (F_OSC/(2*BAUD*TQ_NUM))-1
 
 // Define timing config values
 

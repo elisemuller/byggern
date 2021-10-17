@@ -14,7 +14,6 @@
 #include "xmem.h"
 #include "menu.h"
 #include "Movement_driver.h"
-#include <util/delay.h>
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 

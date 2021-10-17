@@ -11,6 +11,8 @@
 
 void test_address_decoder(void);
 
+void test_movement(void);
+
 
 
 #endif /* TEST_H_ */

@@ -11,6 +11,8 @@
 #include <util/delay.h>
 #include <avr/io.h>
 #include <stdio.h>
+#include "CAN_driver.h"
+#include "Movement_driver.h"
 
 void test_address_decoder(void) {
 	PORTC &= (0xF0);
@@ -50,7 +52,21 @@ void test_CAN_loopback(void){
 	}
 }
 
-//mcp2515_write(0x1F, 0x02);
+//
+//void test_movement(void){
+	//input_j joystick_input;
+	//input_s slider_input;
+	//while (1)
+	//{
+		//joystick_input = mov_get_joy_input();
+		//slider_input = mov_get_slider_input();
+		//printf("X value: %d, Y value: %d \r\n", joystick_input.pos_x, joystick_input.pos_y);
+		////printf("Button pressed: %d \r\n", joystick_input.button_pressed);
+		////printf("Left slider value: %d, Right slider value: %d \r\n", slider_input.pos_l_slider, slider_input.pos_r_slider);
+	//}
+//}
+//
+////mcp2515_write(0x1F, 0x02);
 
 //SPI_select();
 //SPI_send(0xff);
