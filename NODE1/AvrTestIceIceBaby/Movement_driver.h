@@ -14,15 +14,6 @@ typedef struct pos_joystick {
 	int pos_y;
 } pos_j;
 
-
-
-//typedef struct input_slider {
-	//int pos_r_slider;
-	//int pos_l_slider;
-  	//int r_button_pressed;
-  	//int l_button_pressed;
-//} input_s;
-
 typedef enum {
 	LEFT,
 	RIGHT,
@@ -32,18 +23,25 @@ typedef enum {
 	UNDEFINED
 } dir;
 
-//typedef struct input_joystick {
-	//int pos_x;
-	//int pos_y;
-	//int button_pressed;
-	//dir direction;
-//} input_j;
+typedef struct input_joystick {
+	int pos_x;
+	int pos_y;
+	int button_pressed;
+	dir direction;
+} input_j;
 
 typedef struct pos_slider {
 	int pos_r_slider;
 	int pos_l_slider;
 } pos_s;
 
+
+typedef struct input_slider {
+	int pos_r_slider;
+	int pos_l_slider;
+	int r_button_pressed;
+	int l_button_pressed;
+} input_s;
 
 /**
 * @brief Finds the neutral position of the joystick for x and y
@@ -72,9 +70,9 @@ int mov_read_joy_button(void);
 int mov_read_r_slider_button(void);
 
 int mov_read_l_slider_button(void);
-//
-//input_j mov_get_joy_input(void);
-//
-//input_s mov_get_slider_input(void);
+
+input_j mov_get_joy_input(void);
+
+input_s mov_get_slider_input(void);
 
 #endif /* MOVEMENT_DRIVER_H_ */

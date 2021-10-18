@@ -13,6 +13,8 @@ void test_address_decoder(void);
 
 void test_movement(void);
 
+void test_CAN_loopback(void);
+
 
 
 #endif /* TEST_H_ */

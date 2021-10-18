@@ -1,19 +1,19 @@
 #define F_CPU 4915200
 #define F_OSC 16000000
-#define BAUD 9600
+#define BAUD 125000
 #define TQ_NUM 16
 
-#define PS1 5 // 4 (TQ) + 1
-#define PS2 5 // 4 (TQ) + 1
+#define PS1 6
+#define PS2 5
 #define BRP (F_OSC/(2*BAUD*TQ_NUM))-1
 
 // Define timing config values
 
 // Enable CLKOUT pin for SOF signal, enable wakeup filter, PS2
-#define CNF3_REG_VALUE ( SOF_ENABLE | WAKFIL_ENABLE | PS2 )
+#define CNF3_REG_VALUE ( SOF_ENABLE | PS2 )
 
 // Set bit 7 to 1 = BTLMODE. Sample 3x = SAMPLE_3X, PS1 on pos 3 and 0
-#define CNF2_REG_VALUE ( BTLMODE | SAMPLE_3X | (PS1 << 3) | (PS1 << 0) )	
+#define CNF2_REG_VALUE ( BTLMODE | SAMPLE_1X | (PS1 << 3) | (1 << 0) )
 
 // Two top bits are 11 (4 x TQ). Bottom bits are BRP.
 #define CNF1_REG_VALUE ( SJW4 | BRP )										

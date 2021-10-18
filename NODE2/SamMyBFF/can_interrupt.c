@@ -58,11 +58,12 @@ void CAN0_Handler( void )
 		if(DEBUG_INTERRUPT)printf("message data length: %d\n\r", message.data_length);
 		for (int i = 0; i < message.data_length; i++)
 		{
-			if(DEBUG_INTERRUPT)printf("%d ", message.data[i]);
+			if(DEBUG_INTERRUPT)printf("%x ", message.data[i]);
 		}
 		if(DEBUG_INTERRUPT)printf("\n\r");
 		
 		message_data_collector(message);
+		move_PWM();
 	}
 	
 	if(can_sr & CAN_SR_MB0)
@@ -93,7 +94,7 @@ void CAN0_Handler( void )
 void message_data_collector(CAN_MESSAGE msg){
 	switch(msg.id){
 		case CAN_JOYSTICK_ID:{
-			joystick.pos_x = msg.data[0];
+			joystick.pos_x = (int8_t)msg.data[0];
 			joystick.pos_y = msg.data[1];
 			joystick.button_pressed = msg.data[2];
 			joystick.direction = msg.data[3];
@@ -106,4 +107,17 @@ void message_data_collector(CAN_MESSAGE msg){
 			slider.l_button_pressed = msg.data[3];
 		}
 	}
+}
+
+
+void move_PWM(void){
+	int j_x = joystick.pos_x;
+	if((j_x <= 0xff) && (j_x >= 0x9c)){
+		j_x = ~(j_x-1) * (-1);
+	}
+	
+	//printf("X value: %x", j_x);
+	// if x in [9c ff]: x = -1 * ~(x-1)
+	
+	servo_dutycycle_modify_x(j_x);
 }

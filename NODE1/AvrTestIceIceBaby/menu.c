@@ -14,6 +14,7 @@
 #include "xmem.h"
 #include "menu.h"
 #include "Movement_driver.h"
+#include "CAN_driver.h"
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 
@@ -85,16 +86,16 @@ void menu_init(void){
 	//Highscore
 	node* see = menu_new_item(highscore, "See", &seeHighscore, SEE );
 	node* clear = menu_new_item(highscore, "Clear", &clearHighscore, CLEAR );
-	
-	//Sound
-	node* sound_up = menu_new_item(sound, "Volume up", NULL, NO_CHOICE); //heller lage to piler som representerer opp og ned
-	node* sound_down = menu_new_item(sound, "Volume down", NULL, NO_CHOICE);
-	
-	//Minigames
-	node* IC_man = menu_new_item(mini, "IC-man", NULL, NO_CHOICE); //Integrated circuit man
-	node* draw_pic = menu_new_item(mini, "Make art", NULL, NO_CHOICE); 
-	node* pong = menu_new_item(mini, "Ping pong", NULL, NO_CHOICE);
-	node* led_game = menu_new_item(mini, "Light up LED", NULL, NO_CHOICE);
+	//
+	////Sound
+	//node* sound_up = menu_new_item(sound, "Volume up", NULL, NO_CHOICE); //heller lage to piler som representerer opp og ned
+	//node* sound_down = menu_new_item(sound, "Volume down", NULL, NO_CHOICE);
+	//
+	////Minigames
+	//node* IC_man = menu_new_item(mini, "IC-man", NULL, NO_CHOICE); //Integrated circuit man
+	//node* draw_pic = menu_new_item(mini, "Make art", NULL, NO_CHOICE); 
+	//node* pong = menu_new_item(mini, "Ping pong", NULL, NO_CHOICE);
+	//node* led_game = menu_new_item(mini, "Light up LED", NULL, NO_CHOICE);
 
 }
 
@@ -158,7 +159,7 @@ void menu_move_pointer(dir direction){
 		}
 		case LEFT:{
 			if(menu_position->parent != NULL){
-				menu_position = menu_position->parent; //kanskje implement previous child pointer så vi kan bevege oss til den pekeren vi var på før vi gikk inn? 
+				menu_position = menu_position->parent; 
 				current_child_pointer = previous_parent;
 				menu_print();
 			}
@@ -180,18 +181,30 @@ void menu_move_pointer(dir direction){
 
 void menu_main(){
 	joy_dir = mov_get_joy_dir(); 
-	//menu_print();
+	input_j joystick_input = mov_get_joy_input();
+	can_message test_joystick_message;
+	test_joystick_message.id = CAN_JOYSTICK_ID;
+	test_joystick_message.length = 4;
+	test_joystick_message.data[0] = joystick_input.pos_x;
+	test_joystick_message.data[1] = joystick_input.pos_y;
+	test_joystick_message.data[2] = joystick_input.button_pressed;
+	test_joystick_message.data[3] = joystick_input.direction;
+	
 	switch (joy_dir){
 		case NEUTRAL: {
 			if (mov_read_joy_button()){
-				OLED_reset();
-				menu_position->children[current_child_pointer]->funcpt();
+				CAN_send_message(&test_joystick_message);
+				if (menu_position->children[current_child_pointer]->funcpt != NULL){
+					OLED_reset();
+					menu_position->children[current_child_pointer]->funcpt();
+				}
 			}
 			neutral_flag = 1; 
 			break;
 		}
 		case DOWN:{
 			if(neutral_flag){
+				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(DOWN);
 				neutral_flag = 0; 
 			}
@@ -199,6 +212,7 @@ void menu_main(){
 		}
 		case UP:{
 			if(neutral_flag){
+				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(UP);
 				neutral_flag = 0;
 			}
@@ -206,6 +220,7 @@ void menu_main(){
 		}
 		case LEFT:{
 			if(neutral_flag){
+				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(LEFT);
 				neutral_flag = 0;
 			}
@@ -213,6 +228,7 @@ void menu_main(){
 		}
 		case RIGHT:{
 			if(neutral_flag){
+				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(RIGHT);
 				neutral_flag = 0;
 			}

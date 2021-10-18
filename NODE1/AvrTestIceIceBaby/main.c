@@ -18,10 +18,11 @@
 #include "Movement_driver.h"
 #include "OLED_driver.h"
 #include "menu.h"
-//#include "mcp2515.h"
-//#include "SPI_driver.h"
-//#include "CAN_driver.h"
+#include "mcp2515.h"
+#include "SPI_driver.h"
+#include "CAN_driver.h"
 
+// -Wl,--defsym=__heap_start=0x801800,--defsym=__heap_end=0x801fff -Wl,--relax
 
 int main(void)
 {
@@ -29,38 +30,31 @@ int main(void)
 	xmem_init();
 	adc_init();
 	mov_init();
-	//CAN_init(MODE_LOOPBACK);
+	CAN_init(MODE_NORMAL);
 	OLED_init();
-
-	menu_init();
-	menu_print();
 	
+	//OLED_print("Hello");
+	menu_init();
+	//menu_print();
+	//
 	printf("######## Starting new session ########\r\n");
+	
+	//test_CAN_loopback();
+	
 	//SRAM_test();
 	//test_movement();
 	
-	//can_message test_joystick_message;
-	//test_joystick_message.id = CAN_JOYSTICK_ID;
-	//test_joystick_message.length = 4;
-	//input_j joystick_input;
+	can_message test_joystick_message;
+
+	input_j joystick_input;
+	//can_message joy_received;
+
 	
-	while (1)
-	{
-		//OLED_print("Hello");
-		menu_main();
-		//OLED_print("Hello");
+	while (1) {
+		menu_main();		
 
-		//menu_main();
-		//joystick_input = mov_get_joy_input();
 		
-
-		//test_joystick_message.data[0] = joystick_input.pos_x;
-		//test_joystick_message.data[1] = joystick_input.pos_y;
-		//test_joystick_message.data[2] = joystick_input.button_pressed;
-		//test_joystick_message.data[3] = joystick_input.direction;
-		//
-		//CAN_send_message(&test_joystick_message);
-		////CAN_receive_message(&test_1_received);
+		//CAN_receive_message(&joy_received);
 	}
 
 }
