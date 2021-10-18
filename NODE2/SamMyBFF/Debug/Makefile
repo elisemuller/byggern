@@ -45,6 +45,7 @@ C_SRCS +=  \
 ../Device_Startup/system_sam3xa.c \
 ../main.c \
 ../printf-stdarg.c \
+../servo_driver.c \
 ../uart.c
 
 
@@ -62,6 +63,7 @@ Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 printf-stdarg.o \
+servo_driver.o \
 uart.o
 
 OBJS_AS_ARGS +=  \
@@ -72,6 +74,7 @@ Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 printf-stdarg.o \
+servo_driver.o \
 uart.o
 
 C_DEPS +=  \
@@ -82,6 +85,7 @@ Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 printf-stdarg.d \
+servo_driver.d \
 uart.d
 
 C_DEPS_AS_ARGS +=  \
@@ -92,11 +96,12 @@ Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 printf-stdarg.d \
+servo_driver.d \
 uart.d
 
-OUTPUT_FILE_PATH +=SamMyBFF.elf
+OUTPUT_FILE_PATH +=NODE2.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=SamMyBFF.elf
+OUTPUT_FILE_PATH_AS_ARGS +=NODE2.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -161,6 +166,13 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	@echo Finished building: $<
 	
 
+./servo_driver.o: .././servo_driver.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./uart.o: .././uart.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -194,14 +206,14 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: ARM/GNU Linker : 6.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="SamMyBFF.map" -Wl,--start-group -lm  -Wl,--end-group -L"..\\Device_Startup"  -Wl,--gc-sections -mcpu=cortex-m3 -Tsam3x8e_flash.ld  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="NODE2.map" -Wl,--start-group -lm  -Wl,--end-group -L"..\\Device_Startup"  -Wl,--gc-sections -mcpu=cortex-m3 -Tsam3x8e_flash.ld  
 	@echo Finished building target: $@
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "SamMyBFF.elf" "SamMyBFF.bin"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "SamMyBFF.elf" "SamMyBFF.hex"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "SamMyBFF.elf" "SamMyBFF.eep" || exit 0
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "SamMyBFF.elf" > "SamMyBFF.lss"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "SamMyBFF.elf" "SamMyBFF.srec"
-	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "SamMyBFF.elf"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "NODE2.elf" "NODE2.bin"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "NODE2.elf" "NODE2.hex"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "NODE2.elf" "NODE2.eep" || exit 0
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "NODE2.elf" > "NODE2.lss"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "NODE2.elf" "NODE2.srec"
+	"C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "NODE2.elf"
 	
 	
 
@@ -213,5 +225,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "SamMyBFF.elf" "SamMyBFF.a" "SamMyBFF.hex" "SamMyBFF.bin" "SamMyBFF.lss" "SamMyBFF.eep" "SamMyBFF.map" "SamMyBFF.srec"
+	rm -rf "NODE2.elf" "NODE2.a" "NODE2.hex" "NODE2.bin" "NODE2.lss" "NODE2.eep" "NODE2.map" "NODE2.srec"
 	

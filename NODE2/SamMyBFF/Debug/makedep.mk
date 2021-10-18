@@ -16,5 +16,7 @@ main.c
 
 printf-stdarg.c
 
+servo_driver.c
+
 uart.c
 
