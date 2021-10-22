@@ -12,6 +12,8 @@
 
 void adc_init(void);
 
+volatile uint32_t adc_rd(void);
+
 
 
 #endif /* ADC_DRIVER_H_ */
