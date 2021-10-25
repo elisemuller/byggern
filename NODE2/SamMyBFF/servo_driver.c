@@ -40,7 +40,7 @@ void servo_dutycycle_modify_x(int x){
 	// signal width = 1.5 + 0.6 * pos/100
 	// dutycycle = signal width / 20ms * 40000
 	if((x <= 100) | (x >= -100)){
-		REG_PWM_CDTYUPD5 = ( ( (1.5 + 0.6 * x / 100) / 20 ) * 40000 );
+		REG_PWM_CDTYUPD5 = ( ( (1.5 - 0.6 * x / 100) / 20 ) * 40000 );
 		//REG_PWM_CDTY5 = ( ( (1.5 + 0.6 * x / 100) / 20 ) * 40000 );
 	}
 }

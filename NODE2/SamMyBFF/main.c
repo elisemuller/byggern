@@ -16,6 +16,7 @@
 #include "can_controller.h"
 #include "can_interrupt.h"
 #include "servo_driver.h"
+#include "test_driver.h"
 
 int main(void)
 {
@@ -25,13 +26,13 @@ int main(void)
 	led_enable();
 	can_init_def_tx_rx_mb();
 	servo_pwm_init();
-	//WDT->WDT_MR = WDT_MR_WDDIS;
 	printf("NODE 2 STARTING UP");
 	//blink();
 	//servo_dutycycle_modify_x(-100);
+	//test_adc_read();
 	
-    while (1) 
-    {
-		//move_PWM();		
-    }
+    //while (1) 
+    //{
+		////move_PWM();		
+    //}
 }

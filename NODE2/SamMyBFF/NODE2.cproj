@@ -163,6 +163,12 @@
       <SubType>compile</SubType>
       <Link>delay.h</Link>
     </Compile>
+    <Compile Include="adc_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adc_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="blink.c">
       <SubType>compile</SubType>
     </Compile>
@@ -190,10 +196,28 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="motor_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="printf-stdarg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="servo_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="servo_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="test_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="test_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="uart.c">

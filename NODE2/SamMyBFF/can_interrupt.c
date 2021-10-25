@@ -118,6 +118,12 @@ void move_PWM(void){
 	
 	//printf("X value: %x", j_x);
 	// if x in [9c ff]: x = -1 * ~(x-1)
-	
+	dir direction = joystick.direction;
+	//if (direction == LEFT){
+		//printf("Left \r\n");
+	//}
+	//if (direction == RIGHT){
+		//printf("Right \r\n");
+	//}
 	servo_dutycycle_modify_x(j_x);
 }
