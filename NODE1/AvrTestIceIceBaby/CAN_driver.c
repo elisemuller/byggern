@@ -114,7 +114,6 @@ void CAN_interrupt_init(void){
 	
 	DDRD &= ~(1 << PD2);
 	
-	
 	// Interrupt at falling edge of INT0
 	MCUCR |= (1 << ISC01);
 	MCUCR &= ~(1 << ISC00);
