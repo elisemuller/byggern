@@ -9,6 +9,7 @@
 #ifndef ADC_DRIVER_H_
 #define ADC_DRIVER_H_
 
+#include <stdint.h>
 
 void adc_init(void);
 
