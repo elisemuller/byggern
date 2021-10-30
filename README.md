@@ -5,6 +5,7 @@
 - Sende CAN messages med 10 hz frekvens vha timer interrupts - ok ish
 - ADC - sleep når det ikke konverteres
 - Implementere ny CAN message med id: start spillet
+- Lage testfunksjoner i alle driverne der det er hensiktsmessig
 
 ## Kreativ del: 
 - Bevegelsessensor
