@@ -7,6 +7,10 @@
  * NTNU - Norwegian University of Science and Technology
  *
  */ 
+/**
+ * @file
+ * @brief CAN controller on NODE2
+ */
 
 
 #ifndef CAN_CONTROLLER_H_

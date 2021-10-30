@@ -1,0 +1,22 @@
+digraph "NODE1/AvrTestIceIceBaby/menu.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="NODE1/AvrTestIceIceBaby\l/menu.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Creates and navigates the game menu on the OLED display."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="avr/io.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="stdio.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="avr/pgmspace.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="OLED_driver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$OLED__driver_8h.html",tooltip="Driver for the OLED display. Configures printing and drawing on the OLED screen."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="CAN_driver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$CAN__driver_8h.html",tooltip="Driver for CAN communication."];
+  Node6 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="xmem.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$xmem_8h.html",tooltip="Memory driver."];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="movement_driver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$movement__driver_8h.html",tooltip="Functionality and hardware interface for the joystick and slider."];
+}

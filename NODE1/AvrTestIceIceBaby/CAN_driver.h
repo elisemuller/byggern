@@ -16,6 +16,7 @@
 
 #define CAN_JOYSTICK_ID 1
 #define CAN_SLIDER_ID 2
+#define CAN_GAME_ID 3
 
 #include <stdio.h>
 

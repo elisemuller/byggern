@@ -5,6 +5,10 @@
  *  Author: elisegm
  */ 
 
+/**
+ * @file
+ * @brief Driver for the OLED display. Configures printing and drawing on the OLED screen. 
+ */
 
 #ifndef OLED_DRIVER_H_
 #define OLED_DRIVER_H_

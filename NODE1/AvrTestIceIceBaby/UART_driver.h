@@ -1,29 +1,31 @@
+/**
+ * @file
+ * @brief Configuration of UART communication
+ */
+
 #ifndef UART_driver_h
 #define UART_driver_h
 
 #define FOSC 4915200		// Clock speed (crystal oscillator)
 #define BAUD 9600			// Baud rate
 
-#define MYUBRR FOSC/16/BAUD-1
+#define MYUBRR FOSC/16/BAUD-1 
 
 /**
-* @brief initialize UART
-* @param unsigned int UBRR
-* @return void
+* @brief Initializes UART
+* @param UBRR Baud rate
 */
-void uart_init(unsigned int ubrr);
+void uart_init(unsigned int UBRR);
 
 /**
-* @brief transmit char with UART
-* @param unsigned char message
-* @return void
+* @brief Transmits @p message with UART
+* @param message Message to be transmitted
 */
 void uart_transmit(unsigned char message);
 
 /**
-* @brief receive char with UART
-* @param void
-* @return unsigned char received
+* @brief Receives message with UART
+* @return Message received
 */
 unsigned char uart_receive(void);
 

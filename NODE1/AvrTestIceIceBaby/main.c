@@ -15,7 +15,7 @@
 #include "test.h"
 #include "xmem.h"
 #include "ADC_driver.h"
-#include "Movement_driver.h"
+#include "movement_driver.h"
 #include "OLED_driver.h"
 #include "menu.h"
 #include "mcp2515.h"
@@ -51,7 +51,7 @@ int main(void)
 
 	
 	while (1) {
-		menu_main();		
+		menu_state_controller();		
 
 		
 		//CAN_receive_message(&joy_received);

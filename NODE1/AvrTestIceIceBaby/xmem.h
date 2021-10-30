@@ -1,9 +1,6 @@
 /**
- * @file xmem.h
- * @brief memory driver
- 
- * @date 06.09.2021 08:56:06
- * @author elisegm
+ * @file 
+ * @brief Memory driver
  */ 
 
 
@@ -12,29 +9,22 @@
 
 
 /**
-* @brief Initializes external memory
-* @param void
-* @return void                                                                     
+* @brief Initializes external memory                                                           
 */
 void xmem_init(void);
 
-
-/**
-* @brief Configures whether portA on mcu will receive or send
-* @param uint8_t mcu_in
-* @return void
-*/
-void mcu_porta_io_config(uint8_t mcu_in);
-
-
 /**
 * @brief Writes @p data to offset address
-* @param uint16_t @p offset Offset from base address
-* @param uint8_t @p data Data to be written to offset address
-* @return void
+* @param offset from base address
+* @param data to be written to @p offset address
 */
 void xmem_write(uint8_t data, uint16_t offset);
 
+/**
+* @brief Writes @p data to offset address
+* @param offset from base address
+* @return Data located at @p offset address
+*/
 uint8_t xmem_read(uint16_t offset);
 
 

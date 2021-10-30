@@ -13,14 +13,16 @@
 #include "OLED_driver.h"
 #include "xmem.h"
 #include "menu.h"
-#include "Movement_driver.h"
+#include "movement_driver.h"
 #include "CAN_driver.h"
+#include "game_driver.h"
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 
 volatile int previous_parent = 0; 
 volatile dir joy_dir;
 volatile int neutral_flag = 0;
+volatile input_j joystick_input;
 
 
 void printHello(void){
@@ -64,6 +66,12 @@ void clearHighscore(void){
 	
 }
 
+void startGame(void){
+	OLED_print(" Good Luck!");
+	OLED_reset();
+	// Turn off OLED
+	game_set_start_flag();
+}
 
 void menu_init(void){
 	//Root
@@ -71,7 +79,7 @@ void menu_init(void){
 	menu_position = root; 
 	
 	//Main menu
-	node* start_game = menu_new_item(root, "Start game", NULL, NO_CHOICE);	
+	node* start_game = menu_new_item(root, "Start game", &startGame, NO_CHOICE);	
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
 	node* sound = menu_new_item(root, "Sound", NULL, NO_CHOICE);
@@ -179,21 +187,12 @@ void menu_move_pointer(dir direction){
 	}
 }
 
-void menu_main(){
-	joy_dir = mov_get_joy_dir(); 
-	input_j joystick_input = mov_get_joy_input();
-	can_message test_joystick_message;
-	test_joystick_message.id = CAN_JOYSTICK_ID;
-	test_joystick_message.length = 4;
-	test_joystick_message.data[0] = joystick_input.pos_x;
-	test_joystick_message.data[1] = joystick_input.pos_y;
-	test_joystick_message.data[2] = joystick_input.button_pressed;
-	test_joystick_message.data[3] = joystick_input.direction;
-	
-	switch (joy_dir){
+
+void menu_state_controller(){
+	joystick_input = mov_get_joy_input();
+	switch (joystick_input.direction){
 		case NEUTRAL: {
-			if (mov_read_joy_button()){
-				CAN_send_message(&test_joystick_message);
+			if (mov_read_button(jb)){
 				if (menu_position->children[current_child_pointer]->funcpt != NULL){
 					OLED_reset();
 					menu_position->children[current_child_pointer]->funcpt();
@@ -204,7 +203,6 @@ void menu_main(){
 		}
 		case DOWN:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(DOWN);
 				neutral_flag = 0; 
 			}
@@ -212,7 +210,6 @@ void menu_main(){
 		}
 		case UP:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(UP);
 				neutral_flag = 0;
 			}
@@ -220,7 +217,6 @@ void menu_main(){
 		}
 		case LEFT:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(LEFT);
 				neutral_flag = 0;
 			}
@@ -228,7 +224,6 @@ void menu_main(){
 		}
 		case RIGHT:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(RIGHT);
 				neutral_flag = 0;
 			}

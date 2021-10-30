@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "sram_driver.h": "c"
+    }
+}

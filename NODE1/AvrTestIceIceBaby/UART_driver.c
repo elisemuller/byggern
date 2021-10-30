@@ -6,10 +6,10 @@
 
 // Here, using USART0-registers
 
-void uart_init(unsigned int ubrr){
+void uart_init(unsigned int UBRR){
 	// Baud rate
-	UBRR0H = (unsigned char) (ubrr >> 8);	// Baud rate high register
-	UBRR0L = (unsigned char) (ubrr);		// Baud rate low register
+	UBRR0H = (unsigned char) (UBRR >> 8);	// Baud rate high register
+	UBRR0L = (unsigned char) (UBRR);		// Baud rate low register
 	// Enable receivers and transmitter on usart 0
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 	// Data format (char = 8 bit, + 2 stop bit)
