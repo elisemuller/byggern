@@ -101,9 +101,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a18820214529e01727b79c4308a6b6bfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buzzer__driver_8h.html#a18820214529e01727b79c4308a6b6bfc">buzzer_adjust_volume</a> (int vol)</td></tr>
 <tr class="memdesc:a18820214529e01727b79c4308a6b6bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjusts the volume on the buzzer.  <a href="buzzer__driver_8h.html#a18820214529e01727b79c4308a6b6bfc">More...</a><br /></td></tr>
 <tr class="separator:a18820214529e01727b79c4308a6b6bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a196308caefb16ab1dc55fb028f3be5f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buzzer__driver_8h.html#a196308caefb16ab1dc55fb028f3be5f1">buzzer_pause_song</a> (int pause)</td></tr>
-<tr class="memdesc:a196308caefb16ab1dc55fb028f3be5f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses current song playing on buzzer if <code>pause</code> = 1.  <a href="buzzer__driver_8h.html#a196308caefb16ab1dc55fb028f3be5f1">More...</a><br /></td></tr>
-<tr class="separator:a196308caefb16ab1dc55fb028f3be5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d01243b9d99889137b01a9c1555f760"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buzzer__driver_8h.html#a4d01243b9d99889137b01a9c1555f760">buzzer_pause_music</a> (int pause)</td></tr>
+<tr class="memdesc:a4d01243b9d99889137b01a9c1555f760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses current song playing on buzzer if <code>pause</code> = 1.  <a href="buzzer__driver_8h.html#a4d01243b9d99889137b01a9c1555f760">More...</a><br /></td></tr>
+<tr class="separator:a4d01243b9d99889137b01a9c1555f760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abec5f9f01f7f5ea8ea53564532636be5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="buzzer__driver_8h.html#abec5f9f01f7f5ea8ea53564532636be5">buzzer_play_playlist</a> (playlist list_title)</td></tr>
+<tr class="memdesc:abec5f9f01f7f5ea8ea53564532636be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plays the selected playlist <code>list_title</code> on the buzzer.  <a href="buzzer__driver_8h.html#abec5f9f01f7f5ea8ea53564532636be5">More...</a><br /></td></tr>
+<tr class="separator:abec5f9f01f7f5ea8ea53564532636be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Buzzer driver. </p>
@@ -160,14 +163,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a196308caefb16ab1dc55fb028f3be5f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a196308caefb16ab1dc55fb028f3be5f1">&#9670;&nbsp;</a></span>buzzer_pause_song()</h2>
+<a id="a4d01243b9d99889137b01a9c1555f760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d01243b9d99889137b01a9c1555f760">&#9670;&nbsp;</a></span>buzzer_pause_music()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void buzzer_pause_song </td>
+          <td class="memname">void buzzer_pause_music </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>pause</em></td><td>)</td>
@@ -243,6 +246,32 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">freq</td><td>The frequency of the note </td></tr>
     <tr><td class="paramname">duration</td><td>The duration of the note </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abec5f9f01f7f5ea8ea53564532636be5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec5f9f01f7f5ea8ea53564532636be5">&#9670;&nbsp;</a></span>buzzer_play_playlist()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void buzzer_play_playlist </td>
+          <td>(</td>
+          <td class="paramtype">playlist&#160;</td>
+          <td class="paramname"><em>list_title</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Plays the selected playlist <code>list_title</code> on the buzzer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">list_title</td><td>Name of playlist </td></tr>
   </table>
   </dd>
 </dl>

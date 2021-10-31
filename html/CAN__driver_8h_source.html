@@ -82,33 +82,34 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define CAN_JOYSTICK_ID 1</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define CAN_SLIDER_ID 2</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define CAN_GAME_ID 3</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structcan__message.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> id; <span class="comment">//16 bit</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  uint8_t length; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">union </span>{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">char</span> data[8];</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">long</span> positions[2];</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  };</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;} <a class="code" href="structcan__message.html">can_message</a>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define CAN_BUZZER_ID 4</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structcan__message.html">   24</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> id; <span class="comment">//16 bit</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  uint8_t length; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">union </span>{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">char</span> data[8];</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">long</span> positions[2];</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  };</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;} <a class="code" href="structcan__message.html">can_message</a>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#adb0f99207facf71ca3429c6108d42d43">CAN_init</a>(uint8_t mode);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#aaae2a240f5b57bc8b52da1bcd8a39558">CAN_send_message</a>(<a class="code" href="structcan__message.html">can_message</a>* p_msg);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#a1ad7955087d91c5f5ed72d7004cbd8f0">CAN_receive_message</a>(<a class="code" href="structcan__message.html">can_message</a>* p_msg);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#ae3a10bb120081b733f4d5ffee623990c">CAN_interrupt_init</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#adb0f99207facf71ca3429c6108d42d43">CAN_init</a>(uint8_t mode);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#aaae2a240f5b57bc8b52da1bcd8a39558">CAN_send_message</a>(<a class="code" href="structcan__message.html">can_message</a>* p_msg);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#a1ad7955087d91c5f5ed72d7004cbd8f0">CAN_receive_message</a>(<a class="code" href="structcan__message.html">can_message</a>* p_msg);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="CAN__driver_8h.html#ae3a10bb120081b733f4d5ffee623990c">CAN_interrupt_init</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CAN_DRIVER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* CAN_DRIVER_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aCAN__driver_8h_html_ae3a10bb120081b733f4d5ffee623990c"><div class="ttname"><a href="CAN__driver_8h.html#ae3a10bb120081b733f4d5ffee623990c">CAN_interrupt_init</a></div><div class="ttdeci">void CAN_interrupt_init(void)</div><div class="ttdoc">Initializes CAN interrupts.</div><div class="ttdef"><b>Definition:</b> CAN_driver.c:108</div></div>
-<div class="ttc" id="astructcan__message_html"><div class="ttname"><a href="structcan__message.html">can_message</a></div><div class="ttdef"><b>Definition:</b> CAN_driver.h:23</div></div>
+<div class="ttc" id="astructcan__message_html"><div class="ttname"><a href="structcan__message.html">can_message</a></div><div class="ttdef"><b>Definition:</b> CAN_driver.h:24</div></div>
 <div class="ttc" id="aCAN__driver_8h_html_adb0f99207facf71ca3429c6108d42d43"><div class="ttname"><a href="CAN__driver_8h.html#adb0f99207facf71ca3429c6108d42d43">CAN_init</a></div><div class="ttdeci">void CAN_init(uint8_t mode)</div><div class="ttdoc">Initializes the CAN controller. Sets mode to LOOPBACK_MODE.</div><div class="ttdef"><b>Definition:</b> CAN_driver.c:23</div></div>
 <div class="ttc" id="aCAN__driver_8h_html_aaae2a240f5b57bc8b52da1bcd8a39558"><div class="ttname"><a href="CAN__driver_8h.html#aaae2a240f5b57bc8b52da1bcd8a39558">CAN_send_message</a></div><div class="ttdeci">void CAN_send_message(can_message *p_msg)</div><div class="ttdoc">Sends CAN message of type can_message.</div><div class="ttdef"><b>Definition:</b> CAN_driver.c:31</div></div>
 <div class="ttc" id="aCAN__driver_8h_html_a1ad7955087d91c5f5ed72d7004cbd8f0"><div class="ttname"><a href="CAN__driver_8h.html#a1ad7955087d91c5f5ed72d7004cbd8f0">CAN_receive_message</a></div><div class="ttdeci">void CAN_receive_message(can_message *p_msg)</div><div class="ttdoc">Receives CAN message.</div><div class="ttdef"><b>Definition:</b> CAN_driver.c:60</div></div>

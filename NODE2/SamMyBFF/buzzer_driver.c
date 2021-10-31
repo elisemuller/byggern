@@ -16,6 +16,12 @@ volatile int notePointer;
 volatile title currentSong; 
 
 
+void buzzer_init(int vol){
+    
+
+}
+
+
 void buzzer_play_note(freq, duration){
     PWM_frequency_modify(freq, BUZZER_CHANNEL);
     PWM_dutycycle_modify(dutycycle, BUZZER_CHANNEL, 0);
@@ -73,6 +79,7 @@ void buzzer_play_tune(const int* tune, int num_notes){
 void buzzer_play_music(title song){
     int num_notes = 0; 
     currentSong = song; 
+    buzzer_adjust_volume(10);
     switch (song){
         case NEVER_GIVE_UP:{
             buzzer_adjust_tempo(114); //Change to make song play slower/faster
@@ -84,6 +91,48 @@ void buzzer_play_music(title song){
             buzzer_adjust_tempo(108); //Change to make song play slower/faster
             num_notes = (sizeof(starWars) / sizeof(starWars[0]) / 2);
             buzzer_play_music(starWars, num_notes);
+            break;
+        }
+        case BABY_ELEPHANT_WALK:{
+            buzzer_adjust_tempo(132); //Change to make song play slower/faster
+            num_notes = (sizeof(babyElephantWalk) / sizeof(babyElephantWalk[0]) / 2);
+            buzzer_play_music(babyElephantWalk, num_notes);
+            break;
+        }
+        case PINK_PANTHER:{
+            buzzer_adjust_tempo(120); //Change to make song play slower/faster
+            num_notes = (sizeof(pinkPanther) / sizeof(pinkPanther[0]) / 2);
+            buzzer_play_music(pinkPanther, num_notes);
+            break;
+        }
+        case TETRIS:{
+            buzzer_adjust_tempo(144); //Change to make song play slower/faster
+            num_notes = (sizeof(tetris) / sizeof(tetris[0]) / 2);
+            buzzer_play_music(tetris, num_notes);
+            break;
+        }
+        case GREEN_HILL:{
+            buzzer_adjust_tempo(140); //Change to make song play slower/faster
+            num_notes = (sizeof(greenHill) / sizeof(greenHill[0]) / 2);
+            buzzer_play_music(greenHill, num_notes);
+            break;
+        }
+        case CASTLEVANIA:{
+            buzzer_adjust_tempo(130); //Change to make song play slower/faster
+            num_notes = (sizeof(castlevania) / sizeof(castlevania[0]) / 2);
+            buzzer_play_music(castlevania, num_notes);
+            break;
+        }
+        case HAPPY_BIRTHDAY:{
+            buzzer_adjust_tempo(140); //Change to make song play slower/faster
+            num_notes = (sizeof(happyBday) / sizeof(happyBday[0]) / 2);
+            buzzer_play_music(happyBday, num_notes);
+            break;
+        }
+        case TAKE_ON_ME:{
+            buzzer_adjust_tempo(140); //Change to make song play slower/faster
+            num_notes = (sizeof(takeOnMe) / sizeof(takeOnMe[0]) / 2);
+            buzzer_play_music(takeOnMe, num_notes);
             break;
         }
         default:
@@ -102,11 +151,44 @@ void buzzer_adjust_volume(int vol){
     dutycycle = (vol/20);
 }
 
-void buzzer_pause_song(int pause){
+void buzzer_pause_music(int pause){
     if(PAUSE_SONG){
         if (!pause){
             buzzer_play_music(currentSong);
         }
     }
     PAUSE_SONG = pause; //Set to 0 to unpause
+}
+
+void buzzer_play_playlist(playlist list_title){
+    switch (list_title){
+        case LOBBY_MUSIC:{
+            buzzer_play_music(BABY_ELEPHANT_WALK);
+            buzzer_play_music(PINK_PANTHER);
+            break;
+        }
+        case GAME_MUSIC: {
+            buzzer_play(TAKE_ON_ME);
+            buzzer_play_music(TETRIS);
+            buzzer_play_music(CASTLEVANIA);
+            buzzer_play_music(GREEN_HILL);
+            break;
+        }
+        case LOSING_MUSIC:{
+            buzzer_play_music(NEVER_GIVE_UP);
+            break;
+        }
+        case WINNING_MUSIC: {
+            buzzer_play_music(STAR_WARS);
+            break;
+        }
+        case BIRTHDAY_MUSIC:{
+            buzzer_play_music(HAPPY_BIRTHDAY);
+            break;
+        }
+        default:{
+            printf("Invalid playlist selected \r\n");
+            break;
+        }
+    }
 }

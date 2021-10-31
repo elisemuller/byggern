@@ -23,6 +23,7 @@ volatile int previous_parent = 0;
 volatile dir joy_dir;
 volatile int neutral_flag = 0;
 volatile input_j joystick_input;
+volatile buzzer sound; 
 
 
 void printHello(void){
@@ -57,7 +58,6 @@ void setDifficulty(void){
 	}
 }
 
-
 void seeHighscore(void){
 	
 }
@@ -73,6 +73,32 @@ void startGame(void){
 	game_set_start_flag();
 }
 
+void adjustVolume(int vol){
+	/*	Implementere her at man leser om slider øker : 
+		OLED skjerm viser volum fra 0-10. 
+		Trykk høyre slider knapp to confirm. */
+	sound.volume = vol;
+}
+
+void menu_send_can_message(int CAN_ID){
+	can_message menu_msg;
+	menu_msg.id = CAN_ID;
+	switch (CAN_ID){
+		case CAN_BUZZER_ID:{
+			menu_msg.length = 2; 
+			menu_msg.data[0] = sound.volume;
+			menu_msg.data[1] = sound.list_title;
+			CAN_send_message(&menu_msg);
+			break;
+		}
+		default:{
+			printf("Invalid CAN message ID");
+			break;
+		}
+	}
+
+}
+
 void menu_init(void){
 	//Root
 	node* root = menu_new_item(NULL, "Main menu", NULL, NO_CHOICE);
@@ -82,7 +108,7 @@ void menu_init(void){
 	node* start_game = menu_new_item(root, "Start game", &startGame, NO_CHOICE);	
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
-	node* sound = menu_new_item(root, "Sound", NULL, NO_CHOICE);
+	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
 	node* mini = menu_new_item(root, "Minigames", NULL, NO_CHOICE);
 	
 	//Difficulty
@@ -96,15 +122,19 @@ void menu_init(void){
 	node* clear = menu_new_item(highscore, "Clear", &clearHighscore, CLEAR );
 	//
 	////Sound
-	//node* sound_up = menu_new_item(sound, "Volume up", NULL, NO_CHOICE); //heller lage to piler som representerer opp og ned
-	//node* sound_down = menu_new_item(sound, "Volume down", NULL, NO_CHOICE);
+	// node* volume = menu_new_item(sound_settings, "Adjust volume", &adjustVolume, NO_CHOICE); 
+	// node* stop = menu_new_item(sound_settings, "Stop music", NULL, NO_CHOICE);
+	// node* pause = 
 	//
 	////Minigames
 	//node* IC_man = menu_new_item(mini, "IC-man", NULL, NO_CHOICE); //Integrated circuit man
 	//node* draw_pic = menu_new_item(mini, "Make art", NULL, NO_CHOICE); 
 	//node* pong = menu_new_item(mini, "Ping pong", NULL, NO_CHOICE);
 	//node* led_game = menu_new_item(mini, "Light up LED", NULL, NO_CHOICE);
-
+	
+	// Initialize sound settings
+	sound.list_title = LOBBY_MUSIC;
+	sound.volume = 10; // Max volume
 }
 
 

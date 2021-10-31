@@ -43,9 +43,21 @@ typedef struct node {
 	struct node* parent;
 	void (*funcpt)(void);
 	int num_children; 
-	} node;
+} node;
 	
+typedef enum {
+    GAME_MUSIC,
+    WINNING_MUSIC,
+    LOSING_MUSIC,
+    LOBBY_MUSIC,
+    BIRTHDAY_MUSIC
+} playlist;
 
+typedef struct buzzer_controll {
+	int volume;
+	// int tempo; kanskje?
+	playlist list_title;
+} buzzer;
 
 
 void printHello(void);
