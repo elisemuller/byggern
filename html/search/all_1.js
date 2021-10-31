@@ -1,14 +1,11 @@
 var searchData=
 [
-  ['can_5fcontroller_2eh_3',['can_controller.h',['../can__controller_8h.html',1,'']]],
-  ['can_5fdriver_2eh_4',['CAN_driver.h',['../CAN__driver_8h.html',1,'']]],
-  ['can_5finit_5',['CAN_init',['../CAN__driver_8h.html#adb0f99207facf71ca3429c6108d42d43',1,'CAN_init(uint8_t mode):&#160;CAN_driver.c'],['../can__controller_8h.html#a495d9087795580b51fd610a500d67d0b',1,'can_init(uint8_t num_tx_mb, uint8_t num_rx_mb):&#160;can_controller.c']]],
-  ['can_5finit_5fdef_5ftx_5frx_5fmb_6',['can_init_def_tx_rx_mb',['../can__controller_8h.html#ab7bf4f4b82c1e1e1a8add814add2681a',1,'can_controller.c']]],
-  ['can_5finterrupt_5finit_7',['CAN_interrupt_init',['../CAN__driver_8h.html#ae3a10bb120081b733f4d5ffee623990c',1,'CAN_driver.c']]],
-  ['can_5fmessage_8',['can_message',['../structcan__message.html',1,'']]],
-  ['can_5fmessage_5ft_9',['can_message_t',['../structcan__message__t.html',1,'']]],
-  ['can_5freceive_10',['can_receive',['../can__controller_8h.html#ac22373dd81bf37380ec1f662e7b27678',1,'can_controller.c']]],
-  ['can_5freceive_5fmessage_11',['CAN_receive_message',['../CAN__driver_8h.html#a1ad7955087d91c5f5ed72d7004cbd8f0',1,'CAN_driver.c']]],
-  ['can_5fsend_12',['can_send',['../can__controller_8h.html#ac81681fa36cdf9fe6bdefdbb8164df07',1,'can_controller.c']]],
-  ['can_5fsend_5fmessage_13',['CAN_send_message',['../CAN__driver_8h.html#aaae2a240f5b57bc8b52da1bcd8a39558',1,'CAN_driver.c']]]
+  ['buzzer_5fadjust_5ftempo_3',['buzzer_adjust_tempo',['../buzzer__driver_8h.html#a2021c4767848fbd716a8f559a99a0b3e',1,'buzzer_driver.c']]],
+  ['buzzer_5fadjust_5fvolume_4',['buzzer_adjust_volume',['../buzzer__driver_8h.html#a18820214529e01727b79c4308a6b6bfc',1,'buzzer_driver.c']]],
+  ['buzzer_5fdriver_2eh_5',['buzzer_driver.h',['../buzzer__driver_8h.html',1,'']]],
+  ['buzzer_5fpause_5fsong_6',['buzzer_pause_song',['../buzzer__driver_8h.html#a196308caefb16ab1dc55fb028f3be5f1',1,'buzzer_driver.c']]],
+  ['buzzer_5fplay_5fmusic_7',['buzzer_play_music',['../buzzer__driver_8h.html#ada77bddb2a2fb7f68886e7ed64d8034a',1,'buzzer_driver.c']]],
+  ['buzzer_5fplay_5fnote_8',['buzzer_play_note',['../buzzer__driver_8h.html#a29a3d157c258724598595cc2fea657bf',1,'buzzer_driver.c']]],
+  ['buzzer_5fplay_5ftune_9',['buzzer_play_tune',['../buzzer__driver_8h.html#ade10bf89f7966c24797a25bc9d18b4bb',1,'buzzer_driver.c']]],
+  ['byggern_10',['byggern',['../index.html',1,'']]]
 ];

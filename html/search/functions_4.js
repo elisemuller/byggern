@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['uart_5finit_100',['uart_init',['../UART__driver_8h.html#a931b7facfbd596446e318f70ee413957',1,'UART_driver.c']]],
-  ['uart_5freceive_101',['uart_receive',['../UART__driver_8h.html#a1cfc7965f4e12afb917c9de52531d503',1,'UART_driver.c']]],
-  ['uart_5ftransmit_102',['uart_transmit',['../UART__driver_8h.html#a75103ac3e26ba0bec269b4b203b34fcf',1,'UART_driver.c']]]
+  ['pwm_5fdutycycle_5fmodify_129',['PWM_dutycycle_modify',['../PWM__driver_8h.html#a2e43cf065a16022651ecc3f1267194de',1,'PWM_driver.c']]],
+  ['pwm_5ffrequency_5fmodify_130',['PWM_frequency_modify',['../PWM__driver_8h.html#a8abe42c7369798dd8d6bc6b75c802b0e',1,'PWM_driver.c']]],
+  ['pwm_5finit_131',['PWM_init',['../PWM__driver_8h.html#aadae3fe77e36cbf9643a22eeb99fb01e',1,'PWM_driver.c']]]
 ];

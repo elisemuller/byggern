@@ -45,12 +45,10 @@ void CAN0_Handler       ( void );
 
 /**
 * @brief Collects and redistributes data from message according to the message ID.  
-* @param CAN_MESSAGE msg
-* @return void
+* @param msg Message received from CAN bus
 */
 void message_data_collector(CAN_MESSAGE msg);
 
-void move_PWM(void);
 
 
 

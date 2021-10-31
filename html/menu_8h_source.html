@@ -118,38 +118,40 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> printGoodBye(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> menu_init(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> menu_main(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#a06928afa5c7f6b2572306f21cd7d2d31">menu_init</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<a class="code" href="structnode.html">node</a>* menu_new_item(<a class="code" href="structnode.html">node</a>* parent, <span class="keywordtype">char</span>* name, <span class="keywordtype">void</span> (*fpt)(<span class="keywordtype">void</span>), menu_choice choice);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#ad664288070cf34e33b999c25df71dd26">menu_print</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#a35b9db77af6ba1ad47372331df73c814">menu_move_pointer</a>(dir direction);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> setDifficulty(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> seeHighscore(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordtype">void</span> clearHighscore(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#a97c3e79dbc7916eb83134b6b351a4600">menu_state_controller</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<a class="code" href="structnode.html">node</a>* <a class="code" href="menu_8h.html#a3f7d372716ec614ecad957208b233c9d">menu_new_item</a>(<a class="code" href="structnode.html">node</a>* parent, <span class="keywordtype">char</span>* name, <span class="keywordtype">void</span> (*fpt)(<span class="keywordtype">void</span>), menu_choice choice);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#ad664288070cf34e33b999c25df71dd26">menu_print</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#a35b9db77af6ba1ad47372331df73c814">menu_move_pointer</a>(dir direction);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MENU_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#af73b7373e73df7c683846b2800803ae4">setDifficulty</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keywordtype">void</span> seeHighscore(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> clearHighscore(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> <a class="code" href="menu_8h.html#abf5f6de04bef125dc7c4b1cda0357d3f">startGame</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* MENU_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="amenu_8h_html_abf5f6de04bef125dc7c4b1cda0357d3f"><div class="ttname"><a href="menu_8h.html#abf5f6de04bef125dc7c4b1cda0357d3f">startGame</a></div><div class="ttdeci">void startGame(void)</div><div class="ttdoc">Starts the game and turns off the OLED display.</div><div class="ttdef"><b>Definition:</b> menu.c:69</div></div>
 <div class="ttc" id="aCAN__driver_8h_html"><div class="ttname"><a href="CAN__driver_8h.html">CAN_driver.h</a></div><div class="ttdoc">Driver for CAN communication.</div></div>
 <div class="ttc" id="astructnode_html"><div class="ttname"><a href="structnode.html">node</a></div><div class="ttdef"><b>Definition:</b> menu.h:38</div></div>
+<div class="ttc" id="amenu_8h_html_a06928afa5c7f6b2572306f21cd7d2d31"><div class="ttname"><a href="menu_8h.html#a06928afa5c7f6b2572306f21cd7d2d31">menu_init</a></div><div class="ttdeci">void menu_init(void)</div><div class="ttdoc">Initializes the menu displayed on the OLED screen.</div><div class="ttdef"><b>Definition:</b> menu.c:76</div></div>
 <div class="ttc" id="amenu_8h_html_ad664288070cf34e33b999c25df71dd26"><div class="ttname"><a href="menu_8h.html#ad664288070cf34e33b999c25df71dd26">menu_print</a></div><div class="ttdeci">void menu_print(void)</div><div class="ttdoc">Prints the entire menu, depending on where we are in the menu selections. Prints an arrow indicating ...</div><div class="ttdef"><b>Definition:</b> menu.c:132</div></div>
+<div class="ttc" id="amenu_8h_html_a3f7d372716ec614ecad957208b233c9d"><div class="ttname"><a href="menu_8h.html#a3f7d372716ec614ecad957208b233c9d">menu_new_item</a></div><div class="ttdeci">node * menu_new_item(node *parent, char *name, void(*fpt)(void), menu_choice choice)</div><div class="ttdoc">Creates a new item for the menu.</div><div class="ttdef"><b>Definition:</b> menu.c:111</div></div>
 <div class="ttc" id="amovement__driver_8h_html"><div class="ttname"><a href="movement__driver_8h.html">movement_driver.h</a></div><div class="ttdoc">Functionality and hardware interface for the joystick and slider.</div></div>
 <div class="ttc" id="axmem_8h_html"><div class="ttname"><a href="xmem_8h.html">xmem.h</a></div><div class="ttdoc">Memory driver.</div></div>
 <div class="ttc" id="amenu_8h_html_a35b9db77af6ba1ad47372331df73c814"><div class="ttname"><a href="menu_8h.html#a35b9db77af6ba1ad47372331df73c814">menu_move_pointer</a></div><div class="ttdeci">void menu_move_pointer(dir direction)</div><div class="ttdoc">Updates the pointer indicating where we are in the menu managed by the joystick direction.</div><div class="ttdef"><b>Definition:</b> menu.c:152</div></div>
+<div class="ttc" id="amenu_8h_html_a97c3e79dbc7916eb83134b6b351a4600"><div class="ttname"><a href="menu_8h.html#a97c3e79dbc7916eb83134b6b351a4600">menu_state_controller</a></div><div class="ttdeci">void menu_state_controller(void)</div><div class="ttdoc">State controller for the menu. Updates the display on the menu with regards to the joystick input.</div><div class="ttdef"><b>Definition:</b> menu.c:191</div></div>
 <div class="ttc" id="aOLED__driver_8h_html"><div class="ttname"><a href="OLED__driver_8h.html">OLED_driver.h</a></div><div class="ttdoc">Driver for the OLED display. Configures printing and drawing on the OLED screen.</div></div>
+<div class="ttc" id="amenu_8h_html_af73b7373e73df7c683846b2800803ae4"><div class="ttname"><a href="menu_8h.html#af73b7373e73df7c683846b2800803ae4">setDifficulty</a></div><div class="ttdeci">void setDifficulty(void)</div><div class="ttdoc">Sets the difficulty of the game.</div><div class="ttdef"><b>Definition:</b> menu.c:37</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -15,7 +15,7 @@
 #include "blink.h"
 #include "can_controller.h"
 #include "can_interrupt.h"
-#include "servo_driver.h"
+#include "PWM_driver.h"
 #include "test_driver.h"
 
 int main(void)
@@ -25,7 +25,7 @@ int main(void)
 	configure_uart();
 	led_enable();
 	can_init_def_tx_rx_mb();
-	servo_pwm_init();
+	PWM_init();
 	printf("NODE 2 STARTING UP");
 	//blink();
 	//servo_dutycycle_modify_x(-100);

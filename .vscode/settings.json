@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "sram_driver.h": "c"
+        "sram_driver.h": "c",
+        "stdint.h": "c"
     }
 }
