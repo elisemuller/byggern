@@ -16,7 +16,7 @@ void test_adc_read(void){
 	while (1)
 	{
 		uint32_t data = adc_rd();
-		printf("ADC data from IR score system: %d", data);
+		printf("ADC data from IR score system: %d \r\n", data);
 	}
 }
 

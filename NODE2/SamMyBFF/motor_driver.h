@@ -10,10 +10,26 @@
 #define MOTOR_DRIVER_H_
 
 #include <stdint.h>
+#include "can_interrupt.h"
 
 void motor_init(void);
 
+uint16_t motor_read_encoder(void);
 
 
+
+/**
+ * @brief Sets the speed of the motor 
+ * @param speed The digital value that is converted to an analog signal of [0-5]V powering the motor speed
+ */
+void motor_set_speed(uint32_t speed);
+
+void motor_power(int on);
+
+void motor_set_direction(dir direction);
+
+void motor_controller(void);
+
+void motor_reset_encoder(int reset);
 
 #endif /* MOTOR_DRIVER_H_ */

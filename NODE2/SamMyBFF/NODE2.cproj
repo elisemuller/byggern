@@ -159,10 +159,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\..\..\..\Program Files %28x86%29\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h">
-      <SubType>compile</SubType>
-      <Link>delay.h</Link>
-    </Compile>
     <Compile Include="adc_driver.c">
       <SubType>compile</SubType>
     </Compile>
@@ -173,6 +169,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="blink.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="buzzer_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="buzzer_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="can_controller.c">
@@ -187,13 +189,28 @@
     <Compile Include="can_interrupt.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="delay.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="delay.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Device_Startup\startup_sam3xa.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Device_Startup\system_sam3xa.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="game_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="game_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="melodies.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="motor_driver.c">
@@ -206,6 +223,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="printf-stdarg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="PWM_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="PWM_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="servo_driver.c">
