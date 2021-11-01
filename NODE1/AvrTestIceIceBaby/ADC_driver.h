@@ -1,10 +1,7 @@
-/*
- * ADC_driver.h
- *
- * Created: 06.09.2021 15:25:20
- *  Author: elisegm
- */ 
-
+/**
+ * @file
+ * @brief Driver for analog to digital conversion on NODE1
+ */
 
 #ifndef ADC_DRIVER_H_
 #define ADC_DRIVER_H_
@@ -18,12 +15,16 @@
 
 
 
-
-/** 
-* Initializes PWM signal to be used in ADC conversion
-**/
+/**
+ * @brief Initializes PWM signal to be used in ADC conversion
+ */
 void adc_init(void); 
 
+/**
+ * @brief Converts and read the data on the selected @p channel
+ * @param channel The channel selected for adc conversion
+ * @return The converted data 
+ */
 volatile uint8_t adc_rd(uint8_t channel);
 
 
