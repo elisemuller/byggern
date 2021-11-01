@@ -8,7 +8,21 @@
 #include "game_driver.h"
 #include <avr/interrupt.h>
 #include <avr/io.h>
+#include "movement_driver.h"
+#include "CAN_driver.h"
+
 #include <stdio.h>
+
+volatile int send_counter = 0;
+
+// Fikse score handling som teller hvor lenge spilleren har spilt. 
+
+// States for ulike spillmodus
+
+volatile int START_GAME = 0;
+
+volatile int SEND_GAME_MSG =  0;
+
 
 void game_interrupt_enable(void){
 	TIMSK = (1 << TOIE0) | (1 << TOIE1); // enable timer overflow 
@@ -24,12 +38,31 @@ void game_interrupt_disable(void){
 }
 
 ISR(TIMER0_OVF_vect){
-	// send joystick pos
-	input_j joystick_pos = mov_get_joy_input();
-	CAN_send_message(&joystick_pos);
-	// send slider pos
-	input_s slider_pos = mov_get_slider_input();
-	CAN_send_message(&slider_pos);
+
+	SEND_GAME_MSG = 1;
+
 	// reset TCNT0
 	TCNT0 = 0x00;
+}
+
+void game_play(void){
+	if(SEND_GAME_MSG){
+		if(START_GAME){
+			mov_send_can_message(CAN_JOYSTICK_ID);
+			mov_send_can_message(CAN_SLIDER_ID);
+			SEND_GAME_MSG = 0; 
+			
+			send_counter++;
+			printf("Sendt ganger: %d\r\n", send_counter);
+		}
+		else{
+			printf("Game has not started\r\n");
+			SEND_GAME_MSG = 0; 
+		}
+	}
+}
+
+void game_set_start_flag(void){
+	START_GAME = 1; 
+	game_interrupt_enable();
 }

@@ -50,7 +50,7 @@ void CAN_send_message(can_message* p_msg) {
 	// Request to send message for transmit buffer 0
 	mcp2515_request_to_send(1,0,0);
 	
-	printf("Transmitted message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
+	//printf("Transmitted message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
 	
 }
 
@@ -77,7 +77,7 @@ void CAN_receive_message(can_message* p_msg) {
 		// Clear receive flag for receive buffer 0. 
 		READ_B0_MESSAGE = 0;
 		
-		printf("Received message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
+		//printf("Received message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
 	}
 	
 	else if(READ_B1_MESSAGE){

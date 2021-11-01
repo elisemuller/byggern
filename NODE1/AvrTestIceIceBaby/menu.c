@@ -13,14 +13,17 @@
 #include "OLED_driver.h"
 #include "xmem.h"
 #include "menu.h"
-#include "Movement_driver.h"
+#include "movement_driver.h"
 #include "CAN_driver.h"
+#include "game_driver.h"
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 
 volatile int previous_parent = 0; 
 volatile dir joy_dir;
 volatile int neutral_flag = 0;
+volatile input_j joystick_input;
+volatile buzzer sound; 
 
 
 void printHello(void){
@@ -55,7 +58,6 @@ void setDifficulty(void){
 	}
 }
 
-
 void seeHighscore(void){
 	
 }
@@ -64,6 +66,38 @@ void clearHighscore(void){
 	
 }
 
+void startGame(void){
+	OLED_print(" Good Luck!");
+	OLED_reset();
+	// Turn off OLED
+	game_set_start_flag();
+}
+
+void adjustVolume(int vol){
+	/*	Implementere her at man leser om slider øker : 
+		OLED skjerm viser volum fra 0-10. 
+		Trykk høyre slider knapp to confirm. */
+	sound.volume = vol;
+}
+
+void menu_send_can_message(int CAN_ID){
+	can_message menu_msg;
+	menu_msg.id = CAN_ID;
+	switch (CAN_ID){
+		case CAN_BUZZER_ID:{
+			menu_msg.length = 2; 
+			menu_msg.data[0] = sound.volume;
+			menu_msg.data[1] = sound.list_title;
+			CAN_send_message(&menu_msg);
+			break;
+		}
+		default:{
+			printf("Invalid CAN message ID");
+			break;
+		}
+	}
+
+}
 
 void menu_init(void){
 	//Root
@@ -71,10 +105,10 @@ void menu_init(void){
 	menu_position = root; 
 	
 	//Main menu
-	node* start_game = menu_new_item(root, "Start game", NULL, NO_CHOICE);	
+	node* start_game = menu_new_item(root, "Start game", &startGame, NO_CHOICE);	
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
-	node* sound = menu_new_item(root, "Sound", NULL, NO_CHOICE);
+	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
 	node* mini = menu_new_item(root, "Minigames", NULL, NO_CHOICE);
 	
 	//Difficulty
@@ -88,15 +122,19 @@ void menu_init(void){
 	node* clear = menu_new_item(highscore, "Clear", &clearHighscore, CLEAR );
 	//
 	////Sound
-	//node* sound_up = menu_new_item(sound, "Volume up", NULL, NO_CHOICE); //heller lage to piler som representerer opp og ned
-	//node* sound_down = menu_new_item(sound, "Volume down", NULL, NO_CHOICE);
+	// node* volume = menu_new_item(sound_settings, "Adjust volume", &adjustVolume, NO_CHOICE); 
+	// node* stop = menu_new_item(sound_settings, "Stop music", NULL, NO_CHOICE);
+	// node* pause = 
 	//
 	////Minigames
 	//node* IC_man = menu_new_item(mini, "IC-man", NULL, NO_CHOICE); //Integrated circuit man
 	//node* draw_pic = menu_new_item(mini, "Make art", NULL, NO_CHOICE); 
 	//node* pong = menu_new_item(mini, "Ping pong", NULL, NO_CHOICE);
 	//node* led_game = menu_new_item(mini, "Light up LED", NULL, NO_CHOICE);
-
+	
+	// Initialize sound settings
+	sound.list_title = LOBBY_MUSIC;
+	sound.volume = 10; // Max volume
 }
 
 
@@ -179,21 +217,12 @@ void menu_move_pointer(dir direction){
 	}
 }
 
-void menu_main(){
-	joy_dir = mov_get_joy_dir(); 
-	input_j joystick_input = mov_get_joy_input();
-	can_message test_joystick_message;
-	test_joystick_message.id = CAN_JOYSTICK_ID;
-	test_joystick_message.length = 4;
-	test_joystick_message.data[0] = joystick_input.pos_x;
-	test_joystick_message.data[1] = joystick_input.pos_y;
-	test_joystick_message.data[2] = joystick_input.button_pressed;
-	test_joystick_message.data[3] = joystick_input.direction;
-	
-	switch (joy_dir){
+
+void menu_state_controller(){
+	joystick_input = mov_get_joy_input();
+	switch (joystick_input.direction){
 		case NEUTRAL: {
-			if (mov_read_joy_button()){
-				CAN_send_message(&test_joystick_message);
+			if (mov_read_button(jb)){
 				if (menu_position->children[current_child_pointer]->funcpt != NULL){
 					OLED_reset();
 					menu_position->children[current_child_pointer]->funcpt();
@@ -204,7 +233,6 @@ void menu_main(){
 		}
 		case DOWN:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(DOWN);
 				neutral_flag = 0; 
 			}
@@ -212,7 +240,6 @@ void menu_main(){
 		}
 		case UP:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(UP);
 				neutral_flag = 0;
 			}
@@ -220,7 +247,6 @@ void menu_main(){
 		}
 		case LEFT:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(LEFT);
 				neutral_flag = 0;
 			}
@@ -228,7 +254,6 @@ void menu_main(){
 		}
 		case RIGHT:{
 			if(neutral_flag){
-				CAN_send_message(&test_joystick_message);
 				menu_move_pointer(RIGHT);
 				neutral_flag = 0;
 			}

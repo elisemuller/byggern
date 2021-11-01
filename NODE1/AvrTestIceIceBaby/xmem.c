@@ -18,16 +18,6 @@ void xmem_init(void) {
 	SFIOR |= (1 << XMM2); 
 }
 
-void mcu_porta_io_config(uint8_t mcu_in) {
-	if (mcu_in) {
-		DDRA = 0x00; //input
-	}
-	else {
-		DDRA = 0xFF; //output
-	}
-}
-
-
 // xmem read og write er hentet fra labforelesning
 
 void xmem_write(uint8_t data, uint16_t offset) {

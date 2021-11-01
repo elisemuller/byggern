@@ -7,28 +7,36 @@
 //
 #include <avr/io.h>
 #include "ADC_driver.h"
-#include "Movement_driver.h"
+#include "movement_driver.h"
 #include "UART_driver.h"
+#include "CAN_driver.h"
 #include <stdint.h>
 #include <stdlib.h>
 
+/**
+ * @def DEBUG_BUTTON
+ * @brief A macro that is used to debug if the buttons are working when set to 1
+ */
+#define DEBUG_BUTTON 1
 
-volatile int null_x;
-volatile int null_y;
+volatile int null_x; /*!< The calibrated neutral x position of the joystick */
 
-volatile int x_pos;
-volatile int y_pos;
+volatile int null_y; /*!< The calibrated neutral y position of the joystick */
 
-volatile int r_pos;
-volatile int l_pos;
+volatile int x_pos; /*!< The joystick position on the x axis */
+
+volatile int y_pos; /*!< The joystick position on the y axis */
+
+volatile int r_pos; /*!< The position of the right slider */
+
+volatile int l_pos; /*!< The position of the left slider */
+
 
 
 
 void mov_init(void){
 	null_x = adc_rd(JOYSTICK_CHANNEL_X);
 	null_y = adc_rd(JOYSTICK_CHANNEL_Y);
-	
-	// config button pins as input
 	DDRB &= ~(0b111);
 }
 
@@ -52,7 +60,7 @@ void mov_pos_joy_rd(void){
 		y_pos = (data_y - null_y)*100/(null_y);
 	}
 }
-	
+
 void mov_pos_slider_rd(void){
 	char right = adc_rd(SLIDER_CHANNEL_R);
 	char left = adc_rd(SLIDER_CHANNEL_L);
@@ -61,25 +69,6 @@ void mov_pos_slider_rd(void){
 	r_pos = (data_right*100)/255;
 	l_pos = (data_left*100)/255;
 }
-
-	
-pos_j mov_get_joy_pos(void){
-	mov_pos_joy_rd();
-	pos_j joystick_pos;
-	joystick_pos.pos_x = x_pos;
-	joystick_pos.pos_y = y_pos;
-	return joystick_pos;
-}
-
-pos_s mov_get_slider_pos(void){
-	mov_pos_slider_rd();
-	pos_s slider_pos;
-	slider_pos.pos_l_slider = l_pos;
-	slider_pos.pos_r_slider = r_pos;
-	return slider_pos;
-	
-}
-
 
 dir mov_get_joy_dir(void){
 	mov_pos_joy_rd();
@@ -116,34 +105,44 @@ dir mov_get_joy_dir(void){
 	return direction;
 }
 
-int mov_read_joy_button(void){
-	int button_pushed = !(PINB & (1 << PB2));
+int mov_read_button(button b){
+	int button_pushed = 0; 
+	switch (b){
+		case jb:{
+			if(DEBUG_BUTTON){
+				printf("Reading joystick button:\r\n");
+			}
+			button_pushed = !(PINB & (1 << PB2));
+			break;
+		}
+		case rb:{
+			if(DEBUG_BUTTON){
+				printf("Reading right slider button:\r\n");
+			}
+			button_pushed = PINB & (1 << PB0);
+			break;
+		}
+		case lb:{
+			if(DEBUG_BUTTON){
+				printf("Reading left slider button:\r\n");
+			}
+			button_pushed = PINB & (1 << PB1);
+			break;
+		}
+		default:{
+			if(DEBUG_BUTTON){
+				printf("Invalid button selected\r\n");
+			}
+			break;
+		}
+	}
 	if (button_pushed){
-		//printf("Joystick button pressed\r\n");
-		return 1;
+		if(DEBUG_BUTTON){
+			printf("Button pressed\r\n");
+		}
+		return 1; 
 	}
-	
-	return 0;
-}
-
-int mov_read_r_slider_button(void){
-	int button_pushed = PINB & (1 << PB0);
-	//printf("Right button value: %d \r\n", button_pushed);	
-	if (button_pushed != 0){
-		printf("Right slider button pressed\r\n");
-		return 1;
-	}
-	return 0;
-}
-
-int mov_read_l_slider_button(void){
-	int button_pushed = PINB & (1 << PB1);
-	
-	if (button_pushed != 0){
-		printf("Left slider button pressed\r\n");
-		return 1;
-	}
-	return 0;
+	return 0; 
 }
 
 
@@ -152,7 +151,7 @@ input_j mov_get_joy_input(void){
 	input_j joy_input;
 	joy_input.pos_x = x_pos;
 	joy_input.pos_y = y_pos;
-	joy_input.button_pressed = mov_read_joy_button();
+	joy_input.j_button_pressed = mov_read_button(jb);
 	joy_input.direction = mov_get_joy_dir();
 	return joy_input;
 }
@@ -162,7 +161,39 @@ input_s mov_get_slider_input(void){
 	input_s slider_input;
 	slider_input.pos_l_slider = l_pos;
 	slider_input.pos_r_slider = r_pos;
-	slider_input.r_button_pressed =  mov_read_r_slider_button();
-	slider_input.l_button_pressed = mov_read_l_slider_button();
+	slider_input.r_button_pressed =  mov_read_button(rb);
+	slider_input.l_button_pressed = mov_read_button(lb);
 	return slider_input;
+}
+
+
+// Se på frekvens av meldinger som sendes under spill modus
+void mov_send_can_message(int CAN_ID){
+	can_message movement_msg;
+	movement_msg.id = CAN_ID;
+	movement_msg.length = 4;
+	switch (CAN_ID){
+		case CAN_JOYSTICK_ID:{
+			input_j joystick_input = mov_get_joy_input();
+			movement_msg.data[0] = joystick_input.pos_x;
+			movement_msg.data[1] = joystick_input.pos_y;
+			movement_msg.data[2] = joystick_input.j_button_pressed;
+			movement_msg.data[3] = joystick_input.direction;
+			CAN_send_message(&movement_msg);
+			break;
+			}
+		case CAN_SLIDER_ID:{
+			input_s slider_input = mov_get_slider_input();
+			movement_msg.data[0] = slider_input.pos_r_slider;;
+			movement_msg.data[1] = slider_input.pos_l_slider;
+			movement_msg.data[2] = slider_input.r_button_pressed;
+			movement_msg.data[3] = slider_input.l_button_pressed;
+			CAN_send_message(&movement_msg);
+			break;
+		}
+		default:
+			printf("Invalid CAN message ID");
+			break;
+		}
+
 }

@@ -1,19 +1,19 @@
-/*
- * test.h
- *
- * Created: 06.09.2021 12:50:10
- *  Author: elisegm
- */ 
+/**
+ * @file
+ * @brief Test driver for debugging of NODE1 drivers
+ */
 
 
 #ifndef TEST_H_
 #define TEST_H_
 
-void test_address_decoder(void);
+void test_ADC(void);
 
 void test_movement(void);
 
 void test_CAN_loopback(void);
+
+void test_SRAM(void);
 
 
 

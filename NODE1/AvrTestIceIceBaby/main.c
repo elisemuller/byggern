@@ -15,7 +15,7 @@
 #include "test.h"
 #include "xmem.h"
 #include "ADC_driver.h"
-#include "Movement_driver.h"
+#include "movement_driver.h"
 #include "OLED_driver.h"
 #include "menu.h"
 #include "mcp2515.h"
@@ -34,7 +34,7 @@ int main(void)
 	OLED_init();
 	
 	//OLED_print("Hello");
-	menu_init();
+	//menu_init();
 	//menu_print();
 	//
 	printf("######## Starting new session ########\r\n");
@@ -49,11 +49,10 @@ int main(void)
 	input_j joystick_input;
 	//can_message joy_received;
 
-	
-	while (1) {
-		menu_main();		
+	game_set_start_flag();
 
-		
+	while (1) {
+		game_play();		
 		//CAN_receive_message(&joy_received);
 	}
 
