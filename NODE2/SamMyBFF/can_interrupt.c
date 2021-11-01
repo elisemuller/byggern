@@ -18,7 +18,7 @@
 
 #include "can_controller.h"
 
-#define DEBUG_INTERRUPT 1
+#define DEBUG_INTERRUPT 0
 
 volatile input_j joystick;
 volatile input_s slider;
@@ -63,7 +63,7 @@ void CAN0_Handler( void )
 		if(DEBUG_INTERRUPT)printf("\n\r");
 		
 		message_data_collector(message);
-		move_PWM();
+
 	}
 	
 	if(can_sr & CAN_SR_MB0)
@@ -107,23 +107,15 @@ void message_data_collector(CAN_MESSAGE msg){
 			slider.l_button_pressed = msg.data[3];
 		}
 	}
+	game_update_input_msg();
 }
 
 
-void move_PWM(void){
-	int j_x = joystick.pos_x;
-	if((j_x <= 0xff) && (j_x >= 0x9c)){
-		j_x = ~(j_x-1) * (-1);
-	}
-	
-	//printf("X value: %x", j_x);
-	// if x in [9c ff]: x = -1 * ~(x-1)
-	dir direction = joystick.direction;
-	//if (direction == LEFT){
-		//printf("Left \r\n");
-	//}
-	//if (direction == RIGHT){
-		//printf("Right \r\n");
-	//}
-	servo_dutycycle_modify_x(j_x);
+input_j can_get_joy_input(void){
+	return joystick;
+}
+
+
+input_s can_get_slider_input(void){
+	return slider;
 }

@@ -8,10 +8,10 @@ void adc_init(void){
 	PMC->PMC_PCER1 |= ( PMC_PCER1_PID37 ); //ADC ID = 37
 	
 	// Freerun mode, og sover mellom conversions. Kan eventuelt sette opp fast wake up? 
-	ADC->ADC_MR |= (ADC_MR_FREERUN); //| (ADC_MR_SLEEP); //Bare gjetter på hva ting heter
+	ADC->ADC_MR |= (ADC_MR_FREERUN)| (ADC_MR_SLEEP); //Bare gjetter på hva ting heter
 	
 	// Enable channel
-	ADC->ADC_CHER |= ADC_CHER_CH0; // der x er tallet på kanalen vi vil enable
+	ADC->ADC_CHER |= ADC_CHER_CH0; // Channel 0 is at A7
   }
 
 volatile uint32_t adc_rd(void){

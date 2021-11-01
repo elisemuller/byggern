@@ -8,7 +8,7 @@
 #include "sam.h"
 #include <stdio.h>
 #include <unistd.h>
-//#include "delay.h"
+#include "delay.h"
 #include "blink.h"
 
 void led_enable(void){
@@ -22,11 +22,12 @@ void led_enable(void){
 void blink(void) {
 	// sett output
 	PIOA->PIO_SODR = PIO_SODR_P19;
-	PIOA->PIO_SODR = PIO_SODR_P20;
-	//_delay_ms(1000);
+	PIOA->PIO_CODR = PIO_CODR_P20;
+	delay_ms(1000);
 	
-	// clear output
-	//PIOA->PIO_CODR = PIO_CODR_P19;
-	//PIOA->PIO_CODR = PIO_CODR_P20;
-	//_delay_ms(1000);
+	 //clear output
+	PIOA->PIO_CODR = PIO_CODR_P19;
+
+	PIOA->PIO_SODR = PIO_SODR_P20;
+	delay_ms(1000);
 }

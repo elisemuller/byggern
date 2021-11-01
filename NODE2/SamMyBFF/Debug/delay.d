@@ -1,4 +1,4 @@
-main.d main.o: .././main.c \
+delay.d delay.o: .././delay.c \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/sam.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/sam3x8e.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stdint.h \
@@ -105,9 +105,7 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\unistd.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\unistd.h \
- .././delay.h .././blink.h .././can_controller.h .././can_interrupt.h \
- .././PWM_driver.h .././test_driver.h .././adc_driver.h \
- .././motor_driver.h
+ .././delay.h .././uart.h .././printf-stdarg.h
 
 C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/sam.h:
 
@@ -323,16 +321,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 .././delay.h:
 
-.././blink.h:
+.././uart.h:
 
-.././can_controller.h:
-
-.././can_interrupt.h:
-
-.././PWM_driver.h:
-
-.././test_driver.h:
-
-.././adc_driver.h:
-
-.././motor_driver.h:
+.././printf-stdarg.h:

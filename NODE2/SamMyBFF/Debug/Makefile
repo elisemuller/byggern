@@ -40,13 +40,17 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../adc_driver.c \
 ../blink.c \
+../buzzer_driver.c \
 ../can_controller.c \
 ../can_interrupt.c \
+../delay.c \
 ../Device_Startup/startup_sam3xa.c \
 ../Device_Startup/system_sam3xa.c \
+../game_driver.c \
 ../main.c \
 ../motor_driver.c \
 ../printf-stdarg.c \
+../PWM_driver.c \
 ../servo_driver.c \
 ../test_driver.c \
 ../uart.c
@@ -61,13 +65,17 @@ ASM_SRCS +=
 OBJS +=  \
 adc_driver.o \
 blink.o \
+buzzer_driver.o \
 can_controller.o \
 can_interrupt.o \
+delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
+game_driver.o \
 main.o \
 motor_driver.o \
 printf-stdarg.o \
+PWM_driver.o \
 servo_driver.o \
 test_driver.o \
 uart.o
@@ -75,13 +83,17 @@ uart.o
 OBJS_AS_ARGS +=  \
 adc_driver.o \
 blink.o \
+buzzer_driver.o \
 can_controller.o \
 can_interrupt.o \
+delay.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
+game_driver.o \
 main.o \
 motor_driver.o \
 printf-stdarg.o \
+PWM_driver.o \
 servo_driver.o \
 test_driver.o \
 uart.o
@@ -89,13 +101,17 @@ uart.o
 C_DEPS +=  \
 adc_driver.d \
 blink.d \
+buzzer_driver.d \
 can_controller.d \
 can_interrupt.d \
+delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
+game_driver.d \
 main.d \
 motor_driver.d \
 printf-stdarg.d \
+PWM_driver.d \
 servo_driver.d \
 test_driver.d \
 uart.d
@@ -103,13 +119,17 @@ uart.d
 C_DEPS_AS_ARGS +=  \
 adc_driver.d \
 blink.d \
+buzzer_driver.d \
 can_controller.d \
 can_interrupt.d \
+delay.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
+game_driver.d \
 main.d \
 motor_driver.d \
 printf-stdarg.d \
+PWM_driver.d \
 servo_driver.d \
 test_driver.d \
 uart.d
@@ -146,6 +166,13 @@ LINKER_SCRIPT_DEP+=  \
 	@echo Finished building: $<
 	
 
+./buzzer_driver.o: .././buzzer_driver.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./can_controller.o: .././can_controller.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -160,6 +187,13 @@ LINKER_SCRIPT_DEP+=  \
 	@echo Finished building: $<
 	
 
+./delay.o: .././delay.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 Device_Startup/startup_sam3xa.o: ../Device_Startup/startup_sam3xa.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -168,6 +202,13 @@ Device_Startup/startup_sam3xa.o: ../Device_Startup/startup_sam3xa.c
 	
 
 Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./game_driver.o: .././game_driver.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
@@ -189,6 +230,13 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	
 
 ./printf-stdarg.o: .././printf-stdarg.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./PWM_driver.o: .././PWM_driver.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\5.0.1\CMSIS\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -O1 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

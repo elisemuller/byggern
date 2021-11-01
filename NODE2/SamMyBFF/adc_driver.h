@@ -1,9 +1,7 @@
-/*
- * adc_driver.h
- *
- * Created: 18.10.2021 12:27:14
- *  Author: elisegm
- */ 
+/**
+ * @file
+ * @brief Driver for analog to digital conversion on NODE2
+ */
 
 
 #ifndef ADC_DRIVER_H_
