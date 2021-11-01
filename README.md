@@ -5,6 +5,7 @@
 - Bruke SRAM for å håndtere lite minne
 - ADC - sleep når det ikke konverteres
 - Lage testfunksjoner i alle driverne der det er hensiktsmessig
+- Fikse threshold for joystick (den gir 100 før den er helt til en side) 
 
 ### NODE 2
 - Sette opp delay (Systick handler)
