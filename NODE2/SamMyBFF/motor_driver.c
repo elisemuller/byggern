@@ -10,6 +10,7 @@
 #include "sam.h"
 #include "can_controller.h"
 #include "can_interrupt.h"
+#include "time.h"
 
 
 #define MJ2_ENCODER_DATA (PIO_PER_P1 | PIO_PER_P2 | PIO_PER_P3 | PIO_PER_P4 | PIO_PER_P5 | PIO_PER_P6 | PIO_PER_P7 | PIO_PER_P8)
@@ -86,11 +87,11 @@ uint16_t motor_read_encoder(void){
 	PIOD->PIO_CODR = PIO_CODR_P0; // !OE low to enable output of encoder
 	PIOD->PIO_CODR = PIO_CODR_P2; // SEL low to get high byte
 	
-	delay_us(20);
+	time_delay_us(20);
 	high_byte = ((PIOC->PIO_PDSR | MJ2_ENCODER_DATA) << 8);
 	PIOD->PIO_SODR = PIO_SODR_P2; // SEL high to get low byte
 	
-	delay_us(20);
+	time_delay_us(20);
 	low_byte = (PIOC->PIO_PDSR | MJ2_ENCODER_DATA);
 	encoder_data = (high_byte | low_byte);
 	

@@ -8,21 +8,29 @@
 
 
 /**
- * @brief Initializes the game
+ * @brief Initializes the game.
  */
 void game_init(void);
 
-void game_end(void);
+/**
+ * @return Highscore for latest game.
+ */
+int game_get_highscore(void);
 
 /**
- * @brief Counts how long the player is able to keep the game going
+ * @brief Controls the motor and servo with the input from the joystick controller.
  */
-void game_score_counter(void);
-
 void game_joystick_controller(void);
 
+/**
+ * @brief Updates the input received in the CAN messages from node 2.
+ */
 void game_update_input_msg(void);
 
-//void TC0_setup(void);
+/**
+ * @brief Starts the game and is responsible for the logic of the game.
+ */
+void game_start(void);
+
 
 #endif /* GAME_DRIVER_H_ */

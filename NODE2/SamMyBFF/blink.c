@@ -8,11 +8,11 @@
 #include "sam.h"
 #include <stdio.h>
 #include <unistd.h>
-#include "delay.h"
+#include "time.h"
 #include "blink.h"
 
 void led_enable(void){
-	// bruker pin 19 og 20 på port A
+	// bruker pin 19 og 20 pï¿½ port A
 	// peripheral enable register
 	PIOA->PIO_PER |= (0b11 << 19);
 	// output enable register
@@ -23,11 +23,11 @@ void blink(void) {
 	// sett output
 	PIOA->PIO_SODR = PIO_SODR_P19;
 	PIOA->PIO_CODR = PIO_CODR_P20;
-	delay_ms(1000);
+	time_delay_ms(1000);
 	
 	 //clear output
 	PIOA->PIO_CODR = PIO_CODR_P19;
 
 	PIOA->PIO_SODR = PIO_SODR_P20;
-	delay_ms(1000);
+	time_delay_ms(1000);
 }
