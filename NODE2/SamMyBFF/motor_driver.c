@@ -53,7 +53,7 @@ void motor_set_speed(uint32_t speed){
 	//Implementere direction utfira om speed er negativ/positiv
 	//Set motor speed by adjusting dac voltage
 	// Use DACC_CDR register to write to motor speed. 
-	//PIOD->PIO_SODR = PIO_SODR_P9; // EN = 1 --> Skrur på motoren
+	//PIOD->PIO_SODR = PIO_SODR_P9; // EN = 1 --> Skrur pï¿½ motoren
 }
 
 void motor_power(int on){
@@ -82,7 +82,7 @@ uint16_t motor_read_encoder(void){
 	uint16_t encoder_data;
 	int debug = 1; 
 	motor_reset_encoder(0);
-	// Legge inn at dersom retning er i negativ retning så vil vi måtte lese 2's komplement.
+	// Legge inn at dersom retning er i negativ retning sï¿½ vil vi mï¿½tte lese 2's komplement.
 	PIOD->PIO_CODR = PIO_CODR_P0; // !OE low to enable output of encoder
 	PIOD->PIO_CODR = PIO_CODR_P2; // SEL low to get high byte
 	
@@ -136,3 +136,6 @@ void motor_controller(void){
 		motor_set_speed(0);
 	}
 }
+
+
+// testing push from pc 
