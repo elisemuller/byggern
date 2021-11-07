@@ -11,12 +11,15 @@
 #include <avr/io.h>
 #include <stdio.h>
 #include <avr/interrupt.h>
+#include "game_driver.h"
 
 // Higher priority message 
 volatile uint8_t READ_B0_MESSAGE = 0;
 
 // Lower priority message
 volatile uint8_t READ_B1_MESSAGE = 0;
+
+volatile highscore record_msg; 
 
 
 
@@ -141,5 +144,26 @@ ISR(INT0_vect){
 		// Clear interrupt flag to allow new message reception
 		mcp2515_bit_modify(0x02, 0x00, MCP_CANINTF);
 	}
-	
+	CAN_message_handler();
+}
+
+
+
+void CAN_message_handler(void){
+	if (READ_B0_MESSAGE || READ_B1_MESSAGE ){
+		can_message msg; 
+		CAN_receive_message(&msg);
+	}
+	switch (msg.id){
+		case CAN_GAME_END_ID: {
+			record_msg.best_highscore = msg.data[0];
+			record_msg.last_playtime = msg.data[1];
+			game_set_end_flag();
+		}
+	}
+}
+
+
+highscore CAN_get_highscore(void){
+	return record_msg;
 }

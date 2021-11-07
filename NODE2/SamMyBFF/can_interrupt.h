@@ -14,6 +14,10 @@
 
 #define CAN_JOYSTICK_ID 1
 #define CAN_SLIDER_ID 2
+#define CAN_GAME_START_ID 3
+#define CAN_GAME_END_ID 4
+#define CAN_BUZZER_ID 5
+
 
 #include "can_controller.h"
 
@@ -39,6 +43,7 @@ typedef struct input_slider {
 	int r_button_pressed;
 	int l_button_pressed;
 } input_s;
+
 
 
 void CAN0_Handler       ( void );

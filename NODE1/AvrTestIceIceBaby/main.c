@@ -32,28 +32,10 @@ int main(void)
 	mov_init();
 	CAN_init(MODE_NORMAL);
 	OLED_init();
-	
-	//OLED_print("Hello");
-	//menu_init();
-	//menu_print();
-	//
 	printf("######## Starting new session ########\r\n");
-	
-	//test_CAN_loopback();
-	
-	//SRAM_test();
-	//test_movement();
-	
-	can_message test_joystick_message;
-
-	input_j joystick_input;
-	//can_message joy_received;
-
-	game_set_start_flag();
 
 	while (1) {
 		game_play();		
-		//CAN_receive_message(&joy_received);
 	}
 
 }

@@ -15,6 +15,7 @@
 
 void game_set_start_flag(void);
 void game_interrupt_enable(void);
-
+void game_interrupt_disable(void);
+void game_set_end_flag(void);
 
 #endif /* GAME_DRIVER_H_ */

@@ -17,6 +17,7 @@
 #include "printf-stdarg.h"
 
 #include "can_controller.h"
+#include "game_driver.h"
 
 #define DEBUG_INTERRUPT 0
 
@@ -98,6 +99,7 @@ void message_data_collector(CAN_MESSAGE msg){
 			joystick.pos_y = msg.data[1];
 			joystick.button_pressed = msg.data[2];
 			joystick.direction = msg.data[3];
+			game_update_mov_msg();
 			break;
 		}
 		case CAN_SLIDER_ID:{
@@ -105,9 +107,14 @@ void message_data_collector(CAN_MESSAGE msg){
 			slider.pos_l_slider = msg.data[1];
 			slider.r_button_pressed = msg.data[2];
 			slider.l_button_pressed = msg.data[3];
+			game_update_mov_msg();
+			break;
+		}
+		case CAN_GAME_START_ID:{
+			game_set_start_flag();
+			break;
 		}
 	}
-	game_update_input_msg();
 }
 
 

@@ -10,14 +10,12 @@
 #include <avr/io.h>
 #include "movement_driver.h"
 #include "CAN_driver.h"
+#include "menu.h"
 
 #include <stdio.h>
 
 volatile int send_counter = 0;
 
-// Fikse score handling som teller hvor lenge spilleren har spilt. 
-
-// States for ulike spillmodus
 
 volatile int START_GAME = 0;
 
@@ -46,23 +44,26 @@ ISR(TIMER0_OVF_vect){
 }
 
 void game_play(void){
-	if(SEND_GAME_MSG){
-		if(START_GAME){
+	if(START_GAME){
+		if(SEND_GAME_MSG){
 			mov_send_can_message(CAN_JOYSTICK_ID);
 			mov_send_can_message(CAN_SLIDER_ID);
 			SEND_GAME_MSG = 0; 
-			
-			send_counter++;
-			printf("Sendt ganger: %d\r\n", send_counter);
-		}
-		else{
-			printf("Game has not started\r\n");
-			SEND_GAME_MSG = 0; 
 		}
 	}
+	else{
+		menu_state_controller();
+	}
+
 }
 
 void game_set_start_flag(void){
 	START_GAME = 1; 
 	game_interrupt_enable();
+}
+
+void game_set_end_flag(void){
+	START_GAME = 0; 
+	game_interrupt_disable();
+	//fikse highscore her? 
 }

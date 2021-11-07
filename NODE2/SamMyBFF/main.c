@@ -18,6 +18,7 @@
 #include "test_driver.h"
 #include "adc_driver.h"
 #include "motor_driver.h"
+#include "game_driver.h"
 
 
 
@@ -32,7 +33,6 @@ int main(void)
 	//printf("NODE 2 STARTING UP");
 	adc_init();
 	motor_init();
-	motor_power(1);
 	//printf("Hello\r\n");
 	//printf("Goodbye muddafucca\r\n");
 	
@@ -44,24 +44,16 @@ int main(void)
 	//time_t now_time = time(NULL);
 	//
 	input_j joystick;
+	int highscore; 
 	//motor_reset_encoder();
 	
     while (1) 
     {
-		blink();
-
-		//joystick = can_get_joy_input();
-		//int j_y = joystick.pos_y;
-		//PWM_dutycycle_modify(j_y,0);
-		//game_joystick_controller();
-		//motor_read_encoder();
-		//printf("Joystick x pos: %d\r\n", joystick.pos_x);
-		//game_joystick_controller();
 		
-		//motor_set_direction(LEFT);
-		//motor_set_speed(2000);
+		game_play();
+		
+		//motor_read_encoder();
 
-		//now_time = time(NULL);
-		//printf("Time: %d\r\n", now_time);
+
     }
 }
