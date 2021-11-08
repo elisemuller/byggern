@@ -60,7 +60,7 @@ void setDifficulty(void){
 
 void seeHighscore(void){
 	highscore record; 
-	record = CAN_get_highscore(void);
+	//record = CAN_get_highscore();
 	
 	OLED_goto_pos(0,0);
 	OLED_print("Highscore: ");
@@ -78,7 +78,6 @@ void startGame(void){
 	OLED_reset();
 	// Turn off OLED
 	game_set_start_flag();
-	menu_send_can_message(CAN_GAME_START_ID);
 }
 
 void adjustVolume(int vol){
@@ -98,9 +97,6 @@ void menu_send_can_message(int CAN_ID){
 			menu_msg.data[1] = sound.list_title;
 			CAN_send_message(&menu_msg);
 			break;
-		}
-		case CAN_GAME_START_ID:{
-			CAN_send_message(&menu_msg);
 		}
 		default:{
 			printf("Invalid CAN message ID");
@@ -145,6 +141,8 @@ void menu_init(void){
 	// Initialize sound settings
 	sound.list_title = LOBBY_MUSIC;
 	sound.volume = 10; // Max volume
+	
+	menu_print();
 }
 
 
@@ -194,14 +192,14 @@ void menu_move_pointer(dir direction){
 		case DOWN:{
 			if(current_child_pointer < menu_position->num_children - 1){
 				current_child_pointer++;
-				// menu_print();
+				menu_print();
 			}
 			break; 
 		}
 		case UP:{
 			if(current_child_pointer > 0){
 				current_child_pointer--;
-				// menu_print();
+				menu_print();
 			}
 			break;
 		}
@@ -209,7 +207,7 @@ void menu_move_pointer(dir direction){
 			if(menu_position->parent != NULL){
 				menu_position = menu_position->parent; 
 				current_child_pointer = previous_parent;
-				// menu_print();
+				menu_print();
 			}
 			break;
 		}
@@ -218,7 +216,7 @@ void menu_move_pointer(dir direction){
 				menu_position = menu_position->children[current_child_pointer];
 				previous_parent = current_child_pointer;
 				current_child_pointer = 0; 
-				// menu_print();
+				menu_print();
 			}
 			break;
 		}
@@ -230,7 +228,7 @@ void menu_move_pointer(dir direction){
 
 void menu_state_controller(){
 	joystick_input = mov_get_joy_input();
-	menu_print(); //Debug her om dette kan ødelegge?
+	//menu_print(); //Debug her om dette kan ødelegge?
 	switch (joystick_input.direction){
 		case NEUTRAL: {
 			if (mov_read_button(jb)){

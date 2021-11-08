@@ -17,7 +17,7 @@
  * @def DEBUG_BUTTON
  * @brief A macro that is used to debug if the buttons are working when set to 1
  */
-#define DEBUG_BUTTON 1
+#define DEBUG_BUTTON 0
 
 volatile int null_x; /*!< The calibrated neutral x position of the joystick */
 
@@ -180,9 +180,11 @@ void mov_send_can_message(int CAN_ID){
 			movement_msg.data[2] = joystick_input.j_button_pressed;
 			movement_msg.data[3] = joystick_input.direction;
 			CAN_send_message(&movement_msg);
+			//printf("Sent joystick pos\r\n");
 			break;
 			}
 		case CAN_SLIDER_ID:{
+			printf("Sent slider input \n\r");
 			input_s slider_input = mov_get_slider_input();
 			movement_msg.data[0] = slider_input.pos_r_slider;;
 			movement_msg.data[1] = slider_input.pos_l_slider;

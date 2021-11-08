@@ -32,10 +32,16 @@ int main(void)
 	mov_init();
 	CAN_init(MODE_NORMAL);
 	OLED_init();
+	menu_init();
 	printf("######## Starting new session ########\r\n");
-
+	
+	
+	
+	
+	
+	
 	while (1) {
-		game_play();		
+		game_play();
 	}
 
 }

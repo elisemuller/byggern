@@ -11,8 +11,10 @@
 #include "movement_driver.h"
 #include "CAN_driver.h"
 #include "menu.h"
-
+#include <util/delay.h>
 #include <stdio.h>
+
+#define F_CPU 4915200
 
 volatile int send_counter = 0;
 
@@ -46,6 +48,7 @@ ISR(TIMER0_OVF_vect){
 void game_play(void){
 	if(START_GAME){
 		if(SEND_GAME_MSG){
+			//printf("Sending message\r\n");
 			mov_send_can_message(CAN_JOYSTICK_ID);
 			mov_send_can_message(CAN_SLIDER_ID);
 			SEND_GAME_MSG = 0; 
@@ -53,17 +56,28 @@ void game_play(void){
 	}
 	else{
 		menu_state_controller();
+		
 	}
+	
 
 }
 
 void game_set_start_flag(void){
 	START_GAME = 1; 
 	game_interrupt_enable();
+	can_message menu_msg;
+	menu_msg.id = CAN_GAME_START_ID;
+	menu_msg.length = 1;
+	menu_msg.data[0] = 1;
+	CAN_send_message(&menu_msg);
 }
 
 void game_set_end_flag(void){
 	START_GAME = 0; 
+	OLED_reset();
+	OLED_print("Game over loser");
+	_delay_ms(5000);
+	menu_print();
 	game_interrupt_disable();
 	//fikse highscore her? 
 }

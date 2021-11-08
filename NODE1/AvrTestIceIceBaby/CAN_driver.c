@@ -109,11 +109,11 @@ void CAN_receive_message(can_message* p_msg) {
 
 
 void CAN_interrupt_init(void){
+	
 	// Disable global interrupts
 	cli();
 	
-	// Enable interrupts on MCP for when messages are received in the receive buffers
-	mcp2515_bit_modify(0b00000011, 0xFF, MCP_CANINTE);
+	
 	
 	DDRD &= ~(1 << PD2);
 	
@@ -124,12 +124,16 @@ void CAN_interrupt_init(void){
 	// Define INT0 as interrupt input
 	GICR |= (1 << INT0);
 	
+	// Enable interrupts on MCP for when messages are received in the receive buffers
+	mcp2515_bit_modify(0b00000011, 0xFF, MCP_CANINTE);
+
 	// Enable global interrupts
 	sei();
 }
 
 ISR(INT0_vect){
 	uint8_t interrupt_flag = mcp2515_read(MCP_CANINTF);
+	printf("Received message\n\r");
 	if (interrupt_flag & 0x01){
 		// Set receive flag for receive buffer 0
 		READ_B0_MESSAGE = 1;
@@ -150,12 +154,14 @@ ISR(INT0_vect){
 
 
 void CAN_message_handler(void){
+	can_message msg; 
 	if (READ_B0_MESSAGE || READ_B1_MESSAGE ){
-		can_message msg; 
+		
 		CAN_receive_message(&msg);
 	}
 	switch (msg.id){
 		case CAN_GAME_END_ID: {
+			printf("END GAME MESSAGE RECEIVED\n\r");
 			record_msg.best_highscore = msg.data[0];
 			record_msg.last_playtime = msg.data[1];
 			game_set_end_flag();
