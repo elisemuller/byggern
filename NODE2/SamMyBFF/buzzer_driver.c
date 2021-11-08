@@ -24,9 +24,9 @@ void buzzer_init(int vol){
 
 void buzzer_play_note(int freq, int duration){
     PWM_frequency_modify(freq);
-    PWM_dutycycle_modify(dutycycle, 0, BUZZER_CHANNEL, 0);
+	PWM_dutycycle_modify(0, BUZZER_CHANNEL, dutycycle);
 
-    //_delay_ms(noteDuration); //Tonen holder seg her så lenge da vi ikke endrer den
+    time_delay_ms(duration); //Tonen holder seg her så lenge da vi ikke endrer den
 
     // Set frequency at pwm pin 45
     // Set duty cycle of pwm to select volume. --> 0.5 er maks. 

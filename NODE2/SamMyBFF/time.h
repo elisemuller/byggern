@@ -10,6 +10,13 @@
 #define TIME_H_
 
 
+typedef enum {
+	us,
+	ms,
+	s
+} time;
+
+
 /**
  * @brief Sets a time delay for @p delay ms
  * @param delay The time delay in milliseconds
@@ -23,21 +30,8 @@ void time_delay_ms(int delay);
  */
 void time_delay_us(int delay);
 
-/**
- * @brief Starts the time counter 
- */
-void time_start_counter(void);
 
-/**
- * @brief Increases the @p counter for every second
- * @param counter that counts the time
- */
-void time_update_counter(int &counter);
-
-/**
- * @brief Stops the time counter 
- */
-void time_stop_counter(void);
+int time_get_count(time count);
 
 
 #endif /* TIME_H_ */

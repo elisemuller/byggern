@@ -25,7 +25,7 @@ void PWM_init(void);
  * @param channel The selected channel for PWM modification
  * @param debug 
  */
-void PWM_dutycycle_modify(int debug);
+void PWM_dutycycle_modify(int debug, int channel, int vol);
 
 /**
  * @brief Modifies the @p freq of the PWM for the selected @p channel.

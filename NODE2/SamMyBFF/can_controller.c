@@ -137,10 +137,12 @@ uint8_t can_init( uint8_t num_tx_mb, uint8_t num_rx_mb)
  * \retval Success(0) or failure(1)
  */
 uint8_t can_send(CAN_MESSAGE* can_msg, uint8_t tx_mb_id)
-{
+{	
+	
 	//Check that mailbox is ready
 	if(CAN0->CAN_MB[tx_mb_id].CAN_MSR & CAN_MSR_MRDY)
 	{
+		printf("CAN MESSAGE sent\n\r");
 		//Set message ID and use CAN 2.0B protocol
 		CAN0->CAN_MB[tx_mb_id].CAN_MID = CAN_MID_MIDvA(can_msg->id) | CAN_MID_MIDE ;
 		
@@ -159,7 +161,7 @@ uint8_t can_send(CAN_MESSAGE* can_msg, uint8_t tx_mb_id)
 	}
 	
 	else //Mailbox busy
-	{
+	{	printf("Sending CAN MESSAGE\n\r");
 		return 1;
 	}
 	

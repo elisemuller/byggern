@@ -45,7 +45,7 @@ void game_play(void);
 void game_set_start_flag(void);
 
 
-void game_over(void);
+void game_ended(void);
 
 
 #endif /* GAME_DRIVER_H_ */

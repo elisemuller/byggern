@@ -8,8 +8,8 @@
 #include "sam.h"
 #include <stdio.h>
 #include <unistd.h>
-#include "time.h"
 #include "blink.h"
+#include "time.h"
 
 void led_enable(void){
 	// bruker pin 19 og 20 p� port A
@@ -23,11 +23,11 @@ void blink(void) {
 	// sett output
 	PIOA->PIO_SODR = PIO_SODR_P19;
 	PIOA->PIO_CODR = PIO_CODR_P20;
-	time_delay_ms(1000);
+	time_delay_us(1000000);
 	
 	 //clear output
 	PIOA->PIO_CODR = PIO_CODR_P19;
 
 	PIOA->PIO_SODR = PIO_SODR_P20;
-	time_delay_ms(1000);
+	time_delay_us(1000000);
 }

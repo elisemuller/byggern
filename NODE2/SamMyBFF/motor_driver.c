@@ -78,20 +78,21 @@ void motor_reset_encoder(int reset){
 }
 
 uint16_t motor_read_encoder(void){
-	uint16_t high_byte;
-	uint16_t low_byte;
-	uint16_t encoder_data;
+	uint16_t high_byte = 0;
+	uint16_t low_byte = 0;
+	uint16_t encoder_data = 0;
 	int debug = 1; 
 	motor_reset_encoder(0);
 	// Legge inn at dersom retning er i negativ retning s� vil vi m�tte lese 2's komplement.
 	PIOD->PIO_CODR = PIO_CODR_P0; // !OE low to enable output of encoder
 	PIOD->PIO_CODR = PIO_CODR_P2; // SEL low to get high byte
 	
-	time_delay_us(20);
+	time_delay_us(25);
 	high_byte = ((PIOC->PIO_PDSR | MJ2_ENCODER_DATA) << 8);
+	
 	PIOD->PIO_SODR = PIO_SODR_P2; // SEL high to get low byte
 	
-	time_delay_us(20);
+	time_delay_us(25);
 	low_byte = (PIOC->PIO_PDSR | MJ2_ENCODER_DATA);
 	encoder_data = (high_byte | low_byte);
 	
@@ -114,6 +115,7 @@ void motor_set_direction(dir direction){
 void motor_controller(void){
 	input_j joystick = can_get_joy_input();
 	int j_x = joystick.pos_x;
+	//printf("joystick pos %d \n\r", j_x);
 	            // if j_x is represented by a negative number in two's complement:
 	            // --> Convert to negative number between -100 and 0
 	if((j_x <= 0xff) && (j_x >= 0x9c)){

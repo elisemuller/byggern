@@ -5,6 +5,7 @@
 #include "can_interrupt.h"
 #include "adc_driver.h"
 #include "time.h"
+#include "blink.h"
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -12,72 +13,91 @@
 volatile int NEW_MOV_INPUT = 0; 
 volatile int GAME_START = 0; 
 volatile int playtime = 0; 
+volatile int game_over = 0; 
 volatile highscore record; 
+volatile int start_time = 0; 
 
 void game_init(void){
-	time_start_counter();
 	motor_power(1);
-	playtime = 0; 
+	start_time = time_get_count(s); 
+	//playtime = 0; 
     //Pass på at servo er i nullposisjon på en eller annen måte. 
 }
 
 void game_update_highscore(void){
-	printf("Current playtime is: %d \r\n", playtime);
 	record.last_playtime = playtime;
 	if(playtime > record.best_highscore){
 		record.best_highscore = playtime;
 	}
+	printf("Current playtime is: %d \r\n", playtime);
+	printf("Highscore: %d\n\r", record.best_highscore);
 }
 
 void game_joystick_controller(void){
+	
 	if (NEW_MOV_INPUT){
+		//printf("controlling joystick \n\r");
 		int debug = 0;
-		PWM_dutycycle_modify(debug);
+		input_s slider = can_get_slider_input();
+		PWM_dutycycle_modify(debug, SERVO_CHANNEL, 0);
 		motor_controller();
+		solenoid_shoot(slider.l_button_pressed);
 		NEW_MOV_INPUT = 0; 
 	}
 }
 
 void game_update_mov_msg(void){ 
+	
 	NEW_MOV_INPUT = 1; 
 }
 
-void game_play(void){
-	if (GAME_START){
-		game_init();
-		int game_over = 0; 
-		int ir_beam_lower_lim = 200; // Hva er denne? 
-		
-		while (!game_over){
-
-			game_joystick_controller();
-			uint32_t ir_beam = adc_rd();
-			if (ir_beam < ir_beam_lower_lim){
-				game_over = 1; 
-			}
-			time_update_counter(playtime);
-		}
-
-		game_over();
-
-	}
-}
-
-void game_set_start_flag(void){
-	printf("Starting the ping pong game\r\n");
-	GAME_START = 1; 
-}
-
-void game_over(void){
-	GAME_START = 0; 
+void game_ended(void){
+	GAME_START = 0;
+	game_over = 0; 
 	motor_power(0); // Turns off motor
-	time_stop_counter(); // Stops
+	//time_stop_counter_us(); // Stops
 	game_update_highscore();
+	printf("Game over. Playtime: %d \n\r",playtime);
 
 	CAN_MESSAGE end_game_msg;
 	end_game_msg.id = CAN_GAME_END_ID;
 	end_game_msg.data_length = 2;
 	end_game_msg.data[0] = record.best_highscore;
 	end_game_msg.data[1] = record.last_playtime;
-	can_send(&end_game_msg, 0);	// Mailbox 0? 
+	can_send(&end_game_msg, 0);	// Mailbox 0?
 }
+
+void game_play(void){
+	//printf("hei\n\r");
+	if (GAME_START){
+		playtime = 0; 
+		printf("Game started\n\r");
+		game_init();
+		int ir_beam_lower_lim = 800; 
+		
+		while (!game_over){
+			
+			int current_time = time_get_count(s); 
+
+			game_joystick_controller();
+			uint32_t ir_beam = adc_rd();
+			//printf("IR value: %d\n\r",ir_beam);
+			if (ir_beam < ir_beam_lower_lim){
+				game_over = 1; 
+				printf("Hello\n\r");
+			}
+			int time_diff = (current_time - start_time);
+			playtime = time_diff;
+			printf("Playtime : %d\n\r",playtime);
+		}
+	
+		game_ended();
+
+	}
+}
+
+void game_set_start_flag(void){
+	//printf("Starting the ping pong game\r\n");
+	GAME_START = 1; 
+}
+

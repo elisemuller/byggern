@@ -10,55 +10,46 @@
 #include <unistd.h>
 #include "time.h"
 #include "uart.h"
-#include "printf-stdarg.h"
+
+#define F_CPU 84000000UL
+
+
+volatile int us_counter = 0;
+volatile int ms_counter = 0;
+volatile int s_counter = 0;
 
 
 void time_delay_ms(int delay){
-	int counter = 0; 
-	// Enables the counter
-	SysTick->CTRL |= (SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
+	int start_time = ms_counter;
 	
-	// Value loaded to the VAL register when it reaches 0
-	SysTick->LOAD |= (84000/8); // MCK / 8 / 1000
-	
-	while(counter < delay){
-		if(SysTick->CTRL & (SysTick_CTRL_COUNTFLAG_Msk)){
-			counter++;
-		}
-	}
-	SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
+	while((ms_counter-start_time) < delay);
 }
 
 void time_delay_us(int delay){
-	int counter = 0;
-	// Enables the counter
-	SysTick->CTRL |= (SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
-		
-	// Value loaded to the VAL register when it reaches 0
-	SysTick->LOAD |= (84/8); // MCK / 8 / 10^6
-		
-	while(counter < delay){
-		if(SysTick->CTRL & (SysTick_CTRL_COUNTFLAG_Msk)){
-			counter++;
+	int start_time = us_counter;
+	
+	while((us_counter-start_time) < delay);
+
+}
+
+
+int time_get_count(time count){
+	switch (count){
+		case us: {
+			return us_counter; 
 		}
-	}
-	SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
-}
-
-void time_start_counter(void){
-	SysTick->CTRL |= (SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
-	SysTick->LOAD |= (84000000/8); // MCK / 8 
-
-}
-
-void time_update_counter(int &counter){
-	if(SysTick->CTRL & (SysTick_CTRL_COUNTFLAG_Msk)){
-		counter++;
+		case ms: {
+			
+			return ms_counter/1000;
+		}
+		case s: {
+			//printf("Seconds\n\r");
+			s_counter = us_counter/1000000;
+			return s_counter;
 		}
 	}
 }
 
-
-void time_stop_counter(void){
-	SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk << SysTick_CTRL_ENABLE_Pos);
+SysTick_Handler(){
+	us_counter++;
 }

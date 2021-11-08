@@ -20,5 +20,6 @@ volatile uint32_t adc_rd(void){
 	// Read converted data 
 	uint32_t data;
 	data = ADC -> ADC_CDR[0]; // Channel 0
+	//printf("Ir data: %d\n\r",data);
 	return data;
 }

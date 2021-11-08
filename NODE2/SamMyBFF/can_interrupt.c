@@ -17,6 +17,7 @@
 #include "printf-stdarg.h"
 
 #include "can_controller.h"
+#include "blink.h"
 #include "game_driver.h"
 
 #define DEBUG_INTERRUPT 0
@@ -43,12 +44,14 @@ void CAN0_Handler( void )
 		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
 		{
 			can_receive(&message, 1);
+			//printf("Inside message box 1 \n\r");
 
 		}
 		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event
 		
 		{
 			can_receive(&message, 2);
+			//printf("Inside message box 2 \n\r");
 		}
 		else
 		{
@@ -93,6 +96,8 @@ void CAN0_Handler( void )
 
 
 void message_data_collector(CAN_MESSAGE msg){
+	
+	//printf("message id: %d \n\r", msg.id);
 	switch(msg.id){
 		case CAN_JOYSTICK_ID:{
 			joystick.pos_x = (int8_t)msg.data[0];
@@ -100,6 +105,7 @@ void message_data_collector(CAN_MESSAGE msg){
 			joystick.button_pressed = msg.data[2];
 			joystick.direction = msg.data[3];
 			game_update_mov_msg();
+			
 			break;
 		}
 		case CAN_SLIDER_ID:{
@@ -111,6 +117,7 @@ void message_data_collector(CAN_MESSAGE msg){
 			break;
 		}
 		case CAN_GAME_START_ID:{
+			printf("Inside game id \n\r");
 			game_set_start_flag();
 			break;
 		}
