@@ -30,6 +30,7 @@ void motor_set_direction(dir direction);
 
 void motor_controller(void);
 
-void motor_reset_encoder(int reset);
+void motor_reset_encoder(void);
+
 
 #endif /* MOTOR_DRIVER_H_ */

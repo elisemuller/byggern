@@ -60,16 +60,26 @@ void setDifficulty(void){
 
 void seeHighscore(void){
 	highscore record; 
-	//record = CAN_get_highscore();
-	
+	record = CAN_get_highscore();
+	char hs_text[1];
+	char play_text[1];
+	int best_num = record.best_highscore;
+	int play_time = record.last_playtime;
+	sprintf(hs_text, "%d", best_num);
+	sprintf(play_text, "%d", play_time);
+
 	OLED_goto_pos(0,0);
 	OLED_print("Highscore: ");
+	OLED_print(hs_text);
+
 	OLED_goto_pos(1,0);
 	OLED_print("Your time: ");
+	OLED_print(play_text);
 
 }
 
 void clearHighscore(void){
+	// Send til CAN 2 om å cleare highscore der. 
 	
 }
 
@@ -228,7 +238,6 @@ void menu_move_pointer(dir direction){
 
 void menu_state_controller(){
 	joystick_input = mov_get_joy_input();
-	//menu_print(); //Debug her om dette kan ødelegge?
 	switch (joystick_input.direction){
 		case NEUTRAL: {
 			if (mov_read_button(jb)){

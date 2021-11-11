@@ -14,7 +14,7 @@
 
 
 #define MJ2_ENCODER_DATA (PIO_PER_P1 | PIO_PER_P2 | PIO_PER_P3 | PIO_PER_P4 | PIO_PER_P5 | PIO_PER_P6 | PIO_PER_P7 | PIO_PER_P8)
-
+// #define MJ2_ENCODER_DATA (0xFF << 1)
 
 void motor_init(void){
 	
@@ -22,8 +22,8 @@ void motor_init(void){
 	PMC->PMC_PCER1 |= PMC_PCER1_PID38; // DACC
 	PMC->PMC_PCER0 |= (PMC_PCER0_PID13 | PMC_PCER0_PID14); // PIOC and PIOD
 	
-	// Select channel 1 for DACC
-	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1;
+	// Select channel 1 for DACC, 16 LSB data
+	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1 | DACC_MR_WORD_HALF;
 	DACC->DACC_CHER |= DACC_CHER_CH1;
 	
 	// MJ2: Enable IO pins for encoder data D(0-7)
@@ -59,21 +59,19 @@ void motor_set_speed(uint32_t speed){
 
 void motor_power(int on){
 	if (on){
-		PIOD->PIO_SODR = PIO_SODR_P9;
+		PIOD->PIO_SODR |= PIO_SODR_P9;
 	}
 	else {
-		PIOD->PIO_CODR = PIO_CODR_P9; 
+		PIOD->PIO_CODR |= PIO_CODR_P9; 
 	}
 	
 }
 
-void motor_reset_encoder(int reset){
-	if (reset){
-		PIOD->PIO_CODR = PIO_CODR_P1;
-	}
-	else {
-		PIOD->PIO_SODR = PIO_SODR_P1;
-	}
+void motor_reset_encoder(void){
+	// Toggle to reset, active low reset pin. 
+	PIOD->PIO_CODR |= PIO_CODR_P1;
+	time_delay_us(20);
+	PIOD->PIO_SODR |= PIO_SODR_P1;
 	
 }
 
@@ -82,24 +80,30 @@ uint16_t motor_read_encoder(void){
 	uint16_t low_byte = 0;
 	uint16_t encoder_data = 0;
 	int debug = 1; 
-	motor_reset_encoder(0);
+	// motor_reset_encoder();
 	// Legge inn at dersom retning er i negativ retning s� vil vi m�tte lese 2's komplement.
-	PIOD->PIO_CODR = PIO_CODR_P0; // !OE low to enable output of encoder
-	PIOD->PIO_CODR = PIO_CODR_P2; // SEL low to get high byte
+	PIOD->PIO_CODR |= PIO_CODR_P0; // !OE low to enable output of encoder
 	
+	
+	PIOD->PIO_CODR |= PIO_CODR_P2; // SEL low to get high byte
 	time_delay_us(25);
-	high_byte = ((PIOC->PIO_PDSR | MJ2_ENCODER_DATA) << 8);
+	// Right shift by 1 as encoder data is on pins 1-8. Then left shift by 8 to get high byte. 
+	high_byte = ((PIOC->PIO_PDSR & MJ2_ENCODER_DATA) << 7);
 	
+
 	PIOD->PIO_SODR = PIO_SODR_P2; // SEL high to get low byte
-	
 	time_delay_us(25);
-	low_byte = (PIOC->PIO_PDSR | MJ2_ENCODER_DATA);
+	// Right shift by 1 as encoder data is on pins 1-8. 
+	low_byte = (PIOC->PIO_PDSR & MJ2_ENCODER_DATA >> 1);
+
 	encoder_data = (high_byte | low_byte);
-	
-	//Reset dersom vi hele tida vil resette hvor encoderen er? 
-	if(debug){printf("Encoder data: %d\r\n", encoder_data);}
+
+	motor_reset_encoder();
 	PIOD->PIO_SODR = PIO_SODR_P0; // !OE high to disable output of encoder
-	return encoder_data;
+	
+	if(debug){printf("Encoder data: %d\n\r", -encoder_data);}
+
+	return -encoder_data;
 }
 
 void motor_set_direction(dir direction){
