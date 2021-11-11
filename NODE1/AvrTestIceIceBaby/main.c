@@ -21,27 +21,54 @@
 #include "mcp2515.h"
 #include "SPI_driver.h"
 #include "CAN_driver.h"
+#include "game_driver.h"
+
+
+#define DEBUG 1
 
 // -Wl,--defsym=__heap_start=0x801800,--defsym=__heap_end=0x801fff -Wl,--relax
 
 int main(void)
 {
-	uart_init( MYUBRR );
-	xmem_init();
-	adc_init();
-	mov_init();
-	CAN_init(MODE_NORMAL);
-	OLED_init();
-	menu_init();
-	printf("######## Starting new session ########\r\n");
+
+	printf("######## Starting new session ########\n\r");
 	
 	
-	
-	
-	
+	// Error test first
+
+	game_set_state(INIT);
 	
 	while (1) {
-		game_play();
+		switch (game_get_state()){
+			case INIT: {
+				if(DEBUG){printf("In init state \n\r");}
+				//Flytte init i andre som allerede bruker de for å ikke ha så mange koblinger
+				uart_init( MYUBRR );
+				xmem_init();
+				adc_init();
+				mov_init();
+				CAN_init(MODE_NORMAL);
+				menu_init();
+				game_set_state(LOBBY);
+				break;
+			}
+			case LOBBY: {
+				if(DEBUG){printf("In lobby state \n\r");}
+				menu_state_controller();
+				break;
+			}
+			case PLAY: {
+				if(DEBUG){printf("In play state \n\r");}
+				game_interrupt_enable();
+				game_play();
+				break;
+			}
+			case GAME_OVER:{
+				if(DEBUG){printf("In game over state \n\r");}
+				game_interrupt_disable();
+				menu_print();
+				break;
+			}
+		}
 	}
-
 }

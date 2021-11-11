@@ -26,16 +26,16 @@ volatile input_j joystick_input;
 volatile buzzer sound; 
 
 
-void printHello(void){
+void menu_printHello(void){
 	OLED_print("Hello World");
 }
 
-void printGoodBye(void){
+void menu_printGoodBye(void){
 	printf("Inside goodbye\r\n");
 	OLED_print("Goodbye World");
 }
 
-void setDifficulty(void){
+void menu_setDifficulty(void){
 	OLED_goto_pos(2,3);
 	switch(menu_position->children[current_child_pointer]->choice){
 		case EASY: {
@@ -58,7 +58,7 @@ void setDifficulty(void){
 	}
 }
 
-void seeHighscore(void){
+void menu_seeHighscore(void){
 	highscore record; 
 	record = CAN_get_highscore();
 	char hs_text[1];
@@ -78,19 +78,22 @@ void seeHighscore(void){
 
 }
 
-void clearHighscore(void){
+void menu_clearHighscore(void){
 	// Send til CAN 2 om å cleare highscore der. 
 	
 }
 
-void startGame(void){
+void menu_startGame(void){
 	OLED_print(" Good Luck!");
+	_delay_ms(2000);
 	OLED_reset();
+	
 	// Turn off OLED
-	game_set_start_flag();
+	game_set_state(PLAY);
+	menu_send_can_message(CAN_GAME_START_ID);
 }
 
-void adjustVolume(int vol){
+void menu_adjustVolume(int vol){
 	/*	Implementere her at man leser om slider øker : 
 		OLED skjerm viser volum fra 0-10. 
 		Trykk høyre slider knapp to confirm. */
@@ -108,6 +111,12 @@ void menu_send_can_message(int CAN_ID){
 			CAN_send_message(&menu_msg);
 			break;
 		}
+		case CAN_GAME_START_ID:{
+			menu_msg.length = 1; 
+			menu_msg.data[0] = 1; 
+			CAN_send_message(&menu_msg);
+			break;
+		}
 		default:{
 			printf("Invalid CAN message ID");
 			break;
@@ -116,29 +125,30 @@ void menu_send_can_message(int CAN_ID){
 }
 
 void menu_init(void){
+	OLED_init();
 	//Root
 	node* root = menu_new_item(NULL, "Main menu", NULL, NO_CHOICE);
 	menu_position = root; 
 	
 	//Main menu
-	node* start_game = menu_new_item(root, "Start game", &startGame, NO_CHOICE);	
+	node* start_game = menu_new_item(root, "Start game", &menu_startGame, NO_CHOICE);	
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
 	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
 	node* mini = menu_new_item(root, "Minigames", NULL, NO_CHOICE);
 	
 	//Difficulty
-	node* easy = menu_new_item(difficulty, "Easy", &setDifficulty, EASY );
-	node* normal = menu_new_item(difficulty, "Normal", &setDifficulty, NORMAL );
-	node* hard = menu_new_item(difficulty, "Hard", &setDifficulty, HARD );
-	node* insane = menu_new_item(difficulty, "Insane", &setDifficulty, INSANE );
+	node* easy = menu_new_item(difficulty, "Easy", &menu_setDifficulty, EASY );
+	node* normal = menu_new_item(difficulty, "Normal", &menu_setDifficulty, NORMAL );
+	node* hard = menu_new_item(difficulty, "Hard", &menu_setDifficulty, HARD );
+	node* insane = menu_new_item(difficulty, "Insane", &menu_setDifficulty, INSANE );
 	
 	//Highscore
-	node* see = menu_new_item(highscore, "See", &seeHighscore, SEE );
-	node* clear = menu_new_item(highscore, "Clear", &clearHighscore, CLEAR );
+	node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
+	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
 	//
 	////Sound
-	// node* volume = menu_new_item(sound_settings, "Adjust volume", &adjustVolume, NO_CHOICE); 
+	// node* volume = menu_new_item(sound_settings, "Adjust volume", &menu_adjustVolume, NO_CHOICE); 
 	// node* stop = menu_new_item(sound_settings, "Stop music", NULL, NO_CHOICE);
 	// node* pause = 
 	//

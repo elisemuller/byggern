@@ -13,9 +13,18 @@
 #ifndef GAME_DRIVER_H_
 #define GAME_DRIVER_H_
 
-void game_set_start_flag(void);
+typedef enum {
+    INIT,
+    PLAY,
+    LOBBY,
+    GAME_OVER
+} game_state;
+
+void game_set_state(game_state state);
+game_state game_get_state(void);
+void game_send_start_flag(void);
 void game_interrupt_enable(void);
 void game_interrupt_disable(void);
-void game_set_end_flag(void);
+
 
 #endif /* GAME_DRIVER_H_ */

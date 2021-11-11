@@ -18,10 +18,18 @@
 
 volatile int send_counter = 0;
 
-
-volatile int START_GAME = 0;
-
 volatile int SEND_GAME_MSG =  0;
+
+volatile game_state current_state = 0; 
+
+void game_set_state(game_state state){
+	current_state = state;
+}
+
+game_state game_get_state(void){
+	return current_state;
+}
+
 
 
 void game_interrupt_enable(void){
@@ -45,39 +53,35 @@ ISR(TIMER0_OVF_vect){
 	TCNT0 = 0x00;
 }
 
-void game_play(void){
-	if(START_GAME){
-		if(SEND_GAME_MSG){
-			//printf("Sending message\r\n");
-			mov_send_can_message(CAN_JOYSTICK_ID);
-			mov_send_can_message(CAN_SLIDER_ID);
-			SEND_GAME_MSG = 0; 
-		}
-	}
-	else{
-		menu_state_controller();
+// void game_play(void){
+// 	if(START_GAME){
+// 		if(SEND_GAME_MSG){
+// 			//printf("Sending message\r\n");
+// 			mov_send_can_message(CAN_JOYSTICK_ID);
+// 			mov_send_can_message(CAN_SLIDER_ID);
+// 			SEND_GAME_MSG = 0; 
+// 		}
+// 	}
+// 	else{
+// 		menu_state_controller();
 		
-	}
+// 	}
 	
 
+// }
+
+void game_play(void){
+	if(SEND_GAME_MSG){
+		mov_send_can_message(CAN_JOYSTICK_ID);
+		mov_send_can_message(CAN_SLIDER_ID);
+		SEND_GAME_MSG = 0; 
+	}
 }
 
-void game_set_start_flag(void){
-	START_GAME = 1; 
-	game_interrupt_enable();
+void game_send_start_flag(void){
 	can_message menu_msg;
 	menu_msg.id = CAN_GAME_START_ID;
 	menu_msg.length = 1;
 	menu_msg.data[0] = 1;
 	CAN_send_message(&menu_msg);
-}
-
-void game_set_end_flag(void){
-	START_GAME = 0; 
-	OLED_reset();
-	OLED_print("Game over loser");
-	_delay_ms(5000);
-	menu_print();
-	game_interrupt_disable();
-	//fikse highscore her? 
 }

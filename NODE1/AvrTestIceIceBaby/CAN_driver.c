@@ -164,7 +164,7 @@ void CAN_message_handler(void){
 			printf("END GAME MESSAGE RECEIVED\n\r");
 			record_msg.best_highscore = msg.data[0];
 			record_msg.last_playtime = msg.data[1];
-			game_set_end_flag();
+			game_set_state(GAME_OVER);
 		}
 	}
 }

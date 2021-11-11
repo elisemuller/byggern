@@ -60,9 +60,9 @@ typedef struct buzzer_controll {
 } buzzer;
 
 
-void printHello(void);
+void menu_printHello(void);
 
-void printGoodBye(void);
+void menu_printGoodBye(void);
 
 /**
 * @brief Initializes the menu displayed on the OLED screen.
@@ -100,11 +100,11 @@ void menu_move_pointer(dir direction);
 /**
 * @brief Sets the difficulty of the game. 
 */
-void setDifficulty(void);
+void menu_setDifficulty(void);
 
-void seeHighscore(void);
+void menu_seeHighscore(void);
 
-void clearHighscore(void);
+void menu_clearHighscore(void);
 
 /**
 * @brief Starts the game and turns off the OLED display
