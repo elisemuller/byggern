@@ -20,15 +20,22 @@ volatile int s_counter = 0;
 
 
 void time_delay_ms(int delay){
+	ms_counter = time_get_count(ms);
 	int start_time = ms_counter;
 	
-	while((ms_counter-start_time) < delay);
+	while((ms_counter-start_time) < delay){
+		ms_counter = time_get_count(ms);
+		//printf("ms_counter %d\n\r", ((ms_counter-start_time)/1000));
+	}
 }
 
 void time_delay_us(int delay){
 	int start_time = us_counter;
 	
-	while((us_counter-start_time) < delay);
+	
+	while((us_counter-start_time) < delay){
+		//printf("us_counter %d\n\r", ((us_counter-start_time)/1000000));
+	}
 
 }
 
@@ -39,8 +46,7 @@ int time_get_count(time count){
 			return us_counter; 
 		}
 		case ms: {
-			
-			return ms_counter/1000;
+			return us_counter/1000;
 		}
 		case s: {
 			//printf("Seconds\n\r");

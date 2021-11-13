@@ -14,6 +14,14 @@ typedef struct hs {
 
 
 
+typedef enum {
+	INIT,
+	PLAY,
+	LOBBY,
+	GAME_OVER
+} game_state;
+
+
 /**
  * @brief Initializes the game.
  */
@@ -39,13 +47,14 @@ void game_update_mov_msg(void);
  */
 void game_play(void);
 
-/**
- * @brief Sets the start flag for the game 
- */
-void game_set_start_flag(void);
 
 
 void game_ended(void);
+
+
+void game_set_state(game_state state);
+
+game_state game_get_state(void);
 
 
 #endif /* GAME_DRIVER_H_ */

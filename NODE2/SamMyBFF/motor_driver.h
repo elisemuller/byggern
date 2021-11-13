@@ -32,5 +32,7 @@ void motor_controller(void);
 
 void motor_reset_encoder(void);
 
+void motor_calibrate_encoder(void);
+
 
 #endif /* MOTOR_DRIVER_H_ */

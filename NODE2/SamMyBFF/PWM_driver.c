@@ -2,6 +2,7 @@
 #include "sam.h"
 #include "PWM_driver.h"
 
+
 #include <stdint.h>
 
 #include "can_interrupt.h"
@@ -22,11 +23,13 @@ void PWM_init(void){
 	
 	// PWM clock. Velger 84 MHz / 42 = 2 MHz
 	PWM->PWM_CLK = PWM_CLK_PREA(0) | PWM_CLK_DIVA(42);
-	PWM->PWM_CLK |= PWM_CLK_PREB(0) | PWM_CLK_DIVB(DIV);
+	PWM->PWM_CLK |= PWM_CLK_PREB(0) | PWM_CLK_DIVB(84);
 	
 	// Channel mode. High polarity. Left aligned.
 	REG_PWM_CMR6 = PWM_CMR_CPRE_CLKA | PWM_CMR_CPOL;
 	REG_PWM_CMR5 = PWM_CMR_CPRE_CLKB | PWM_CMR_CPOL;
+	//REG_PWM_CMR6 = PWM_CMR_CPRE_CLKA | PWM_CMR_CPOL;
+	//REG_PWM_CMR5 = PWM_CMR_CPRE_CLKB | PWM_CMR_CPOL;
 	
 	
 	
@@ -42,6 +45,9 @@ void PWM_init(void){
 	PWM->PWM_ENA |= (PWM_ENA_CHID5) | (PWM_ENA_CHID6);
 }
 
+
+
+
 void PWM_dutycycle_modify(int debug, int channel, int vol){
     switch (channel) {
         case SERVO_CHANNEL:{
@@ -50,7 +56,7 @@ void PWM_dutycycle_modify(int debug, int channel, int vol){
 		
 			if(debug){printf("right_slider = %d\n\r", s_r);}
 			
-			int s_r_diff = abs(s_r-last_s_r);
+			//int s_r_diff = abs(s_r-last_s_r);
 
 			if((s_r <= 100) && (s_r >= 0)){
 			
@@ -60,6 +66,9 @@ void PWM_dutycycle_modify(int debug, int channel, int vol){
 	    }
         case BUZZER_CHANNEL: {
             REG_PWM_CDTYUPD6 = (int) (40000 * vol);
+			int CDTY = 0; 
+			CDTY = (int) (PWM->PWM_CH_NUM[6].PWM_CPRD*(1-vol));
+			PWM->PWM_CH_NUM[6].PWM_CDTY = PWM_CDTY_CDTY(CDTY);
 			break;
         }
         default:{
@@ -69,12 +78,14 @@ void PWM_dutycycle_modify(int debug, int channel, int vol){
     }
 
 }
-//
-//void PWM_frequency_modify(int freq){
-	//if (freq == 0){
-		//REG_PWM_CPRD6 = 0; 
-	//}
-	//else{
-		//REG_PWM_CPRD6 = (int)(MCK/(DIV*freq));
-	//}
-//}
+
+void PWM_frequency_modify(int freq){
+	if (freq == 0){
+		REG_PWM_CPRD6 = 0;
+	}
+	else{
+		REG_PWM_CPRD6 = (int)(MCK/(DIV*freq));
+		int CPRD = (int)(MCK/(84*freq));
+		PWM->PWM_CH_NUM[6].PWM_CPRD = PWM_CPRD_CPRD(CPRD);
+	}
+}

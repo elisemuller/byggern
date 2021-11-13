@@ -17,6 +17,8 @@ volatile int game_over = 0;
 volatile highscore record; 
 volatile int start_time = 0; 
 
+volatile game_state current_state = INIT;
+
 void game_init(void){
 	motor_power(1);
 	start_time = time_get_count(s); 
@@ -41,6 +43,7 @@ void game_joystick_controller(void){
 		input_s slider = can_get_slider_input();
 		PWM_dutycycle_modify(debug, SERVO_CHANNEL, 0);
 		motor_controller();
+		// PID_controller();
 		solenoid_shoot(slider.l_button_pressed);
 		NEW_MOV_INPUT = 0; 
 	}
@@ -64,40 +67,42 @@ void game_ended(void){
 	end_game_msg.data_length = 2;
 	end_game_msg.data[0] = record.best_highscore;
 	end_game_msg.data[1] = record.last_playtime;
+	NVIC_DisableIRQ(TC0_IRQn);
 	can_send(&end_game_msg, 0);	// Mailbox 0?
 }
 
 void game_play(void){
-	//printf("hei\n\r");
-	if (GAME_START){
-		playtime = 0; 
-		printf("Game started\n\r");
-		game_init();
-		int ir_beam_lower_lim = 800; 
+	motor_reset_encoder();
+	NVIC_EnableIRQ(TC0_IRQn);
+	playtime = 0; 
+	printf("Game started\n\r");
+	game_init();
+	int ir_beam_lower_lim = 800; 
 		
-		while (!game_over){
+	while (!game_over){
 			
-			int current_time = time_get_count(s); 
-
-			game_joystick_controller();
-			uint32_t ir_beam = adc_rd();
-			//printf("IR value: %d\n\r",ir_beam);
-			if (ir_beam < ir_beam_lower_lim){
-				game_over = 1; 
-				printf("Hello\n\r");
-			}
-			int time_diff = (current_time - start_time);
-			playtime = time_diff;
-			printf("Playtime : %d\n\r",playtime);
+		int current_time = time_get_count(s); 
+		//motor_read_encoder();
+		game_joystick_controller();
+		uint32_t ir_beam = adc_rd();
+		//printf("IR value: %d\n\r",ir_beam);
+		if (ir_beam < ir_beam_lower_lim){
+			game_over = 1; 
 		}
-	
-		game_ended();
-
+		int time_diff = (current_time - start_time);
+		playtime = time_diff;
+		//printf("Playtime : %d\n\r",playtime);
 	}
+	game_set_state(GAME_OVER);
 }
 
-void game_set_start_flag(void){
-	//printf("Starting the ping pong game\r\n");
-	GAME_START = 1; 
+
+
+void game_set_state(game_state state){
+	current_state = state;
+}
+
+game_state game_get_state(void){
+	return current_state;
 }
 

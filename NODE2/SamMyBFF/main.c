@@ -19,7 +19,11 @@
 #include "adc_driver.h"
 #include "motor_driver.h"
 #include "game_driver.h"
+#include "buzzer_driver.h"
+#include "PID_controller.h"
+#include "melodies.h"
 
+#define DEBUG 1
 
 
 int main(void)
@@ -47,15 +51,60 @@ int main(void)
 	//
 	input_j joystick;
 	int highscore; 
+	PID_init();
 	//motor_reset_encoder(1);
 	
 	SysTick_Config(84);
+	
+	printf("#####################################################\n\r");
 
 	//REG_PWM_CDTYUPD5 = (int)( ( (1.5 - 0.6 * (100-50) / 50) / 20 ) * 40000 );
 	//REG_PWM_CDTYUPD6 = (int)( ( (1.5 - 0.6 * (0-50) / 50) / 20 ) * 40000 );
-	
+	//motor_reset_encoder();
+	//motor_calibrate_encoder();
+	//time_delay_ms(10000);
+	//time_delay_us(10000000);
+//
+	//NVIC_EnableIRQ(TC0_IRQn);
+
+
     while (1) 
     {
+		switch (game_get_state()){
+			case INIT: {
+				if(DEBUG){printf("In init state \n\r");}
+		
+				game_set_state(LOBBY);
+				break;
+			}
+			case LOBBY: {
+				if(DEBUG){printf("In lobby state \n\r");}
+				//buzzer_adjust_volume(10);
+				buzzer_play_music(HAPPY_BIRTHDAY);
+				//buzzer_play_note(NOTE_B7,1000);
+				//buzzer_play_note(NOTE_D8,3000);
+				//buzzer_play_note(NOTE_CS2,2000);
+				//PID_timer_test();
+				motor_reset_encoder();
+				//play music
+				break;
+			}
+			case PLAY: {
+				if(DEBUG){printf("In play state \n\r");}
+				game_play();
+				break;
+			}
+			case GAME_OVER:{
+				if(DEBUG){printf("In game over state \n\r");}
+				game_ended();
+				game_set_state(STAR_WARS);
+				break;
+			}
+			
+		}
+		
+		
+		//PID_timer_test();
 		
 		//blink();
 		//CAN_MESSAGE end_game_msg;
@@ -64,11 +113,11 @@ int main(void)
 		//end_game_msg.data[0] = 1;
 		//end_game_msg.data[1] = 2;
 		//can_send(&end_game_msg, 0);	// Mailbox 0?
-		game_play();
-		
+			
 		//PWM->PWM_CH_NUM[6].PWM_CDTYUPD = (int)( ( (1.5 - 0.6 * (100-50) / 50) / 20 ) * 40000 );
 		
 		//game_joystick_controller();
 
     }
+			
 }
