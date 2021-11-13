@@ -11,7 +11,7 @@ volatile int STOP_SONG = 0;
 volatile int PAUSE_SONG = 0;
 
 volatile int tempo; 
-volatile float dutycycle; 
+volatile float dutycycle = 0.5;
 volatile int notePointer; 
 volatile title currentSong; 
 
@@ -136,7 +136,7 @@ void buzzer_play_music(title song){
             break;
         }
         default:
-            printf("Invalid song choice\r\n");
+            printf("Invalid song choice\n\r");
             break;
         }
     
@@ -187,7 +187,7 @@ void buzzer_play_playlist(playlist list_title){
             break;
         }
         default:{
-            printf("Invalid playlist selected \r\n");
+            printf("Invalid playlist selected \n\r");
             break;
         }
     }

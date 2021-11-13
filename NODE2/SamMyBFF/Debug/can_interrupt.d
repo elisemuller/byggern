@@ -104,7 +104,7 @@ can_interrupt.d can_interrupt.o: .././can_interrupt.c \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/rtc.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/gpbr.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h \
- .././printf-stdarg.h
+ .././printf-stdarg.h .././blink.h .././game_driver.h
 
 .././can_interrupt.h:
 
@@ -319,3 +319,7 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/i
 C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h:
 
 .././printf-stdarg.h:
+
+.././blink.h:
+
+.././game_driver.h:

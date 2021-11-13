@@ -105,6 +105,7 @@ void message_data_collector(CAN_MESSAGE msg){
 			joystick.button_pressed = msg.data[2];
 			joystick.direction = msg.data[3];
 			game_update_mov_msg();
+			//printf("Joystick pos %d \n\r", joystick.pos_x);
 			
 			break;
 		}
@@ -117,8 +118,8 @@ void message_data_collector(CAN_MESSAGE msg){
 			break;
 		}
 		case CAN_GAME_START_ID:{
-			printf("Inside game id \n\r");
-			game_set_start_flag();
+			//printf("Inside game id \n\r");
+			game_set_state(PLAY);
 			break;
 		}
 	}

@@ -12,8 +12,6 @@ can_controller.c
 
 can_interrupt.c
 
-delay.c
-
 Device_Startup\startup_sam3xa.c
 
 Device_Startup\system_sam3xa.c
@@ -24,13 +22,19 @@ main.c
 
 motor_driver.c
 
+PID_controller.c
+
 printf-stdarg.c
 
 PWM_driver.c
 
 servo_driver.c
 
+solenoid.c
+
 test_driver.c
+
+time.c
 
 uart.c
 
