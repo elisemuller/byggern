@@ -16,6 +16,7 @@
 #include "movement_driver.h"
 #include "CAN_driver.h"
 #include "game_driver.h"
+#include <util/delay.h>
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 
@@ -85,11 +86,12 @@ void menu_clearHighscore(void){
 
 void menu_startGame(void){
 	OLED_print(" Good Luck!");
-	_delay_ms(2000);
+	game_set_state(PLAY);
+	//_delay_ms(2000); // debug her
 	OLED_reset();
 	
 	// Turn off OLED
-	game_set_state(PLAY);
+	game_interrupt_enable();
 	menu_send_can_message(CAN_GAME_START_ID);
 }
 
@@ -143,9 +145,9 @@ void menu_init(void){
 	node* hard = menu_new_item(difficulty, "Hard", &menu_setDifficulty, HARD );
 	node* insane = menu_new_item(difficulty, "Insane", &menu_setDifficulty, INSANE );
 	
-	//Highscore
-	node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
-	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
+	////Highscore
+	//node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
+	//node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
 	//
 	////Sound
 	// node* volume = menu_new_item(sound_settings, "Adjust volume", &menu_adjustVolume, NO_CHOICE); 

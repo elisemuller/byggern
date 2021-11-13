@@ -20,7 +20,7 @@ volatile int send_counter = 0;
 
 volatile int SEND_GAME_MSG =  0;
 
-volatile game_state current_state = 0; 
+volatile game_state current_state = INIT; 
 
 void game_set_state(game_state state){
 	current_state = state;
@@ -72,6 +72,7 @@ ISR(TIMER0_OVF_vect){
 
 void game_play(void){
 	if(SEND_GAME_MSG){
+		printf("Sending message\n\r");
 		mov_send_can_message(CAN_JOYSTICK_ID);
 		mov_send_can_message(CAN_SLIDER_ID);
 		SEND_GAME_MSG = 0; 

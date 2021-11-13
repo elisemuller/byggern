@@ -174,13 +174,14 @@ void mov_send_can_message(int CAN_ID){
 	movement_msg.length = 4;
 	switch (CAN_ID){
 		case CAN_JOYSTICK_ID:{
+			printf("Joystick\n\r");
 			input_j joystick_input = mov_get_joy_input();
 			movement_msg.data[0] = joystick_input.pos_x;
 			movement_msg.data[1] = joystick_input.pos_y;
 			movement_msg.data[2] = joystick_input.j_button_pressed;
 			movement_msg.data[3] = joystick_input.direction;
 			CAN_send_message(&movement_msg);
-			//printf("Sent joystick pos\r\n");
+			//printf("Sent joystick pos %d\r\n", joystick_input.pos_x);
 			break;
 			}
 		case CAN_SLIDER_ID:{
