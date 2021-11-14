@@ -47,13 +47,20 @@ void game_update_mov_msg(void);
  */
 void game_play(void);
 
-
-
+/**
+ * @brief Ends the game and records the score. 
+ */
 void game_ended(void);
 
-
+/**
+ * @brief Sets the game state to @p state. 
+ * @param game_state
+ */
 void game_set_state(game_state state);
 
+/**
+ * @brief Returns the current game state @p game_state. 
+ */
 game_state game_get_state(void);
 
 
