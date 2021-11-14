@@ -54,9 +54,16 @@ void CAN0_Handler       ( void );
 */
 void message_data_collector(CAN_MESSAGE msg);
 
-
+/**
+* @brief Returns the joystick variable updated in @func message_data_collector
+* @return input_j
+**/
 input_j can_get_joy_input(void);
 
+/**
+* @brief Returns the slider variable updated in @func message_data_collector
+* @return input_s
+**/
 input_s can_get_slider_input(void);
 
 
