@@ -165,12 +165,6 @@
     <Compile Include="adc_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="blink.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="blink.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="buzzer_driver.c">
       <SubType>compile</SubType>
     </Compile>
@@ -229,12 +223,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="PWM_driver.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="servo_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="servo_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="solenoid.c">
