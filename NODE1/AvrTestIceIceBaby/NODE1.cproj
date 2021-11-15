@@ -193,18 +193,6 @@
     <Compile Include="SPI_driver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="SRAM_driver.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="SRAM_driver.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="sram_test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="sram_test.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="test.c">
       <SubType>compile</SubType>
     </Compile>

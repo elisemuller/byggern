@@ -8,14 +8,14 @@
 #include <avr/io.h>
 #include <stdio.h>
 #include <avr/pgmspace.h>
+
 #include "OLED_driver.h"
 #include "xmem.h"
 #include "fonts.h"
 #include "Graphics.h"
 
 
-volatile font style; 
-//volatile graphic picture; 
+volatile font style;  
 volatile int current_page = 0;
 
 
@@ -83,7 +83,7 @@ void OLED_goto_column(uint8_t col){
 	OLED_write_c(upper_col_addr); 
 }
 
-void OLED_goto_page(uint8_t page){ //page og line er synonymer
+void OLED_goto_page(uint8_t page){ 
 	OLED_write_c(0xB0 + page);
 	current_page = page; 
 }
@@ -95,13 +95,6 @@ void OLED_clear_page(uint8_t page){
 	}
 }
 
-//void OLED_write_to_pos(uint8_t row, uint8_t col, uint8_t set){
-	//uint8_t page = row / NUM_PAGES; 
-	//uint8_t page_line = row % NUM_PAGES; 
-	//OLED_goto_page(page); 
-	//OLED_goto_column(col); 
-	//OLED_write_c(set << page_line); 	
-//}
 
 void OLED_goto_pos(uint8_t row, uint8_t col){
 	OLED_goto_page(row);
@@ -152,7 +145,6 @@ void OLED_print(char* data){
 		}
 
 	}
-	//printf("Size of data is: %d byte \r\n", size_ch);
 }
 
 
@@ -165,68 +157,3 @@ void OLED_print_arrow(uint8_t row, uint8_t col){
   OLED_write_d(0b00011000);
 }
 
-void OLED_print_hexa_arrow(uint8_t row, uint8_t col){
-	OLED_goto_pos(row, col);
-	OLED_write_d(0x18);
-	OLED_write_d(0x18);
-	OLED_write_d(0x7e);
-	OLED_write_d(0x3c);
-	OLED_write_d(0x18);
-}
-
-void OLED_print_image(graphic image){
-	OLED_home();
-	switch (image) {
-		case SPICYBIT: 
-			for (int pg = 0; pg < NUM_PAGES; pg++){
-				OLED_goto_page(pg);
-				for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
-					uint8_t byte = pgm_read_byte(&(spicyBit[data]));
-					OLED_write_d(byte);
-				}
-			}
-			break;
-		case BATMAN:
-			{
-				int data = 0;
-				for (int pg = 0; pg < NUM_PAGES; pg++){
-					OLED_goto_pos(pg,0);
-					int size_ch = 0;
-					
-					//OLED_print("hello");
-					while(size_ch < OLED_SCREEN_WIDTH){
-						uint8_t byte = pgm_read_byte(&(lmfao[data]));
-						OLED_write_d(byte);
-						size_ch++;
-						data++;
-					}
-					break;
-				}
-			}
-		case LMFAO:
-			{
-				int data = 0; 
-				for (int pg = 0; pg < NUM_PAGES; pg++){
-					OLED_goto_pos(pg,0);
-					int size_ch = 0;
-
-					//OLED_print("hello");
-					while(size_ch < OLED_SCREEN_WIDTH){
-						uint8_t byte = pgm_read_byte(&(lmfao[data]));
-						OLED_write_d(byte);
-						size_ch++;
-						data++;
-					}
-					printf("size = %d, page = %d and data = %d \r\n", size_ch, pg, data);
-					//for(uint8_t data = pg*OLED_SCREEN_WIDTH; data < (pg+1)*OLED_SCREEN_WIDTH; data ++){
-						//uint8_t byte = pgm_read_byte(&(lmfao[data]));
-						//printf("Byte: %d and page: %d \r\n", byte, pg);
-						//OLED_write_d(byte);
-					//}
-				}
-				break;
-			}
-		default:
-			break;	
-	}
-}

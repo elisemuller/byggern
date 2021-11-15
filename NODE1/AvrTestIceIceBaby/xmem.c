@@ -1,9 +1,6 @@
 #include <avr/io.h>
 #include <stdio.h>
 
-#include "UART_driver.h"
-#include "sram_test.h"
-#include "test.h"
 #include "xmem.h"
 
 #define BASE_ADDRESS 0x1000
@@ -18,7 +15,7 @@ void xmem_init(void) {
 	SFIOR |= (1 << XMM2); 
 }
 
-// xmem read og write er hentet fra labforelesning
+// xmem_read and xmem_write from lab lectures
 
 void xmem_write(uint8_t data, uint16_t offset) {
 	volatile char *ext_mem = (char *) BASE_ADDRESS;

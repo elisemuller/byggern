@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "UART_driver.h"
 
-// Kode er hentet fra datablad til ATMega162
+// Code from ATMega162 datasheet
 
 // Here, using USART0-registers
 
@@ -28,9 +28,3 @@ unsigned char uart_receive(void){
 	UCSR0A |= (1 << RXC0);
 	return UDR0;					// Put data in buffer
 }
-
-//printf * fdevopen(uart_transmit, uart_receive);
-
-//void printf(){
-	//fdevopen(uart_transmit, uart_receive);
-//}
