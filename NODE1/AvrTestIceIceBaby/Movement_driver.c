@@ -6,16 +6,15 @@
  //*/ 
 //
 #include <avr/io.h>
-#include "ADC_driver.h"
-#include "movement_driver.h"
-#include "UART_driver.h"
-#include "CAN_driver.h"
 #include <stdint.h>
 #include <stdlib.h>
-#include <util/delay.h>
+
+#include "movement_driver.h"
+#include "ADC_driver.h"
+#include "CAN_driver.h"
 
 
-#define F_CPU 4915200
+
 /**
  * @def DEBUG_BUTTON
  * @brief A macro that is used to debug if the buttons are working when set to 1
@@ -38,6 +37,7 @@ volatile int l_pos; /*!< The position of the left slider */
 
 
 void mov_init(void){
+	adc_init();
 	null_x = adc_rd(JOYSTICK_CHANNEL_X);
 	null_y = adc_rd(JOYSTICK_CHANNEL_Y);
 	DDRB &= ~(0b111);
@@ -83,26 +83,21 @@ dir mov_get_joy_dir(void){
 	
 	if (abs_x < neutral_threshold && abs_y < neutral_threshold){
 		direction = NEUTRAL;
-		//printf("Direction: NEUTRAL \r\n");
 	}
 	else if((abs_x > abs_y) && (abs_x > neutral_threshold)){
 		if (x_pos > 0){
 			direction = RIGHT;
-			//printf("Direction: RIGHT \r\n");
 		}
 		else {
-			//printf("Direction: LEFT \r\n");
 			direction = LEFT;
 		}
 	}
 	else if ((abs_y > abs_x) && (abs_y > neutral_threshold)){
 		if(y_pos > 0){
 			direction = UP;
-			//printf("Direction: UP \r\n");
 		}
 		else{
 			direction = DOWN;
-			//printf("Direction: DOWN \r\n");
 		}
 	}
 	return direction;
@@ -170,7 +165,6 @@ input_s mov_get_slider_input(void){
 }
 
 
-// Se på frekvens av meldinger som sendes under spill modus
 void mov_send_can_message(int CAN_ID){
 	can_message movement_msg;
 	movement_msg.id = CAN_ID;
@@ -184,7 +178,6 @@ void mov_send_can_message(int CAN_ID){
 			movement_msg.data[2] = joystick_input.j_button_pressed;
 			movement_msg.data[3] = joystick_input.direction;
 			CAN_send_message(&movement_msg);
-			//printf("Sent joystick pos %d\r\n", joystick_input.pos_x);
 			break;
 			}
 		case CAN_SLIDER_ID:{

@@ -5,13 +5,16 @@
  *  Author: elisegm
  */ 
 
-#include "CAN_driver.h"
-#include "mcp2515.h"
-#include "UART_driver.h"
+
 #include <avr/io.h>
 #include <stdio.h>
 #include <avr/interrupt.h>
+
+#include "CAN_driver.h"
+#include "mcp2515.h"
 #include "game_driver.h"
+
+#define DEBUG 0
 
 // Higher priority message 
 volatile uint8_t READ_B0_MESSAGE = 0;
@@ -23,13 +26,13 @@ volatile highscore record_msg;
 
 
 
-void CAN_init(uint8_t mode){
+
+void CAN_init(void){
 	mcp2515_init(); //Config mode
 	CAN_interrupt_init();
-	mcp2515_bit_modify(MODE_MASK, mode, MCP_CANCTRL);
+	mcp2515_bit_modify(MODE_MASK, MODE_NORMAL, MCP_CANCTRL);
 }
 
-// Gjør det noe at vi alltid sender via transmit buffer 0? Kan hende vi vil bruke en annen buffer for andre meldinger i fremtidig kode
 
 void CAN_send_message(can_message* p_msg) {
 	// Wait for transmit buffer 0 to be empty
@@ -52,13 +55,10 @@ void CAN_send_message(can_message* p_msg) {
 	
 	// Request to send message for transmit buffer 0
 	mcp2515_request_to_send(1,0,0);
-	
-	//printf("Transmitted message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
-	
+		
 }
 
 
-// Vi har ikke lest filter and masks som spesifisert i lab lecture. 
 
 void CAN_receive_message(can_message* p_msg) {
 	if(READ_B0_MESSAGE){
@@ -80,7 +80,6 @@ void CAN_receive_message(can_message* p_msg) {
 		// Clear receive flag for receive buffer 0. 
 		READ_B0_MESSAGE = 0;
 		
-		//printf("Received message: X: %x, Y: %x , button: %x and direction : %x \r\n", p_msg->data[0], p_msg->data[1],  p_msg->data[2],  p_msg->data[3]);
 	}
 	
 	else if(READ_B1_MESSAGE){
@@ -102,7 +101,7 @@ void CAN_receive_message(can_message* p_msg) {
 		// Clear receive flag for receive buffer 1. 
 		READ_B1_MESSAGE = 0;
 		
-		printf("Received message: %x \r\n", p_msg->data[0]);
+		if(DEBUG){printf("Received message: %x \r\n", p_msg->data[0]);}
 	}
 }
 
@@ -112,8 +111,6 @@ void CAN_interrupt_init(void){
 	
 	// Disable global interrupts
 	cli();
-	
-	
 	
 	DDRD &= ~(1 << PD2);
 	
@@ -133,7 +130,6 @@ void CAN_interrupt_init(void){
 
 ISR(INT0_vect){
 	uint8_t interrupt_flag = mcp2515_read(MCP_CANINTF);
-	//printf("Received message\n\r");
 	if (interrupt_flag & 0x01){
 		// Set receive flag for receive buffer 0
 		READ_B0_MESSAGE = 1;
@@ -162,7 +158,7 @@ void CAN_message_handler(void){
 	}
 	switch (msg.id){
 		case CAN_GAME_END_ID: {
-			printf("END GAME MESSAGE RECEIVED\n\r");
+			if(DEBUG){printf("END GAME MESSAGE RECEIVED\n\r");}
 			if (record_msg.last_playtime < msg.data[0]){
 				record_msg.best_highscore = msg.data[0];
 			}

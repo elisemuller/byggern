@@ -20,6 +20,7 @@
 #define CAN_GAME_END_ID 4
 #define CAN_BUZZER_ID 5
 #define CAN_GAME_LEVEL_ID 6
+#define CAN_MUSIC_CONTROL 7
 
 
 #include <stdio.h>
@@ -27,10 +28,7 @@
 typedef struct {
   unsigned short id; //16 bit
   uint8_t length; 
-  union {
-    char data[8];
-    long positions[2];
-  };
+  char data[8];
 } can_message;
 
 
@@ -41,10 +39,9 @@ typedef struct hs {
 
 
 /**
-* @brief Initializes the CAN controller. Sets mode to LOOPBACK_MODE.
-* @param mode The wanted CAN mode
+* @brief Initializes the CAN controller. Sets mode to NORMAL_MODE
 */
-void CAN_init(uint8_t mode);
+void CAN_init(void);
 
 /**
 * @brief Sends CAN message of type can_message

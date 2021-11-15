@@ -1,11 +1,22 @@
+
+#include <stdio.h>
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdlib.h>
+
+#include "mcp2515.h"
+#include "SPI_driver.h"
+
+
+
 #define F_CPU 4915200
 #define F_OSC 16000000
 #define BAUD 125000
 #define TQ_NUM 16
-
 #define PS1 6
 #define PS2 5
 #define BRP (F_OSC/(2*BAUD*TQ_NUM))-1
+
 
 // Define timing config values
 
@@ -17,13 +28,6 @@
 
 // Two top bits are 11 (4 x TQ). Bottom bits are BRP.
 #define CNF1_REG_VALUE ( SJW4 | BRP )										
-
-#include "mcp2515.h"
-#include <stdio.h>
-#include <avr/io.h>
-#include "SPI_driver.h"
-#include <util/delay.h>
-#include <stdlib.h>
 
 
 

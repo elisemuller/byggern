@@ -14,12 +14,7 @@
 #define MENU_H_
 
 
-#include <avr/io.h>
-#include <stdio.h>
-#include <avr/pgmspace.h>
-#include "OLED_driver.h"
 #include "CAN_driver.h"
-#include "xmem.h"
 #include "movement_driver.h"
 
 typedef enum {
@@ -29,8 +24,8 @@ typedef enum {
 	INSANE,
 	SEE,
 	CLEAR,
-	VOLUME_UP,
-	VOLUME_DOWN,
+	STOP, 
+	BIRTHDAY,
 	NO_CHOICE
 } menu_choice;
 
@@ -45,24 +40,6 @@ typedef struct node {
 	int num_children; 
 } node;
 	
-typedef enum {
-    GAME_MUSIC,
-    WINNING_MUSIC,
-    LOSING_MUSIC,
-    LOBBY_MUSIC,
-    BIRTHDAY_MUSIC
-} playlist;
-
-typedef struct buzzer_controll {
-	int volume;
-	// int tempo; kanskje?
-	playlist list_title;
-} buzzer;
-
-
-void menu_printHello(void);
-
-void menu_printGoodBye(void);
 
 /**
 * @brief Initializes the menu displayed on the OLED screen.
@@ -105,6 +82,8 @@ void menu_setDifficulty(void);
 void menu_seeHighscore(void);
 
 void menu_clearHighscore(void);
+
+void menu_control_music(void);
 
 /**
 * @brief Starts the game and turns off the OLED display

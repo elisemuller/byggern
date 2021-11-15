@@ -10,32 +10,25 @@
 #include <avr/io.h>
 #include <stdio.h>
 #include <avr/pgmspace.h>
+#include <util/delay.h>
+
 #include "OLED_driver.h"
-#include "xmem.h"
 #include "menu.h"
 #include "movement_driver.h"
 #include "CAN_driver.h"
 #include "game_driver.h"
-#include <util/delay.h>
+
 
 volatile node* menu_position;
 volatile int current_child_pointer = 0; 
 volatile int previous_parent = 0; 
-volatile dir joy_dir;
 volatile int neutral_flag = 0;
 volatile input_j joystick_input;
-volatile buzzer sound; 
 volatile int level = 0;
+volatile int buzzer_data = 0; 
 
 
-void menu_printHello(void){
-	OLED_print("Hello World");
-}
 
-void menu_printGoodBye(void){
-	printf("Inside goodbye\r\n");
-	OLED_print("Goodbye World");
-}
 
 void menu_setDifficulty(void){
 	OLED_goto_pos(2,3);
@@ -46,22 +39,9 @@ void menu_setDifficulty(void){
 			menu_send_can_message(CAN_GAME_LEVEL_ID);
 			break;
 		}
-		case NORMAL:
-		{
-			OLED_print("As normal as normal can be");
-			level = 2;
-			menu_send_can_message(CAN_GAME_LEVEL_ID);
-			break;
-		}
 		case HARD:{
 			OLED_print("So you like it hardcore huh?");
-			level = 3;
-			menu_send_can_message(CAN_GAME_LEVEL_ID);
-			break;
-		}
-		case INSANE:{
-			OLED_print("YOU ARE ABSOLUTELY INSANE!!");
-			level = 4;
+			level = 2;
 			menu_send_can_message(CAN_GAME_LEVEL_ID);
 			break;
 		}
@@ -98,7 +78,6 @@ void menu_clearHighscore(void){
 void menu_startGame(void){
 	OLED_print(" Good Luck!");
 	game_set_state(PLAY);
-	//_delay_ms(2000); // debug her
 	OLED_reset();
 	
 	// Turn off OLED
@@ -106,11 +85,24 @@ void menu_startGame(void){
 	menu_send_can_message(CAN_GAME_START_ID);
 }
 
-void menu_adjustVolume(int vol){
-	/*	Implementere her at man leser om slider øker : 
-		OLED skjerm viser volum fra 0-10. 
-		Trykk høyre slider knapp to confirm. */
-	sound.volume = vol;
+
+
+void menu_control_music(void){
+	switch(menu_position->children[current_child_pointer]->choice){
+		case STOP: {
+			OLED_print("   STOPPED");
+			buzzer_data = 1;
+			menu_send_can_message(CAN_BUZZER_ID);
+			break;
+		}
+		case BIRTHDAY:
+		{
+			OLED_print("HAPPY BIRTHDAY!");
+			buzzer_data = 2;
+			menu_send_can_message(CAN_BUZZER_ID);
+			break;
+		}
+	}
 }
 
 void menu_send_can_message(int CAN_ID){
@@ -118,9 +110,8 @@ void menu_send_can_message(int CAN_ID){
 	menu_msg.id = CAN_ID;
 	switch (CAN_ID){
 		case CAN_BUZZER_ID:{
-			menu_msg.length = 2; 
-			menu_msg.data[0] = sound.volume;
-			menu_msg.data[1] = sound.list_title;
+			menu_msg.length = 1; 
+			menu_msg.data[0] = buzzer_data;
 			CAN_send_message(&menu_msg);
 			break;
 		}
@@ -154,33 +145,20 @@ void menu_init(void){
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
 	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
-	node* mini = menu_new_item(root, "Minigames", NULL, NO_CHOICE);
+	node* happy_bday =  menu_new_item(root, "My birthday", &menu_control_music, BIRTHDAY);
 	
 	//Difficulty
 	node* easy = menu_new_item(difficulty, "Easy", &menu_setDifficulty, EASY );
-	node* normal = menu_new_item(difficulty, "Normal", &menu_setDifficulty, NORMAL );
 	node* hard = menu_new_item(difficulty, "Hard", &menu_setDifficulty, HARD );
-	node* insane = menu_new_item(difficulty, "Insane", &menu_setDifficulty, INSANE );
-	
+	//node* insane = menu_new_item(difficulty, "Insane", &menu_setDifficulty, INSANE );
+	//
 	////Highscore
 	node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
 	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
 	
 	////Sound
-	// node* volume = menu_new_item(sound_settings, "Adjust volume", &menu_adjustVolume, NO_CHOICE); 
-	// node* stop = menu_new_item(sound_settings, "Stop music", NULL, NO_CHOICE);
-	// node* pause = 
-	//
-	////Minigames
-	//node* IC_man = menu_new_item(mini, "IC-man", NULL, NO_CHOICE); //Integrated circuit man
-	//node* draw_pic = menu_new_item(mini, "Make art", NULL, NO_CHOICE); 
-	//node* pong = menu_new_item(mini, "Ping pong", NULL, NO_CHOICE);
-	//node* led_game = menu_new_item(mini, "Light up LED", NULL, NO_CHOICE);
-	
-	// Initialize sound settings
-	sound.list_title = LOBBY_MUSIC;
-	sound.volume = 10; // Max volume
-	
+	 node* stop = menu_new_item(sound_settings, "Stop music", &menu_control_music, STOP);
+
 	menu_print();
 }
 

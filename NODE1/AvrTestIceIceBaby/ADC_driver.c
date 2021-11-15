@@ -11,24 +11,11 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include "ADC_driver.h"
-#include "xmem.h"
-#include "UART_driver.h"
 #include <stdint.h>
 #include <stdlib.h>
 
-
-volatile int x_pos;
-volatile int y_pos;
-
-volatile int r_pos;
-volatile int l_pos;
-
-
-volatile int null_x;
-volatile int null_y;
-
-
+#include "ADC_driver.h"
+#include "xmem.h"
 
 
 void adc_init(void){

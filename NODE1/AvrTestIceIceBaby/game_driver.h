@@ -22,7 +22,6 @@ typedef enum {
 
 void game_set_state(game_state state);
 game_state game_get_state(void);
-void game_send_start_flag(void);
 void game_interrupt_enable(void);
 void game_interrupt_disable(void);
 
