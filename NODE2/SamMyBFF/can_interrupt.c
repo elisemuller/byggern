@@ -8,17 +8,14 @@
  *
  */ 
 
-#include "can_interrupt.h"
-
 #include <stdio.h>
+
+#include "can_interrupt.h"
 #include "sam.h"
-
-//#include "../uart_and_printf/printf-stdarg.h"
 #include "printf-stdarg.h"
-
 #include "can_controller.h"
-#include "blink.h"
 #include "game_driver.h"
+#include "buzzer_driver.h"
 
 #define DEBUG_INTERRUPT 0
 
@@ -91,21 +88,17 @@ void CAN0_Handler( void )
 	}
 	
 	NVIC_ClearPendingIRQ(ID_CAN0);
-	//sei();*/
 }
 
 
 void message_data_collector(CAN_MESSAGE msg){
-	
-	//printf("message id: %d \n\r", msg.id);
-	switch(msg.id){
+		switch(msg.id){
 		case CAN_JOYSTICK_ID:{
 			joystick.pos_x = (int8_t)msg.data[0];
 			joystick.pos_y = msg.data[1];
 			joystick.button_pressed = msg.data[2];
 			joystick.direction = msg.data[3];
 			game_update_mov_msg();
-			//printf("Joystick pos %d \n\r", joystick.pos_x);
 			
 			break;
 		}
@@ -118,14 +111,24 @@ void message_data_collector(CAN_MESSAGE msg){
 			break;
 		}
 		case CAN_GAME_START_ID:{
-			//printf("Inside game id \n\r");
 			game_set_state(PLAY);
+			buzzer_stop_music();
 			break;
 		}
 		case CAN_GAME_LEVEL_ID:{
 			game_level lv = msg.data[0];
 			game_set_level(lv);
-			printf("Easy bro\n\r");
+			break;
+		}
+		case CAN_BUZZER_ID:{
+			int buzzer_data = msg.data[0];
+			if(buzzer_data == 1){
+			buzzer_stop_music();
+			}
+			else if (buzzer_data == 2){
+				game_set_state(BIRTHDAY);
+				buzzer_stop_music();
+			}
 			break;
 		}
 	}

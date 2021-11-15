@@ -9,7 +9,6 @@
 #define BUZZER_DRIVER_H_
 
 #include "melodies.h"
-#include "PWM_driver.h"
 
 /**
  * @brief Plays a single note on the buzzer
@@ -56,6 +55,9 @@ void buzzer_pause_music(int pause);
  * @param list_title Name of playlist
  */
 void buzzer_play_playlist(playlist list_title);
+
+
+void buzzer_stop_music(void);
 
 
 #endif /* BUZZER_DRIVER_H_ */

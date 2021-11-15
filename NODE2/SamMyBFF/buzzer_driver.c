@@ -1,35 +1,25 @@
-#include "buzzer_driver.h"
-#include "sam.h"
 #include <stdio.h>
 #include <stdint.h>
-#include <stdlib.h>
+
+#include "buzzer_driver.h"
+#include "sam.h"
 #include "melodies.h"
+#include "game_driver.h"
 #include "PWM_driver.h"
 
 volatile int NO_TONE = 0;
 volatile int STOP_SONG = 0;
-volatile int PAUSE_SONG = 0;
 
 volatile int tempo; 
-volatile float dutycycle = 0.5;
 volatile int notePointer; 
 volatile title currentSong; 
 
 
-void buzzer_init(int vol){
-    
-
-}
 
 
 void buzzer_play_note(int freq, int duration){
     PWM_frequency_modify(freq);
-	PWM_dutycycle_modify(0, BUZZER_CHANNEL, dutycycle);
-
-    time_delay_ms(duration); //Tonen holder seg her så lenge da vi ikke endrer den
-
-    // Set frequency at pwm pin 45
-    // Set duty cycle of pwm to select volume. --> 0.5 er maks. 
+    time_delay_ms(duration); 
 }
 
 
@@ -60,12 +50,6 @@ void buzzer_play_tune(const int* tune, int num_notes){
             STOP_SONG = 0; 
             return; 
         }
-        else if (PAUSE_SONG){
-            buzzer_play_note(NO_TONE,0);
-            notePointer = noteCounter;
-            return;
-        }
-
         buzzer_play_note(tune[noteCounter], noteDuration);
 
         buzzer_play_note(NO_TONE, waitDuration);
@@ -79,7 +63,7 @@ void buzzer_play_tune(const int* tune, int num_notes){
 void buzzer_play_music(title song){
     int num_notes = 0; 
     currentSong = song; 
-    buzzer_adjust_volume(10);
+	
     switch (song){
         case NEVER_GIVE_UP:{
             buzzer_adjust_tempo(114); //Change to make song play slower/faster
@@ -135,6 +119,12 @@ void buzzer_play_music(title song){
             buzzer_play_tune(takeOnMe, num_notes);
             break;
         }
+		case SUPER_MARIO:{
+			buzzer_adjust_tempo(200); //Change to make song play slower/faster
+			num_notes = (sizeof(superMario) / sizeof(superMario[0]) / 2);
+			buzzer_play_tune(superMario, num_notes);
+			break;
+		}
         default:
             printf("Invalid song choice\n\r");
             break;
@@ -146,36 +136,17 @@ void buzzer_adjust_tempo(int temp){
     tempo = temp;
 }
 
-void buzzer_adjust_volume(int vol){
-    if ( vol >= 0 && vol < 10)
-    dutycycle = (vol/20);
-}
-
-void buzzer_pause_music(int pause){
-    if(PAUSE_SONG){
-        if (!pause){
-            buzzer_play_music(currentSong);
-        }
-    }
-    PAUSE_SONG = pause; //Set to 0 to unpause
-}
 
 void buzzer_play_playlist(playlist list_title){
     switch (list_title){
         case LOBBY_MUSIC:{
-            buzzer_play_music(BABY_ELEPHANT_WALK);
-            buzzer_play_music(PINK_PANTHER);
-            break;
-        }
-        case GAME_MUSIC: {
-            buzzer_play_music(TAKE_ON_ME);
-            buzzer_play_music(TETRIS);
-            buzzer_play_music(CASTLEVANIA);
-            buzzer_play_music(GREEN_HILL);
+            if(game_get_state() == LOBBY){buzzer_play_music(BABY_ELEPHANT_WALK);}
+            if(game_get_state() == LOBBY){buzzer_play_music(PINK_PANTHER);}
+			if(game_get_state() == LOBBY){buzzer_play_music(TAKE_ON_ME);}
             break;
         }
         case LOSING_MUSIC:{
-            buzzer_play_music(NEVER_GIVE_UP);
+            if(game_get_state() != PLAY) buzzer_play_music(NEVER_GIVE_UP);
             break;
         }
         case WINNING_MUSIC: {
@@ -183,7 +154,7 @@ void buzzer_play_playlist(playlist list_title){
             break;
         }
         case BIRTHDAY_MUSIC:{
-            buzzer_play_music(HAPPY_BIRTHDAY);
+            if(game_get_state() != PLAY) {buzzer_play_music(HAPPY_BIRTHDAY);}
             break;
         }
         default:{
@@ -191,4 +162,8 @@ void buzzer_play_playlist(playlist list_title){
             break;
         }
     }
+}
+
+void buzzer_stop_music(void){
+	STOP_SONG = 1;
 }

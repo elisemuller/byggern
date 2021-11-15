@@ -18,15 +18,14 @@ typedef enum {
 	INIT,
 	PLAY,
 	LOBBY,
-	GAME_OVER
+	GAME_OVER,
+	BIRTHDAY
 } game_state;
 
 typedef enum {
 	UNSET,
 	EASY,
-	MEDIUM,
-	HARD,
-	INSANE
+	HARD
 } game_level;
 
 /**
@@ -71,6 +70,8 @@ void game_set_state(game_state state);
 game_state game_get_state(void);
 
 void game_set_level(game_level lv);
+
+void game_start(void);
 
 
 #endif /* GAME_DRIVER_H_ */

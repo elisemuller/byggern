@@ -7,8 +7,6 @@
 #ifndef ADC_DRIVER_H_
 #define ADC_DRIVER_H_
 
-#include <stdint.h>
-
 
 /**
 * @brief Initializes adc. Enables the peripheral clock and channel 0. 
