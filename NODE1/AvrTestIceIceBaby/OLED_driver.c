@@ -230,3 +230,20 @@ void OLED_print_image(graphic image){
 			break;	
 	}
 }
+
+void OLED_print_byggern(void){
+    OLED_reset();
+    OLED_print(" ____   __ __   ____   ____    ___  ____   ____  ");
+    OLED_goto_pos(1, 0);
+    OLED_print("|    \ |  |  | /    | /    |  /  _]|    \ |    \ ");
+    OLED_goto_pos(2, 0);
+    OLED_print("|  o  )|  |  ||   __||   __| /  [_ |  D  )|  _  |");
+    OLED_goto_pos(3, 0);
+    OLED_print("|     ||  ~  ||  |  ||  |  ||    _]|    / |  |  |");
+    OLED_goto_pos(4, 0);
+    OLED_print("|  O  ||___, ||  |_ ||  |_ ||   [_ |    \ |  |  |");
+    OLED_goto_pos(5, 0);
+    OLED_print("|     ||     ||     ||     ||     ||  .  \|  |  |");
+    OLED_goto_pos(6, 0);
+    OLED_print("|_____||____/ |___,_||___,_||_____||__|\_||__|__|");
+}
