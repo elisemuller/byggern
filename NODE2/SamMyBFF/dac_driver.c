@@ -1,6 +1,4 @@
 
-#include <stdint.h>
-
 #include "sam.h"
 #include "dac_driver.h"
 
@@ -16,10 +14,10 @@ void dac_init(void) {
     // DACC->DACC_IER |= DACC_IER_TXRDY
 }
 
-void dac_wr(uint32_t game_score) {
+void dac_wr(uint32_t int) {
     //check if the dac is ready to accept conversion request
     //if (DACC->DACC_ISR[0]) {
-        DACC->DACC_CDR = game_score;
+        DACC->DACC_CDR = 4*game_score;  //multiply with 4 because esp has smaller bit resolution
     //}
 
 }

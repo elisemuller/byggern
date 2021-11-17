@@ -16,7 +16,7 @@ void dac_init(void);
  * @brief Sets the data on the dac channel
  * @param game_score The game score to be written to the wifi chip
  */
-void dac_wr(uint32_t game_score);
+void dac_wr(int game_score);
 
 
 #endif /* DAC_DRIVER_H_ */
