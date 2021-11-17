@@ -5,7 +5,7 @@
 #include "dac_driver.h"
 
 void dac_init(void) {
-    // free running mode word transfer, does not sleep between conversions, channel 1 selected
+    // free running mode word transfer, does not sleep between conversions, channel 1 selected + startup time??
     DACC->DACC_MR |= DACC_MR_WORD_WORD | DACC_MR_USER_SEL_CHANNEL1; //Dacc->??
     // enable channel 1 and disable channel 0
     DACC->DACC_CHER |= DACC_CHER_CH1;
@@ -15,5 +15,9 @@ void dac_init(void) {
 }
 
 void dac_wr(uint32_t game_score) {
-    DACC->DACC_CDR = game_score;
+    //check if the dac is ready to accept conversion request
+    if (DACC->DACC_ISR[0]) {
+        DACC->DACC_CDR = game_score;
+    }
+
 }
