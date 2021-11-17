@@ -12,12 +12,14 @@ void dac_init(void) {
     DACC->DACC_CHDR |= DACC_CHDR_CH0;
     //diable interrupts - vet ikke om vi trenger dette
     DACC->DACC_IDR |= DACC_IDR_TXRDY | DACC_IDR_EOC | DACC_IDR_ENDTX | DACC_IDR_TXBUFE;
+    // enable interrupts ??
+    // DACC->DACC_IER |= DACC_IER_TXRDY
 }
 
 void dac_wr(uint32_t game_score) {
     //check if the dac is ready to accept conversion request
-    if (DACC->DACC_ISR[0]) {
+    //if (DACC->DACC_ISR[0]) {
         DACC->DACC_CDR = game_score;
-    }
+    //}
 
 }
