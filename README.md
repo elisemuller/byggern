@@ -1,5 +1,5 @@
 # byggern
-
+- Legge til dac i solution
 ## Dependencies
 NODE 1:
 - ADC: xmem
@@ -25,5 +25,5 @@ NODE 2:
 - solenoid:
 - PID: motor
 - time:
-- dac: 
+- dac:
 - main: can_i, can_c, game, buzzer,
