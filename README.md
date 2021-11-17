@@ -20,9 +20,10 @@ NODE 2:
 - buzzer: PWM, game
 - can_c:
 - can_i: can_c, game, buzzer
-- game: PWM, motor, can_i, solenoid, adc, time, PID
+- game: PWM, motor, can_i, solenoid, adc, time, PID, dac
 - motor: can_i, time
 - solenoid:
 - PID: motor
-- time: 
+- time:
+- dac: 
 - main: can_i, can_c, game, buzzer,
