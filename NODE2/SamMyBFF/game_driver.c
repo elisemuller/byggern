@@ -42,12 +42,12 @@ void game_init(void){
 }
 
 void game_write_score_wifi(int game_score) {
-	int pin0 = (game_score && (1 << 0));
-	int pin1 = (game_score && (1 << 1));
-	int pin2 = (game_score && (1 << 2));
-	int pin3 = (game_score && (1 << 3));
-	int pin4 = (game_score && (1 << 4));
-	int pin5 = (game_score && (1 << 5));
+	int pin0 = (game_score & (1 << 0));
+	int pin1 = (game_score & (1 << 1));
+	int pin2 = (game_score & (1 << 2));
+	int pin3 = (game_score & (1 << 3));
+	int pin4 = (game_score & (1 << 4));
+	int pin5 = (game_score & (1 << 5));
 	//pin46 LSB
 	PIOC->PIO_CODR |= (PIO_CODR_P17);
 	if (pin0) {
@@ -78,8 +78,8 @@ void game_write_score_wifi(int game_score) {
 	if (pin5) {
 		PIOC->PIO_SODR |= (PIO_SODR_P8);
 	}
-	
-	
+
+
 }
 
 void game_update_highscore(void){
@@ -116,7 +116,7 @@ void game_update_mov_msg(void){
 void game_ended(void){
 	GAME_START = 0;
 	game_over = 0;
-	
+
 	//printf("Game over. Playtime: %d \n\r",playtime);
 
 	CAN_MESSAGE end_game_msg;
