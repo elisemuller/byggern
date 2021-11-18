@@ -47,7 +47,9 @@ typedef struct input_slider {
 } input_s;
 
 
-
+/**
+ * @brief CAN0 Interrupt handler for RX, TX and bus error interrupts
+ */
 void CAN0_Handler       ( void );
 
 /**

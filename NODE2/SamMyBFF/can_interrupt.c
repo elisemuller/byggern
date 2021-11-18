@@ -22,13 +22,6 @@
 volatile input_j joystick;
 volatile input_s slider;
 
-/**
- * \brief CAN0 Interrupt handler for RX, TX and bus error interrupts
- *
- * \param void
- *
- * \retval 
- */
 void CAN0_Handler( void )
 {
 	if(DEBUG_INTERRUPT)printf("CAN0 interrupt\n\r");
