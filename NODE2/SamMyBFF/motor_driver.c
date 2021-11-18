@@ -25,7 +25,7 @@ void motor_init(void){
 	PMC->PMC_PCER1 |= PMC_PCER1_PID38; // DACC
 	PMC->PMC_PCER0 |= (PMC_PCER0_PID13 | PMC_PCER0_PID14); // PIOC and PIOD
 	
-	// Select channel 1 for DACC, 16 LSB data
+	//// Select channel 1 for DACC, 16 LSB data
 	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1 | DACC_MR_WORD_HALF;
 	DACC->DACC_CHER |= DACC_CHER_CH1;
 	

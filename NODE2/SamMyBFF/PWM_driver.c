@@ -8,7 +8,7 @@
 
 #define MCK 84000000
 #define DIV_44 42
-#define DIV_45 25
+#define DIV_45 17
 
 #define DEBUG 0
 

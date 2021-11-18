@@ -19,9 +19,9 @@
 
 
 int main(void)
-{   
+{   	
     while (1) 
-    {
+    {		
 		switch (game_get_state()){
 			case INIT: {
 				SystemInit();
@@ -33,7 +33,6 @@ int main(void)
 				NVIC_EnableIRQ(TC0_IRQn);
 				game_set_state(LOBBY);
 				printf("######################### INIT COMPLETE ############################\n\r");
-
 				break;
 			}
 			case LOBBY: {
@@ -57,6 +56,12 @@ int main(void)
 				game_set_state(LOBBY);
 				buzzer_play_playlist(BIRTHDAY_MUSIC);
 				break; 
+			}
+			case VICTORY:{
+				game_ended();
+				game_set_state(LOBBY);
+				buzzer_play_playlist(WINNING_MUSIC);
+				break;
 			}
 			
 		}
