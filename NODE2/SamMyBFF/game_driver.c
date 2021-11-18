@@ -29,7 +29,7 @@ void game_start(void){
 
 void game_wifi_init(void) {
 	PIOC->PIO_PER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
-	PIOC->PIO_OER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
+	PIOC->PIO_OER |= PIO_OER_P8 | PIO_OER_P9 | PIO_OER_P14 | PIO_OER_P15 | PIO_OER_P16 | PIO_OER_P17;
 }
 
 void game_init(void){
