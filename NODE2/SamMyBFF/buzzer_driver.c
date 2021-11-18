@@ -47,7 +47,7 @@ void buzzer_play_tune(const int* tune, int num_notes){
         if (STOP_SONG) {
             buzzer_play_note(NO_TONE,0);
             notePointer = 0; 
-            STOP_SONG = 0; 
+            //STOP_SONG = 0; 
             return; 
         }
         buzzer_play_note(tune[noteCounter], noteDuration);
@@ -140,21 +140,21 @@ void buzzer_adjust_tempo(int temp){
 void buzzer_play_playlist(playlist list_title){
     switch (list_title){
         case LOBBY_MUSIC:{
-            if(game_get_state() == LOBBY){buzzer_play_music(BABY_ELEPHANT_WALK);}
-            if(game_get_state() == LOBBY){buzzer_play_music(PINK_PANTHER);}
-			if(game_get_state() == LOBBY){buzzer_play_music(TAKE_ON_ME);}
+            if(game_get_state() == LOBBY & !STOP_SONG){buzzer_play_music(BABY_ELEPHANT_WALK);}
+            if(game_get_state() == LOBBY & !STOP_SONG){buzzer_play_music(PINK_PANTHER);}
+			if(game_get_state() == LOBBY & !STOP_SONG){buzzer_play_music(TAKE_ON_ME);}
             break;
         }
         case LOSING_MUSIC:{
-            if(game_get_state() != PLAY) buzzer_play_music(NEVER_GIVE_UP);
+            if(game_get_state() != PLAY & !STOP_SONG) buzzer_play_music(NEVER_GIVE_UP);
             break;
         }
         case WINNING_MUSIC: {
-            buzzer_play_music(STAR_WARS);
+            if(game_get_state() != PLAY & !STOP_SONG) {buzzer_play_music(STAR_WARS);}
             break;
         }
         case BIRTHDAY_MUSIC:{
-            if(game_get_state() != PLAY) {buzzer_play_music(HAPPY_BIRTHDAY);}
+            if(game_get_state() != PLAY & !STOP_SONG) {buzzer_play_music(HAPPY_BIRTHDAY);}
             break;
         }
         default:{
@@ -164,6 +164,6 @@ void buzzer_play_playlist(playlist list_title){
     }
 }
 
-void buzzer_stop_music(void){
-	STOP_SONG = 1;
+void buzzer_stop_music(int stop){
+	STOP_SONG = stop;
 }

@@ -11,7 +11,7 @@
 #include "time.h"
 #include "PID_controller.h"
 #include "solenoid.h"
-#include "dac_driver.h"
+#include "buzzer_driver.h"
 
 
 volatile int NEW_MOV_INPUT = 0;
@@ -27,20 +27,69 @@ void game_start(void){
 	start_time = time_get_count(s);
 }
 
+void game_wifi_init(void) {
+	PIOC->PIO_PER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
+	PIOC->PIO_OER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
+}
+
 void game_init(void){
 	PWM_init();
 	adc_init();
 	solenoid_init();
 	PID_init();
 	motor_reset_encoder();
-	dac_init();
+	game_wifi_init();
+}
+
+void game_write_score_wifi(int game_score) {
+	int pin0 = (game_score && (1 << 0));
+	int pin1 = (game_score && (1 << 1));
+	int pin2 = (game_score && (1 << 2));
+	int pin3 = (game_score && (1 << 3));
+	int pin4 = (game_score && (1 << 4));
+	int pin5 = (game_score && (1 << 5));
+	//pin46 LSB
+	PIOC->PIO_CODR |= (PIO_CODR_P17);
+	if (pin0) {
+		PIOC->PIO_SODR |= (PIO_SODR_P17);
+	}
+	//pin47
+	PIOC->PIO_CODR |= (PIO_CODR_P16);
+	if (pin1) {
+		PIOC->PIO_SODR |= (PIO_SODR_P16);
+	}
+	//pin48
+	PIOC->PIO_CODR |= (PIO_CODR_P15);
+	if (pin2) {
+		PIOC->PIO_SODR |= (PIO_SODR_P15);
+	}
+	//pin49
+	PIOC->PIO_CODR |= (PIO_CODR_P14);
+	if (pin3) {
+		PIOC->PIO_SODR |= (PIO_SODR_P14);
+	}
+	//pin41
+	PIOC->PIO_CODR |= (PIO_CODR_P9);
+	if (pin4) {
+		PIOC->PIO_SODR |= (PIO_SODR_P9);
+	}
+	//pin40 MSB
+	PIOC->PIO_CODR |= (PIO_CODR_P8);
+	if (pin5) {
+		PIOC->PIO_SODR |= (PIO_SODR_P8);
+	}
+	
+	
 }
 
 void game_update_highscore(void){
 	record.last_playtime = playtime;
-	dac_wr(playtime);
 	if(playtime > record.best_highscore){
 		record.best_highscore = playtime;
+		game_set_state(VICTORY);
+	}
+	else{
+		game_set_state(GAME_OVER);
 	}
 	printf("Current playtime is: %d \r\n", playtime);
 	printf("Highscore: %d\n\r", record.best_highscore);
@@ -67,8 +116,8 @@ void game_update_mov_msg(void){
 void game_ended(void){
 	GAME_START = 0;
 	game_over = 0;
-	game_update_highscore();
-	printf("Game over. Playtime: %d \n\r",playtime);
+	
+	//printf("Game over. Playtime: %d \n\r",playtime);
 
 	CAN_MESSAGE end_game_msg;
 	end_game_msg.id = CAN_GAME_END_ID;
@@ -103,7 +152,10 @@ void game_play(void){
 	motor_set_direction(RIGHT);
 	motor_set_speed(1000);
 	time_delay_ms(1000);
-	game_set_state(GAME_OVER);
+	printf("Playtime: %d\r\n", playtime);
+	game_write_score_wifi(playtime);
+	game_update_highscore();
+	buzzer_stop_music(0);
 }
 
 

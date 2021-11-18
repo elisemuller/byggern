@@ -3,7 +3,6 @@
  * @brief Buzzer driver
  */
 
-//Må vi ha denne i egen node? Hvordan skal vi få denne til å spille musikk på samme tid som vi gjør andre ting? 
 
 #ifndef BUZZER_DRIVER_H_
 #define BUZZER_DRIVER_H_
@@ -37,18 +36,6 @@ void buzzer_play_music(title song);
  */
 void buzzer_adjust_tempo(int temp);
 
-/**
- * @brief Adjusts the volume on the buzzer.
- * @param vol Volume of buzzer in range of 0-10. 
- */
-void buzzer_adjust_volume(int vol);
-
-
-/**
- * @brief Pauses current song playing on buzzer if @p pause = 1.
- * @param pause Pauses if @p pause = 1, unpauses if @p pause = 0.
- */
-void buzzer_pause_music(int pause);
 
 /**
  * @brief Plays the selected playlist @p list_title on the buzzer.
@@ -56,8 +43,11 @@ void buzzer_pause_music(int pause);
  */
 void buzzer_play_playlist(playlist list_title);
 
-
-void buzzer_stop_music(void);
+/**
+ * @brief Stops music from playing on buzzer if @p stop is set
+ * @param stop music when 1, else continues playing
+ */
+void buzzer_stop_music(int stop);
 
 
 #endif /* BUZZER_DRIVER_H_ */

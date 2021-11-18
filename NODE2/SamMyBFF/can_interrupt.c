@@ -112,7 +112,7 @@ void message_data_collector(CAN_MESSAGE msg){
 		}
 		case CAN_GAME_START_ID:{
 			game_set_state(PLAY);
-			buzzer_stop_music();
+			buzzer_stop_music(1);
 			break;
 		}
 		case CAN_GAME_LEVEL_ID:{
@@ -123,11 +123,14 @@ void message_data_collector(CAN_MESSAGE msg){
 		case CAN_BUZZER_ID:{
 			int buzzer_data = msg.data[0];
 			if(buzzer_data == 1){
-			buzzer_stop_music();
+			buzzer_stop_music(1);
 			}
 			else if (buzzer_data == 2){
 				game_set_state(BIRTHDAY);
-				buzzer_stop_music();
+				buzzer_stop_music(1);
+			}
+			else if (buzzer_data == 3){
+				buzzer_stop_music(0);
 			}
 			break;
 		}
