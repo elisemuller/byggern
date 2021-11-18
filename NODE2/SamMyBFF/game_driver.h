@@ -35,6 +35,17 @@ typedef enum {
 void game_init(void);
 
 /**
+ * @brief Initializes the output pins for communication with wifi chip.
+ */
+void game_wifi_init(void);
+
+/**
+ * @brief Sets output pins according to the score input.
+ * @param game_score The score to be sent to the wifi chip.
+ */
+void game_write_score_wifi(int game_score);
+
+/**
  * @return Updates the highscore
  */
 void game_update_highscore(void);

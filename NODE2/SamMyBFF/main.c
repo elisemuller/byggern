@@ -27,7 +27,6 @@ int main(void)
 				SystemInit();
 				configure_uart();
 				can_init_def_tx_rx_mb();
-				WDT->WDT_MR = WDT_MR_WDDIS;
 				SysTick_Config(84);
 				game_init();
 				NVIC_EnableIRQ(TC0_IRQn);
