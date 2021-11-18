@@ -25,7 +25,7 @@ volatile int previous_parent = 0;
 volatile int neutral_flag = 0;
 volatile input_j joystick_input;
 volatile int level = 0;
-volatile int buzzer_data = 0; 
+volatile int buzzer_data = 3; 
 
 
 
@@ -90,8 +90,14 @@ void menu_startGame(void){
 void menu_control_music(void){
 	switch(menu_position->children[current_child_pointer]->choice){
 		case STOP: {
-			OLED_print("   STOPPED");
-			buzzer_data = 1;
+			if (buzzer_data == 1){
+				OLED_print("   PLAYING");
+				buzzer_data = 3;
+			}
+			else if (buzzer_data == 3){
+				OLED_print("   STOPPED");
+				buzzer_data = 1;
+			}
 			menu_send_can_message(CAN_BUZZER_ID);
 			break;
 		}
@@ -157,7 +163,7 @@ void menu_init(void){
 	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
 	
 	////Sound
-	 node* stop = menu_new_item(sound_settings, "Stop music", &menu_control_music, STOP);
+	 node* stop = menu_new_item(sound_settings, "Stop/Play", &menu_control_music, STOP);
 
 	menu_print();
 }
