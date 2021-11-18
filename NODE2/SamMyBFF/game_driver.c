@@ -30,6 +30,7 @@ void game_start(void){
 void game_wifi_init(void) {
 	PIOC->PIO_PER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
 	PIOC->PIO_OER |= PIO_OER_P8 | PIO_OER_P9 | PIO_OER_P14 | PIO_OER_P15 | PIO_OER_P16 | PIO_OER_P17;
+	PIOC->PIO_CODR |= PIO_CODR_P8 | PIO_CODR_P9 | PIO_CODR_P14 | PIO_CODR_P15 | PIO_CODR_P16 | PIO_CODR_P17;
 }
 
 void game_init(void){
@@ -49,40 +50,45 @@ void game_write_score_wifi(int game_score) {
 	int pin4 = (game_score & (1 << 4));
 	int pin5 = (game_score & (1 << 5));
 	//pin46 LSB
-	PIOC->PIO_CODR |= (PIO_CODR_P17);
 	if (pin0) {
 		PIOC->PIO_SODR |= (PIO_SODR_P17);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P17);
 	}
 	//pin47
-	PIOC->PIO_CODR |= (PIO_CODR_P16);
 	if (pin1) {
 		PIOC->PIO_SODR |= (PIO_SODR_P16);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P16);
 	}
 	//pin48
-	PIOC->PIO_CODR |= (PIO_CODR_P15);
 	if (pin2) {
 		PIOC->PIO_SODR |= (PIO_SODR_P15);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P15);
 	}
 	//pin49
-	PIOC->PIO_CODR |= (PIO_CODR_P14);
 	if (pin3) {
 		PIOC->PIO_SODR |= (PIO_SODR_P14);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P14);
 	}
 	//pin41
-	PIOC->PIO_CODR |= (PIO_CODR_P9);
 	if (pin4) {
 		PIOC->PIO_SODR |= (PIO_SODR_P9);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P9);
 	}
 	//pin40 MSB
-	PIOC->PIO_CODR |= (PIO_CODR_P8);
 	if (pin5) {
 		PIOC->PIO_SODR |= (PIO_SODR_P8);
+	} else {
+		PIOC->PIO_CODR |= (PIO_CODR_P8);
 	}
-
-
 }
 
 void game_update_highscore(void){
+	game_write_score_wifi(playtime);
 	record.last_playtime = playtime;
 	if(playtime > record.best_highscore){
 		record.best_highscore = playtime;
@@ -153,7 +159,6 @@ void game_play(void){
 	motor_set_speed(1000);
 	time_delay_ms(1000);
 	printf("Playtime: %d\r\n", playtime);
-	game_write_score_wifi(playtime);
 	game_update_highscore();
 	buzzer_stop_music(0);
 }
