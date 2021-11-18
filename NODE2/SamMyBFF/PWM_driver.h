@@ -9,12 +9,12 @@
 
 
 /**
- * @brief Configures the pwm signal used for the PWM. 
+ * @brief Configures the pwm signal. 
  */
 void PWM_init(void);
 
 /**
- * @brief Modifies the @p dutycycle of the PWM on pin 44
+ * @brief Modifies the @p dutycycle of the PWM on pin 44.
  */
 void PWM_dutycycle_modify(void);
 

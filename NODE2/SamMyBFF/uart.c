@@ -1,7 +1,7 @@
 /*
  * uart.c
  *
- * Author: Gustav O. Often and Eivind H. Jølsgard
+ * Author: Gustav O. Often and Eivind H. Jï¿½lsgard
  *
  * For use in TTK4155 Embedded and Industrial Computer Systems Design
  * NTNU - Norwegian University of Science and Technology
@@ -15,14 +15,6 @@
 //Ringbuffer for receiving multiple characters
 uart_ringbuffer rx_buffer;
 
-
-/**
- * \brief Configure UART.
- *
- * \param void
- *
- * \retval void.
- */
 void configure_uart(void)
 {
 	uint32_t ul_sr;
@@ -81,13 +73,6 @@ Initialize UART communication
 
 }
 
-/**
- * \brief Get character from UART
- *
- * \param *c location of character 
- *
- * \retval Success(0) or failure(1)
- */
 int uart_getchar(uint8_t *c)
 {
 	// Check if a character is available in the ringbuffer
@@ -101,13 +86,6 @@ int uart_getchar(uint8_t *c)
 	return 0;
 }
 
-/*
- * \brief Sends a character through the UART interface
- *
- * \param c Character to be sent
- *
- * \retval Success(0) or failure(1).
- */
 int uart_putchar(const uint8_t c)
 {
 	// Check if the transmitter is ready

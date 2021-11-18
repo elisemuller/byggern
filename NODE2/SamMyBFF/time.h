@@ -30,7 +30,10 @@ void time_delay_ms(int delay);
  */
 void time_delay_us(int delay);
 
-
+/**
+ * @brief Returns the current value of @p us_counter in either us, ms or s.
+ * @param count The wanted unit of the returned time.
+ */
 int time_get_count(time count);
 
 
