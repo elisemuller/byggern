@@ -3,7 +3,7 @@
  //*
  //* Created: 20.09.2021 16:55:21
  //*  Author: elisegm
- //*/ 
+ //*/
 //
 #include <avr/io.h>
 #include <stdint.h>
@@ -77,10 +77,10 @@ dir mov_get_joy_dir(void){
 	mov_pos_joy_rd();
 	const int neutral_threshold = 70;
 	dir direction = UNDEFINED;
-	
+
 	int abs_x = abs(x_pos);
 	int abs_y = abs(y_pos);
-	
+
 	if (abs_x < neutral_threshold && abs_y < neutral_threshold){
 		direction = NEUTRAL;
 	}
@@ -104,7 +104,7 @@ dir mov_get_joy_dir(void){
 }
 
 int mov_read_button(button b){
-	int button_pushed = 0; 
+	int button_pushed = 0;
 	switch (b){
 		case jb:{
 			if(DEBUG_BUTTON){
@@ -138,9 +138,9 @@ int mov_read_button(button b){
 		if(DEBUG_BUTTON){
 			printf("Button pressed\r\n");
 		}
-		return 1; 
+		return 1;
 	}
-	return 0; 
+	return 0;
 }
 
 

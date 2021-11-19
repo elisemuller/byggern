@@ -3,7 +3,7 @@
  *
  * Created: 20.09.2021 16:54:56
  *  Author: elisegm
- */ 
+ */
 
 /**
  * @file
@@ -15,7 +15,7 @@
 #define MOVEMENT_DRIVER_H_
 
 /**
-* @enum Button types. 
+* @enum Button types.
 */
 typedef enum {
 	jb,
@@ -48,7 +48,7 @@ typedef struct input_slider {
 
 
 /**
-* @brief Calibrates the neutral state of the joystick and configures button pins as input. 
+* @brief Calibrates the neutral state of the joystick and configures button pins as input.
 */
 void mov_init(void);
 

@@ -24,7 +24,7 @@ void uart_transmit(unsigned char message){
 
 unsigned char uart_receive(void){
 	while ( !(UCSR0A & (1 << RXC0)) );	// Wait until last message has been received
-	
+
 	UCSR0A |= (1 << RXC0);
 	return UDR0;					// Put data in buffer
 }

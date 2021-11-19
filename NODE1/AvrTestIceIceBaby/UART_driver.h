@@ -9,7 +9,7 @@
 #define FOSC 4915200		// Clock speed (crystal oscillator)
 #define BAUD 9600			// Baud rate
 
-#define MYUBRR FOSC/16/BAUD-1 
+#define MYUBRR FOSC/16/BAUD-1
 
 /**
 * @brief Initializes UART

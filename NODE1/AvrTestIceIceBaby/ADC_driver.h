@@ -18,12 +18,12 @@
 /**
  * @brief Initializes PWM signal to be used in ADC conversion
  */
-void adc_init(void); 
+void adc_init(void);
 
 /**
- * @brief Converts and read the data on the selected @p channel
+ * @brief Reads and converts the data on the selected @p channel
  * @param channel The channel selected for adc conversion
- * @return The converted data 
+ * @return The converted data
  */
 volatile uint8_t adc_rd(uint8_t channel);
 

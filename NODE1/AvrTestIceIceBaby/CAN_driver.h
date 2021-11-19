@@ -3,11 +3,11 @@
  *
  * Created: 06.09.2021 15:25:20
  *  Author: elisegm
- */ 
+ */
 
 /**
  * @file
- * @brief Driver for CAN communication 
+ * @brief Driver for CAN communication
  */
 
 
@@ -27,14 +27,14 @@
 
 typedef struct {
   unsigned short id; //16 bit
-  uint8_t length; 
+  uint8_t length;
   char data[8];
 } can_message;
 
 
 typedef struct hs {
 	int best_highscore;
-	int last_playtime; 
+	int last_playtime;
 } highscore;
 
 
@@ -45,13 +45,13 @@ void CAN_init(void);
 
 /**
 * @brief Sends CAN message of type can_message
-* @param p_msg This is a poniter to the message to be sent.
+* @param p_msg Pointer to the message to be sent.
 */
 void CAN_send_message(can_message* p_msg);
 
 /**
 * @brief Receives CAN message.
-* @param p_msg This pointer points to the storage location of the received message.
+* @param p_msg Pointer to where the received message should be stored.
 */
 void CAN_receive_message(can_message* p_msg);
 
@@ -61,11 +61,14 @@ void CAN_receive_message(can_message* p_msg);
 void CAN_interrupt_init(void);
 
 /**
-* @brief Allocates information retrieved from CAN messages
+* @brief Allocates information retrieved from CAN messages. Updates the highscore and sets the state as GAME_OVER if the message says game over.
 */
 void CAN_message_handler(void);
 
-
+/**
+* @brief Returns the highscore as a @p highscore
+* @return highscore
+*/
 highscore CAN_get_highscore(void);
 
 

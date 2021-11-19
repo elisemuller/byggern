@@ -3,7 +3,7 @@
  *
  * Created: 27.09.2021 10:51:29
  *  Author: elisegm
- */ 
+ */
 
 #define F_CPU 4915200
 
@@ -20,12 +20,12 @@
 
 
 volatile node* menu_position;
-volatile int current_child_pointer = 0; 
-volatile int previous_parent = 0; 
+volatile int current_child_pointer = 0;
+volatile int previous_parent = 0;
 volatile int neutral_flag = 0;
 volatile input_j joystick_input;
 volatile int level = 0;
-volatile int buzzer_data = 3; 
+volatile int buzzer_data = 3;
 
 
 
@@ -49,7 +49,7 @@ void menu_setDifficulty(void){
 }
 
 void menu_seeHighscore(void){
-	highscore record; 
+	highscore record;
 	record = CAN_get_highscore();
 	char hs_text[16];
 	char play_text[16];
@@ -71,15 +71,15 @@ void menu_seeHighscore(void){
 }
 
 void menu_clearHighscore(void){
-	// Send til CAN 2 om å cleare highscore der. 
-	
+	// Send til CAN 2 om å cleare highscore der.
+
 }
 
 void menu_startGame(void){
 	OLED_print(" Good Luck!");
 	game_set_state(PLAY);
 	OLED_reset();
-	
+
 	// Turn off OLED
 	game_interrupt_enable();
 	menu_send_can_message(CAN_GAME_START_ID);
@@ -116,14 +116,14 @@ void menu_send_can_message(int CAN_ID){
 	menu_msg.id = CAN_ID;
 	switch (CAN_ID){
 		case CAN_BUZZER_ID:{
-			menu_msg.length = 1; 
+			menu_msg.length = 1;
 			menu_msg.data[0] = buzzer_data;
 			CAN_send_message(&menu_msg);
 			break;
 		}
 		case CAN_GAME_START_ID:{
-			menu_msg.length = 1; 
-			menu_msg.data[0] = 1; 
+			menu_msg.length = 1;
+			menu_msg.data[0] = 1;
 			CAN_send_message(&menu_msg);
 			break;
 		}
@@ -144,15 +144,15 @@ void menu_init(void){
 	OLED_init();
 	//Root
 	node* root = menu_new_item(NULL, "Main menu", NULL, NO_CHOICE);
-	menu_position = root; 
-	
+	menu_position = root;
+
 	//Main menu
-	node* start_game = menu_new_item(root, "Start game", &menu_startGame, NO_CHOICE);	
+	node* start_game = menu_new_item(root, "Start game", &menu_startGame, NO_CHOICE);
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
 	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
 	node* happy_bday =  menu_new_item(root, "My birthday", &menu_control_music, BIRTHDAY);
-	
+
 	//Difficulty
 	node* easy = menu_new_item(difficulty, "Easy", &menu_setDifficulty, EASY );
 	node* hard = menu_new_item(difficulty, "Hard", &menu_setDifficulty, HARD );
@@ -161,7 +161,7 @@ void menu_init(void){
 	////Highscore
 	node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
 	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
-	
+
 	////Sound
 	 node* stop = menu_new_item(sound_settings, "Stop/Play", &menu_control_music, STOP);
 
@@ -173,7 +173,7 @@ node* menu_new_item(node* parent, char* name, void (*fpt)(void), menu_choice cho
 	node* newItem = (node*) malloc(sizeof(node));
 	newItem->name = name;
 	newItem->parent = parent;
-	newItem->num_children = 0; 
+	newItem->num_children = 0;
 	newItem->funcpt = fpt;
 	newItem->choice = choice;
 	for(int i = 0; i < 8; i++){
@@ -217,7 +217,7 @@ void menu_move_pointer(dir direction){
 				current_child_pointer++;
 				menu_print();
 			}
-			break; 
+			break;
 		}
 		case UP:{
 			if(current_child_pointer > 0){
@@ -228,7 +228,7 @@ void menu_move_pointer(dir direction){
 		}
 		case LEFT:{
 			if(menu_position->parent != NULL){
-				menu_position = menu_position->parent; 
+				menu_position = menu_position->parent;
 				current_child_pointer = previous_parent;
 				menu_print();
 			}
@@ -238,7 +238,7 @@ void menu_move_pointer(dir direction){
 			if(menu_position->children[current_child_pointer]->num_children != 0){
 				menu_position = menu_position->children[current_child_pointer];
 				previous_parent = current_child_pointer;
-				current_child_pointer = 0; 
+				current_child_pointer = 0;
 				menu_print();
 			}
 			break;
@@ -259,13 +259,13 @@ void menu_state_controller(){
 					menu_position->children[current_child_pointer]->funcpt();
 				}
 			}
-			neutral_flag = 1; 
+			neutral_flag = 1;
 			break;
 		}
 		case DOWN:{
 			if(neutral_flag){
 				menu_move_pointer(DOWN);
-				neutral_flag = 0; 
+				neutral_flag = 0;
 			}
 			break;
 		}
