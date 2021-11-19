@@ -5,8 +5,14 @@
 
 AsyncWebServer server(80);
 
-const char* ssid = "EliseM";
-const char* password = "xe8vci82z4i4x";
+//const char* ssid = "EliseM";
+//const char* password = "xe8vci82z4i4x";
+
+const char* ssid = "AndroidAP_6064";
+const char* password = "mttp1234";
+
+//const char* ssid = "OnePlus Nord";
+//const char* password = "passord321";
 
 const char* PARAM_MESSAGE = "message";
 
@@ -43,7 +49,7 @@ void setup() {
         message += "Player";
         message += i;
         message += ": ";
-        highscore = analogRead(A0);
+        highscore = digitalRead(16) | digitalRead(5) << 1 | digitalRead(4) << 2 | digitalRead(0) << 3 | digitalRead(2) << 4 | digitalRead(14) << 5;
         message += highscore;
         message += "\r\n";
         request->send(200, "text/plain", message);
