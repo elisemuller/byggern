@@ -120,10 +120,10 @@ void message_data_collector(CAN_MESSAGE msg){
 			}
 			else if (buzzer_data == 2){
 				game_set_state(BIRTHDAY);
-				buzzer_stop_music(1);
+				buzzer_stop_music(0);
 			}
 			else if (buzzer_data == 3){
-				buzzer_stop_music(0);
+				buzzer_stop_music(1);
 			}
 			break;
 		}

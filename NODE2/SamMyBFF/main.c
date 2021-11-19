@@ -52,11 +52,13 @@ int main(void)
 				break;
 			}
 			case BIRTHDAY:{
+				if(DEBUG){printf("In birthday state \n\r");}
 				game_set_state(LOBBY);
 				buzzer_play_playlist(BIRTHDAY_MUSIC);
 				break; 
 			}
 			case VICTORY:{
+				if(DEBUG){printf("In victory state \n\r");}
 				game_ended();
 				game_set_state(LOBBY);
 				buzzer_play_playlist(WINNING_MUSIC);
