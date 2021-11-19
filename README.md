@@ -1,29 +1,4 @@
 # byggern
-- Legge til dac i solution
-## Dependencies
-NODE 1:
-- ADC: xmem
-- CAN: mcp, game
-- movement: adc, can
-- OLED: xmem
-- SPI: -
-- UART: -
-- game: movement, menu
-- mcp: SPI
-- menu: oled, movement, can, game
-- xmem:
-- main: xmem, menu, can, game
+This is the completed code for the Embedded Systems term project 2021, by Elise G. Müller, Emilia O'Brien and Aurora Å. Pedersen
 
-NODE 2:
-- PWM: can_i
-- adc: -
-- buzzer: PWM, game
-- can_c:
-- can_i: can_c, game, buzzer
-- game: PWM, motor, can_i, solenoid, adc, time, PID, dac
-- motor: can_i, time
-- solenoid:
-- PID: motor
-- time:
-- dac:
-- main: can_i, can_c, game, buzzer,
+![IMG_0853](https://user-images.githubusercontent.com/78878792/142586324-a6074143-2587-4608-b6d1-f52f9a78dff7.jpg)
