@@ -45,7 +45,7 @@ void game_interrupt_disable(void);
 /**
 * @brief Sends joystick and slider position to node 2 via CAN when timer interrupt occurs.
 */
-void game_play(void)
+void game_play(void);
 
 
 #endif /* GAME_DRIVER_H_ */
