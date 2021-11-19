@@ -9,15 +9,14 @@
 
 
 /**
-* @brief Initializes adc. Enables the peripheral clock and channel 0. 
+* @brief Initializes adc. Enables channel 0
 **/
 
 void adc_init(void);
 
 
 /**
- * @brief Converts and read the data on the selected @p channel
- * @param channel The channel selected for adc conversion
+ * @brief Converts and reads the data on channel 0
  * @return The converted data 
  */
 volatile uint32_t adc_rd(void);

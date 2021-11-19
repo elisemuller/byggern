@@ -27,5 +27,3 @@ NODE 2:
 - time:
 - dac:
 - main: can_i, can_c, game, buzzer,
-
-test

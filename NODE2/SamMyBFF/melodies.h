@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Buzzer driver
+ * @brief Melodies and notes for the buzzer
  */
 
 #ifndef MELODIES_H_

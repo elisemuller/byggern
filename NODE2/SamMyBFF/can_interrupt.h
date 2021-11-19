@@ -8,6 +8,11 @@
  *
  */ 
 
+/**
+ * @file
+ * @brief Driver for handling CAN interrupts
+ */
+
 
 #ifndef CAN_INTERRUPT_H_
 #define CAN_INTERRUPT_H_

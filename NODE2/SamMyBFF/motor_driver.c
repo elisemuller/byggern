@@ -82,25 +82,6 @@ void motor_reset_encoder(void){
 	
 }
 
-void motor_calibrate_encoder(void){
-	motor_power(1);
-	motor_set_direction(RIGHT);
-	motor_set_speed(2000);
-	time_delay_ms(200);
-	motor_set_speed(1000);
-	time_delay_ms(1300);
-	motor_reset_encoder();	
-	start_point = motor_read_encoder();
-	motor_set_direction(LEFT);
-	motor_set_speed(600);
-	time_delay_ms(1500);
-	end_point = motor_read_encoder();
-	uint16_t total_distance = end_point-start_point;
-	printf("starting point: %d \n\r",start_point);
-	printf("end point: %d \n\r",end_point);
-	printf("distance: %d \n\r",total_distance);
-	motor_power(0);
-}
 
 int16_t motor_read_encoder(void){
 	uint16_t high_byte = 0;

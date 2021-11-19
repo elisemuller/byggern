@@ -1,9 +1,7 @@
-/*
- * solenoid.h
- *
- * Created: 08.11.2021 12:18:41
- *  Author: emiliamo
- */ 
+/**
+ * @file
+ * @brief Driver for controlling the solenoid
+ */
 
 
 #ifndef SOLENOID_H_
@@ -15,8 +13,8 @@
 void solenoid_init(void);
 
 /**
- * @brief Sets the solenoid output pin for 100 ms when the @p not_triggered flag is cleared and the button is pushed. While the button is pushed, the and the @p not_triggered is set.
- * @param button_pushed sets solenoid pin if set, else clears @p not_triggered flag.
+ * @brief Sets the solenoid output pin for 100 ms when the @c not_triggered flag is cleared and the button is pushed. While the button is pushed, the and the @c not_triggered is set.
+ * @param button_pushed sets solenoid pin if set, else clears @c not_triggered flag.
  */
 void solenoid_shoot(int button_pushed);
 

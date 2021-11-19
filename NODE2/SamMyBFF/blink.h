@@ -1,10 +1,7 @@
-/*
- * blink.h
- *
- * Created: 11.10.2021 15:45:46
- *  Author: elisegm
- */ 
-
+/**
+ * @file
+ * @brief Blink driver
+ */
 
 #ifndef BLINK_H_
 #define BLINK_H_

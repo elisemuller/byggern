@@ -126,12 +126,6 @@ void PID_set_ref(void){
 }
 
 
-void PID_delay_us(int delay){
-	int start_time = us;
-	
-	while((us-start_time) < delay);
-}
-
 
 void PID_reset(void){
 	posteriori_error = 0; 

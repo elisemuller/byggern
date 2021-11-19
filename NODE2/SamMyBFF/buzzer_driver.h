@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Buzzer driver
+ * @brief Driver for playing music on the piezo buzzer
  */
 
 

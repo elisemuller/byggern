@@ -14,12 +14,12 @@
 void PWM_init(void);
 
 /**
- * @brief Modifies the @p dutycycle of the PWM on pin 44.
+ * @brief Modifies the dutycycle of the PWM on pin 44 used by the servo. 
  */
 void PWM_dutycycle_modify(void);
 
 /**
- * @brief Modifies the @p freq of the PWM for the selected @p channel.
+ * @brief Modifies the @p freq of the PWM on pin 45 used by the piezo buzzer 
  * @param freq Frequency of PWM signal
  */
 void PWM_frequency_modify(int freq);

@@ -1,10 +1,7 @@
-/*
- * time.h
- *
- * Created: 01.11.2021 16:53:28
- *  Author: elisegm
- */ 
-
+/**
+ * @file
+ * @brief Driver for time handling
+ */
 
 #ifndef TIME_H_
 #define TIME_H_

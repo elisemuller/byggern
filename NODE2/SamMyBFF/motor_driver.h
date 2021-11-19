@@ -1,10 +1,7 @@
-/*
- * motor_driver.h
- *
- * Created: 25.10.2021 09:00:48
- *  Author: elisegm
- */ 
-
+/**
+ * @file
+ * @brief Driver for controlling and setting up the motor
+ */
 
 #ifndef MOTOR_DRIVER_H_
 #define MOTOR_DRIVER_H_
@@ -13,12 +10,13 @@
 #include "can_interrupt.h"
 
 /**
- * @brief 
+ * @brief Initializes the motor for user control
  */
 void motor_init(void);
 
 /**
- * @brief 
+ * @brief Reads position data from the encoder 
+ * @return The position data of the motor
  */
 int16_t motor_read_encoder(void);
 
@@ -29,7 +27,8 @@ int16_t motor_read_encoder(void);
 void motor_set_speed(uint32_t speed);
 
 /**
- * @brief 
+ * @brief Turns the motor on if @p on is set, else turns it off
+ * @param on turn the motor on if set, else turns it off
  */
 void motor_power(int on);
 
@@ -40,19 +39,14 @@ void motor_power(int on);
 void motor_set_direction(dir direction);
 
 /**
- * @brief 
+ * @brief Controls the motor with the input from the joystick 
  */
 void motor_controller(void);
 
 /**
- * @brief 
+ * @brief Resets the encoder to 0 
  */
 void motor_reset_encoder(void);
-
-/**
- * @brief 
- */
-void motor_calibrate_encoder(void);
 
 
 #endif /* MOTOR_DRIVER_H_ */
