@@ -70,14 +70,10 @@ void menu_seeHighscore(void){
 
 }
 
-void menu_clearHighscore(void){
-	// Send til CAN 2 om å cleare highscore der.
-
-}
-
 void menu_startGame(void){
 	OLED_print(" Good Luck!");
 	game_set_state(PLAY);
+	buzzer_data = 3;
 	OLED_reset();
 
 	// Turn off OLED
@@ -90,24 +86,18 @@ void menu_startGame(void){
 void menu_control_music(void){
 	switch(menu_position->children[current_child_pointer]->choice){
 		case STOP: {
-			if (buzzer_data == 1){
-				OLED_print("   PLAYING");
-				buzzer_data = 3;
-			}
-			else if (buzzer_data == 3){
-				OLED_print("   STOPPED");
-				buzzer_data = 1;
-			}
+			OLED_print("   STOPPED");
+			buzzer_data = 1;
 			menu_send_can_message(CAN_BUZZER_ID);
 			break;
 		}
-		case BIRTHDAY:
-		{
-			OLED_print("HAPPY BIRTHDAY!");
-			buzzer_data = 2;
+		case CONTINUE:{
+			OLED_print("   PLAYING");
+			buzzer_data = 3;
 			menu_send_can_message(CAN_BUZZER_ID);
 			break;
 		}
+		
 	}
 }
 
@@ -151,7 +141,7 @@ void menu_init(void){
 	node* difficulty = menu_new_item(root, "Difficulty", NULL, NO_CHOICE);
 	node* highscore = menu_new_item(root, "Highscore", NULL, NO_CHOICE);
 	node* sound_settings = menu_new_item(root, "Sound", NULL, NO_CHOICE);
-	node* happy_bday =  menu_new_item(root, "My birthday", &menu_control_music, BIRTHDAY);
+	
 
 	//Difficulty
 	node* easy = menu_new_item(difficulty, "Easy", &menu_setDifficulty, EASY );
@@ -160,10 +150,9 @@ void menu_init(void){
 	//
 	////Highscore
 	node* see = menu_new_item(highscore, "See", &menu_seeHighscore, SEE );
-	node* clear = menu_new_item(highscore, "Clear", &menu_clearHighscore, CLEAR );
-
 	////Sound
-	 node* stop = menu_new_item(sound_settings, "Stop/Play", &menu_control_music, STOP);
+	node* stop = menu_new_item(sound_settings, "Stop", &menu_control_music, STOP);
+	node* play = menu_new_item(sound_settings, "Play", &menu_control_music, CONTINUE);
 
 	menu_print();
 }

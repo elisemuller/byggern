@@ -23,9 +23,8 @@ typedef enum {
 	HARD,
 	INSANE,
 	SEE,
-	CLEAR,
 	STOP,
-	BIRTHDAY,
+	CONTINUE,
 	NO_CHOICE
 } menu_choice;
 
@@ -83,11 +82,6 @@ void menu_setDifficulty(void);
 * @brief Prints best playtime and last playtime on the OLED screen.
 */
 void menu_seeHighscore(void);
-
-/**
-* @brief Clears the best playtime.
-*/
-void menu_clearHighscore(void);
 
 /**
 * @brief Lets the user turn the music on or off.
