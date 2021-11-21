@@ -42,7 +42,8 @@
       <ToolNumber>J41800007696</ToolNumber>
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
-    <avrtoolinterface>JTAG</avrtoolinterface>
+    <avrtoolinterface>
+    </avrtoolinterface>
     <avrtoolinterfaceclock>7500000</avrtoolinterfaceclock>
     <AsfFrameworkConfig>
       <framework-data xmlns="">

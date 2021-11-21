@@ -25,7 +25,6 @@ typedef enum {
     WINNING_MUSIC,
     LOSING_MUSIC,
     LOBBY_MUSIC,
-    BIRTHDAY_MUSIC
 } playlist;
 
 typedef enum {

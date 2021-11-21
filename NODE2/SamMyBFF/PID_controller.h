@@ -31,12 +31,11 @@ void PID_reset(void);
 
 
 /**
- * @brief Sets the parameters used in the PID controller
+ * @brief Sets the parameters used in the PI controller
  * @param kp_inv The Kp parameter for the controller is set as Kp = Kp / @p kp_inv 
  * @param ki The Ki parameter is used for deciding how much effect the integral action has
- * @param kd The kd parameter is used for deciding how much effect the derivative action has
  */
-void PID_set_parameters(int kp_inv, int ki, int kd);
+void PID_set_parameters(int kp_inv, int ki);
 
 
 #endif /* PID_H_ */

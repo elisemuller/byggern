@@ -28,9 +28,9 @@ void game_start(void){
 }
 
 void game_wifi_init(void) {
-	PIOC->PIO_PER |= PIO_PER_P8 | PIO_PER_P9 | PIO_PER_P14 | PIO_PER_P15 | PIO_PER_P16 | PIO_PER_P17;
-	PIOC->PIO_OER |= PIO_OER_P8 | PIO_OER_P9 | PIO_OER_P14 | PIO_OER_P15 | PIO_OER_P16 | PIO_OER_P17;
-	PIOC->PIO_CODR |= PIO_CODR_P8 | PIO_CODR_P9 | PIO_CODR_P14 | PIO_CODR_P15 | PIO_CODR_P16 | PIO_CODR_P17;
+	PIOD->PIO_PER |= PIO_PER_P3 | PIO_PER_P4 | PIO_PER_P5 | PIO_PER_P6 | PIO_PER_P7 | PIO_PER_P8;
+	PIOD->PIO_OER |= PIO_OER_P3 |  PIO_OER_P4 | PIO_OER_P5 | PIO_OER_P6 | PIO_OER_P7 | PIO_OER_P8;
+	PIOD->PIO_CODR |= PIO_CODR_P3 |  PIO_CODR_P4 | PIO_CODR_P5 | PIO_CODR_P6 | PIO_CODR_P7 | PIO_CODR_P8;
 }
 
 void game_init(void){
@@ -49,41 +49,35 @@ void game_write_score_wifi(int game_score) {
 	int pin3 = (game_score & (1 << 3));
 	int pin4 = (game_score & (1 << 4));
 	int pin5 = (game_score & (1 << 5));
-	//pin46 LSB
 	if (pin0) {
-		PIOC->PIO_SODR |= (PIO_SODR_P17);
+		PIOD->PIO_SODR |= (PIO_SODR_P4);
 	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P17);
+		PIOD->PIO_CODR |= (PIO_CODR_P4);
 	}
-	//pin47
 	if (pin1) {
-		PIOC->PIO_SODR |= (PIO_SODR_P16);
+		PIOD->PIO_SODR |= (PIO_SODR_P5);
 	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P16);
+		PIOD->PIO_CODR |= (PIO_CODR_P5);
 	}
-	//pin48
 	if (pin2) {
-		PIOC->PIO_SODR |= (PIO_SODR_P15);
+		PIOD->PIO_SODR |= (PIO_SODR_P7);
 	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P15);
+		PIOD->PIO_CODR |= (PIO_CODR_P7);
 	}
-	//pin49
 	if (pin3) {
-		PIOC->PIO_SODR |= (PIO_SODR_P14);
+		PIOD->PIO_SODR |= (PIO_SODR_P8);
 	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P14);
+		PIOD->PIO_CODR |= (PIO_CODR_P8);
 	}
-	//pin41
 	if (pin4) {
-		PIOC->PIO_SODR |= (PIO_SODR_P9);
-	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P9);
+		PIOD->PIO_SODR |= (PIO_SODR_P3);
+		} else {
+		PIOD->PIO_CODR |= (PIO_CODR_P3);
 	}
-	//pin40 MSB
 	if (pin5) {
-		PIOC->PIO_SODR |= (PIO_SODR_P8);
+		PIOD->PIO_SODR |= (PIO_SODR_P6);
 	} else {
-		PIOC->PIO_CODR |= (PIO_CODR_P8);
+		PIOD->PIO_CODR |= (PIO_CODR_P6);
 	}
 }
 
@@ -115,7 +109,6 @@ void game_joystick_controller(void){
 }
 
 void game_update_mov_msg(void){
-
 	NEW_MOV_INPUT = 1;
 }
 
@@ -176,14 +169,14 @@ game_state game_get_state(void){
 void game_set_level(game_level lv){
 	switch (lv) {
 		case EASY:
-			PID_set_parameters(3, 3, 0);
+			PID_set_parameters(3, 3);
 			break;
 		case HARD:
-			PID_set_parameters(1, 2, 0);
+			PID_set_parameters(1, 2);
 			break;
 		default:
 			printf("Invalid level chosen, EASY by default\n\r");
-			PID_set_parameters(1, 2, 3);
+			PID_set_parameters(1, 2);
 			break;
 	}
 }

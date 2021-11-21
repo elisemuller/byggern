@@ -23,7 +23,8 @@ void motor_init(void){
 	
 	// Enable peripheral clocks
 	PMC->PMC_PCER1 |= PMC_PCER1_PID38; // DACC
-	PMC->PMC_PCER0 |= (PMC_PCER0_PID13 | PMC_PCER0_PID14); // PIOC and PIOD
+	PMC->PMC_PCER0 |= (PMC_PCER0_PID13 | PMC_PCER0_PID14); // PIOC and 
+	
 	
 	//// Select channel 1 for DACC, 16 LSB data
 	DACC->DACC_MR |= DACC_MR_USER_SEL_CHANNEL1 | DACC_MR_WORD_HALF;
@@ -41,6 +42,7 @@ void motor_init(void){
 	PIOD->PIO_OER |= PIO_OER_P9; // EN
 	PIOD->PIO_OER |= PIO_OER_P10; //DIR
 	PIOD->PIO_OER |= PIO_OER_P2; // SEL
+	
 	PIOD->PIO_OER |= PIO_OER_P0; // !OE
 	PIOD->PIO_OER |= PIO_OER_P1; // !RST	
 	
@@ -57,6 +59,7 @@ void motor_init(void){
 	motor_power(1);
 		
 }
+
 
 
 void motor_set_speed(uint32_t speed){

@@ -153,10 +153,6 @@ void buzzer_play_playlist(playlist list_title){
             if(game_get_state() != PLAY & !STOP_SONG) {buzzer_play_music(STAR_WARS);}
             break;
         }
-        case BIRTHDAY_MUSIC:{
-            if(game_get_state() != PLAY & !STOP_SONG) {buzzer_play_music(HAPPY_BIRTHDAY);}
-            break;
-        }
         default:{
             printf("Invalid playlist selected \n\r");
             break;

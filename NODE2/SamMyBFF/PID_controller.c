@@ -19,7 +19,6 @@
 
 volatile int Kp_inv = 3;
 volatile int Ki = 3; 
-//volatile int Kd = 10;
 
 volatile int us = 0;
 volatile int posteriori_error = 0; 
@@ -133,8 +132,7 @@ void PID_reset(void){
 	ref_pos = 0; 
 }
 
-void PID_set_parameters(int kp_inv, int ki, int kd){
+void PID_set_parameters(int kp_inv, int ki){
 	Kp_inv = kp_inv;
 	Ki = ki;
-	// Kd = kd;
 }

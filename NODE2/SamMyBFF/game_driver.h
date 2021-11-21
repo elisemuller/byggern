@@ -19,7 +19,6 @@ typedef enum {
 	PLAY,
 	LOBBY,
 	GAME_OVER,
-	BIRTHDAY,
 	VICTORY
 } game_state;
 

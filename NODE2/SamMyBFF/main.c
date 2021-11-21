@@ -25,6 +25,7 @@ int main(void)
 		switch (game_get_state()){
 			case INIT: {
 				SystemInit();
+				WDT->WDT_MR = WDT_MR_WDDIS;
 				configure_uart();
 				can_init_def_tx_rx_mb();
 				SysTick_Config(84);
@@ -50,12 +51,6 @@ int main(void)
 				game_set_state(LOBBY);
 				buzzer_play_playlist(LOSING_MUSIC);
 				break;
-			}
-			case BIRTHDAY:{
-				if(DEBUG){printf("In birthday state \n\r");}
-				game_set_state(LOBBY);
-				buzzer_play_playlist(BIRTHDAY_MUSIC);
-				break; 
 			}
 			case VICTORY:{
 				if(DEBUG){printf("In victory state \n\r");}
